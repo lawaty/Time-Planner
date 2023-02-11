@@ -1,1 +1,1 @@
-[Time Planner App](timeplanner.nplanet.org)
+[Time Planner App](https://timeplanner.nplanet.org)
