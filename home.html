@@ -1,0 +1,147 @@
+<html>
+
+<head>
+  <!-- Vendors -->
+  <link rel="stylesheet" href="assets/vendor/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/vendor/bootstrap-icons/bootstrap-icons.css">
+
+  <!-- User Styling -->
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body>
+  <nav class="header navbar navbar-expand bg-light">
+    <div class="container d-flex justify-content-between">
+      <a class="navbar-brand" href="#">
+        Time Planner
+      </a>
+
+      <ul class="navbar-nav">
+        <li class="nav-item"><a onclick="logout()" class="nav-link" href="#">logout</a></li>
+      </ul>
+
+    </div>
+  </nav>
+
+  <div class="d-flex w-100">
+    <div class="sidebar bg-light" )>
+      <ul class="list-unstyled">
+        <li>
+          <div class="d-flex justify-content-between">
+            <button class="btn bg-light btn-toggle" data-bs-toggle="collapse" data-bs-target="#projects-list"
+              aria-expanded="true">
+              <i class="bi bi-arrow-down-short mr-1 d-inline-block"></i>
+              Projects
+            </button>
+            <button class="btn bg-light" data-bs-toggle="modal" data-bs-target="#new-project-modal">
+              <i class="valign bi bi-plus-circle"></i>
+            </button>
+          </div>
+          <ul id="projects-list" class="rounded py-4 collapse ml-4 mt-1 list-unstyled show">
+          </ul>
+        </li>
+      </ul>
+
+    </div>
+
+    <main class="bg-light">
+      <div class="container d-flex justify-content-center w-100 mb-5" id="timer-container">
+        <select class="form-control col-sm-4" id="select-project" oninput="$('#start-btn').removeAttr('disabled')">
+          <option selected hidden>
+            Select Project
+          </option>
+        </select>
+        <div id="timer" class="mx-4 d-flex align-items-center">00:00:00</div>
+        <button onclick="start()" class="btn btn-success mx-1" id="start-btn" disabled>Start</button>
+        <button onclick="pause()" class="btn btn-warning text-white mx-1" id="pause-btn"
+          style="display:none;">Pause</button>
+        <button onclick="end()" class="btn btn-primary text-white mx-1" id="end-btn" disabled>End</button>
+      </div>
+
+      <h3 class="text-secondary mb-4 ml-3">Sessions</h3>
+      <div class="container" id="sessions-list">
+
+      </div>
+    </main>
+  </div>
+
+  <div class="modal" id="new-project-modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="modal-title">New Project</div>
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        <form id="new_project_form" request_type="POST" form_type="basic" api="api/projects/create"
+          callback="new_project_callback">
+          <div class="modal-body">
+            <input hidden name="token">
+            <div class="form-group row">
+              <label class="col-sm-2 col-form-label">Name</label>
+              <div class="col-sm-10">
+                <input class="form-control" name="name" max="60" must regex="NAME">
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-sm-2 col-form-label">Color</label>
+              <div class="col-sm-2">
+                <input type="color" oninput="$('#new_project_form [name=name]').css('color', $(this).val())"
+                  class="form-control" must name="color">
+              </div>
+            </div>
+
+            <p class="text-danger m-3" alert="new_project_form"></p>
+
+          </div>
+          <div class="footer">
+            <button type="button" submit="new_project_form" class="px-5 d-block mx-auto btn btn-primary">Create</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="session-desc">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="modal-title">Any Comments?</div>
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        <form id="new_session_form" request_type="POST" form_type="basic" api="api/sessions/create"
+          callback="new_session_callback">
+          <div class="modal-body">
+            <input hidden name="token">
+            <input hidden name="time">
+            <input hidden name="project_id">
+            <textarea class="form-control" name="description" max="255" regex="GENERIC"></textarea>
+            <p class="text-danger m-3" alert="new_session_form"></p>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success" submit="new_session_form">Confirm</button>
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/vendor/jquery-3.6.0.min.js"></script>
+  <script src="assets/vendor/bootstrap.min.js"></script>
+  <script src="assets/vendor/Ajax.js"></script>
+  <script src="assets/vendor/Validator.js"></script>
+  <script src="assets/vendor/Form.js"></script>
+
+  <script src="assets/js/global.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+
+</html>

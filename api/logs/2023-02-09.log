@@ -1,0 +1,18 @@
+Not Found [] 404 "Endpoint Not Found" 2023-02-09 02:13 2023-02-09 02:13 ::1 0 none
+
+Not Found {"username":"lawaty","password":"lawaty10","email":"abdelrahmanlawaty@gmail.com"} 404 "Endpoint Not Found" 2023-02-09 02:19 2023-02-09 02:19 ::1 0 none
+
+Register {"username":"lawaty","password":"lawaty10","email":"abdelrahmanlawaty@gmail.com"} 500 "SQLSTATE[HY000]: General error: 8 attempt to write a readonly database" 2023-02-09 02:39 2023-02-09 02:39 ::1 0
+
+Register {"username":"lawaty","password":"lawaty10","email":"abdelrahmanlawaty@gmail.com"} 500 "username does not exist for object of type User" 2023-02-09 02:40 2023-02-09 02:40 ::1 0
+
+Register {"username":"lawaty","password":"lawaty10","email":"abdelrahmanlawaty@gmail.com"} 409 "User already exists" 2023-02-09 02:40 2023-02-09 02:40 ::1 0
+
+Register {"username":"lawaty","password":"lawaty10","email":"abdelrahmanlawaty@gmail.com"} 409 "User already exists" 2023-02-09 02:40 2023-02-09 02:40 ::1 0
+
+Login {"username":"lol","password":"fol"} 400 "Invalid Parameter: username" 2023-02-09 02:46 2023-02-09 02:46 ::1 0
+
+Login {"username":"lollollol","password":"folfolfol"} 401 "Wrong username or password" 2023-02-09 02:46 2023-02-09 02:46 ::1 0
+
+Login {"username":"lawaty","password":"lawaty10"} 200 success 2023-02-09 02:47 2023-02-09 02:47 ::1 0
+

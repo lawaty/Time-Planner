@@ -1,0 +1,61 @@
+* {
+  transition: 0.3s;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #0000001a;
+}
+
+.header {
+  box-shadow: 0 6px 8px 2px #dadada;
+  height: 10vh;
+}
+
+.sidebar {
+  width: calc(30vw - 40px);
+  max-width: 240px;
+  position: sticky;
+  height: 80vh;
+  margin: 20px;
+  padding: 30px 20px;
+  box-shadow: 8px -3px 8px 2px #dadada;
+  border-radius: 8px;
+}
+
+main {
+  width: -webkit-fill-available;
+  height:80vh;
+  margin: 20px;
+  padding: 30px 20px;
+  box-shadow: -8px -3px 8px 2px #dadada;
+  border-radius: 8px;
+}
+
+button[aria-expanded=true] i {
+  transform: rotate(-180deg);
+}
+
+.sidebar .btn-toggle {
+  padding: 10px 10px 10px 0px;
+}
+
+.bi {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+#projects-list li {
+  display: flex;
+  justify-content: space-between;
+}
+
+#timer-container button {
+  min-width: 80px;
+}
+
+div#sessions-list {
+  height: calc(80vh - 100px - 3rem - 38px);
+  overflow: auto;
+}

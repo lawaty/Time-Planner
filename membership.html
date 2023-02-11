@@ -1,0 +1,133 @@
+<html>
+
+<head>
+  <!-- Vendors -->
+  <link rel="stylesheet" href="assets/vendor/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/vendor/bootstrap-icons/bootstrap-icons.css">
+
+  <!-- User Styling -->
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body class="d-flex align-items-center">
+  <div class="rounded bg-white px-5 pt-5 w-50 conatiner mx-auto">
+    <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <button id="sign-in-btn" type="button" class="nav-link active" data-bs-toggle="tab" data-bs-target="#sign-in">Sign In</button>
+      </li>
+      <li class="nav-item">
+        <button id="sign-up-btn" type="button" class="nav-link" data-bs-toggle="tab" data-bs-target="#sign-up">Sign Up</button>
+      </li>
+    </ul>
+    <div class="container tab-content">
+
+      <form class="p-4 tab-pane fade active show" id="sign-in" form_type="basic" api="api/membership/login" request_type="POST" callback="login_callback">
+
+        <div class="form-group row">
+          <label class="col-form-label col-sm-4">Username</label>
+          <div class="col-sm-8">
+            <input class="form-control" name="username" min="6" max="40" must regex="LOGIN">
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-form-label col-sm-4">Password</label>
+          <div class="col-sm-8">
+            <input class="form-control" type="password" name="password" min="6" max="40" must regex="LOGIN">
+          </div>
+        </div>
+
+        <button class="btn btn-primary pl-2 px-5 mt-4 d-block mx-auto" type="button" submit="sign-in">Sign In</button>
+
+        <p class="p-3 text-danger" alert="sign-in"></p>
+      </form>
+
+      <form class="p-4 tab-pane fade" id="sign-up" form_type="basic" api="api/membership/register" request_type="POST" callback="register_callback">
+
+        <div class="form-group">
+          <div class="form-group row">
+            <label class="col-form-label col-sm-4">Username</label>
+            <div class="col-sm-8">
+              <input class="form-control" name="username" min="6" max="40" must regex="LOGIN">
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-form-label col-sm-4">Password</label>
+            <div class="col-sm-8">
+              <input class="form-control" type="password" name="password" min="6" max="40" must regex="LOGIN">
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-form-label col-sm-4">Email</label>
+            <div class="col-sm-8">
+              <input class="form-control" name="email" must regex="EMAIL">
+            </div>
+          </div>
+
+        </div>
+        <button class="btn btn-primary pl-2 px-5 mt-4 d-block mx-auto" type="button" submit="sign-up">Sign Up</button>
+        <p class="p-3 text-danger" alert="sign-up"></p>
+
+      </form>
+
+    </div>
+  </div>
+
+  <script src="assets/vendor/jquery-3.6.0.min.js"></script>
+  <script src="assets/vendor/bootstrap.min.js"></script>
+  <script src="assets/vendor/Ajax.js"></script>
+  <script src="assets/vendor/Validator.js"></script>
+  <script src="assets/vendor/Form.js"></script>
+
+  <script src="assets/js/global.js"></script>
+
+  <script>
+    let login_form, register_form
+    (function () {
+      login_form = Form.new($("#sign-in"))
+      register_form = Form.new($("#sign-up"))
+    })()
+
+    function login_callback (xhr) {
+        switch (xhr.status) {
+          case 200:
+            local.set('token', xhr.parsed.token)
+            local.set('id', xhr.parsed.id)
+            window.location.href = "home.html"
+            break;
+
+          case 401:
+            $("[alert=sign-in]").html('Wrong Username Or Password')
+            break;
+
+          default:
+            $("[alert=sign-in]").html("Something Went Wrong")
+        }
+      }
+
+      function register_callback (xhr) {
+        switch (xhr.status) {
+          case 200:
+          case 204:
+            $("[alert=sign-up]").html('Registered Successfully').removeClass('text-danger').addClass('text-success')
+            setTimeout(function() {
+              $("#sign-in-btn").click()
+              $("[alert=sign-up]").addClass('text-danger'), removeClass('text-success')
+
+            }, 1700)
+            break;
+
+          case 409:
+            $("[alert=sign-up]").html('Username or email already exists')
+            break;
+
+          default:
+            $("[alert=sign-up]").html("Something Went Wrong")
+        }
+      }
+  </script>
+</body>
+
+</html>
