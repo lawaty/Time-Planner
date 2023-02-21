@@ -63,13 +63,15 @@ class Timer {
   }
 }
 
-let new_project_form, new_session_form, session_timer
+let new_project_form, new_session_form, new_goal_form, session_timer
 (function () {
   new_project_form = Form.new($("#new_project_form"))
   new_session_form = Form.new($("#new_session_form"))
+  new_goal_form = Form.new($("#new_goal_form"))
 
   listProjects()
   listSessions()
+  listGoals() 
 
   $("[name=token]").val(local.get('token'))
 
@@ -180,7 +182,7 @@ function listProjects() {
             $("#projects-list").append(`
             <li style="color:${project.color};" id="project-${project.id}">${project.name}<i class="bi bi-trash" onclick="deleteProject($(this).parent())"></i></li>`)
 
-            $("#select-project").append(`
+            $("main #select-project, #new_goal_form #select-project").append(`
               <option style="color:${project.color}" value="${project.id}">${project.name}</option>
             `)
           }
@@ -195,7 +197,7 @@ function listProjects() {
     }
   })
 }
-
+let session_date;
 function listSessions() {
   AJAX.ajax({
     url: "api/sessions",
@@ -206,9 +208,23 @@ function listSessions() {
     complete: function (xhr) {
       switch (xhr.status) {
         case 200:
-
+          let list_title = '';
           for (let session of xhr.parsed) {
+            let diff = (new Ndate(session.date)).diff(new Ndate())
+            let title
+            if (diff.days == 0)
+              title = 'Today';
+            else if (diff.days == 1)
+              title = 'Yesterday';
+            else
+              title = `${diff.days} days ago`;
+
             let description = session.description != null ? session.description : 'no description';
+
+            if (list_title != title) {
+              $("#sessions-list").append(`<h3 class="text-secondary mb-4 ml-3">${title}</h3>`);
+              list_title = title;
+            }
 
             $("#sessions-list").append(`
               <div class="card mb-4" id="session-${session.id}">
@@ -233,6 +249,46 @@ function listSessions() {
 
         default:
           alert('Cannot list projects. Please, reload')
+      }
+    }
+  })
+}
+
+function listGoals() {
+  AJAX.ajax({
+    url: "api/goals",
+    type: "GET",
+    data: {
+      token: local.get('token')
+    },
+    complete: function (xhr) {
+      switch (xhr.status) {
+        case 200:
+          for (let goal of xhr.parsed) {
+            $("#goals-list").append(`
+              <div class="mb-3" id="goal-${goal.id}">
+                <div class="d-flex justify-content-between">
+                  <span style="color:${goal.project_color}">
+                    ${goal.project_name}
+                  </span>
+                  <i class="bi bi-trash" onclick="deleteSession($(this).closest('.card').attr('id').split('-')[1])"></i>
+                </div>
+
+                <div class="progress">
+                  <div class="progress-bar" role="progressbar" style="width: ${goal.percent}%; background-color: ${goal.project_color}" aria-valuenow="${goal.percent}" aria-valuemin="0" aria-valuemax="100">${goal.percent}%</div>
+                  <p class="w-100 text-center">${parseInt(((100 - goal.percent) / 100) * goal.goal_time)} minutes</p>
+                </div>
+
+              </div>
+            `)
+          }
+          break;
+
+        case 204:
+          break;
+
+        default:
+          alert('Cannot list goals. Please, reload')
       }
     }
   })

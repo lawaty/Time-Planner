@@ -120,7 +120,7 @@ class DB
 
 			else if (str_contains($e->getMessage(), "UNIQUE")) {
 				$conflicts = explode(',', explode("failed: ", $e->getMessage())[1]);
-				foreach($conflicts as &$conflict)
+				foreach ($conflicts as &$conflict)
 					$conflict = explode('.', $conflict)[1];
 				$conflicts = implode(', ', $conflicts);
 

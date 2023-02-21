@@ -7,7 +7,7 @@ class Logger
 
   public function __construct()
   {
-    if(!file_exists(LOG))
+    if (!file_exists(LOG))
       mkdir(LOG);
 
     self::$file = LOG . "/" . (new Ndate())->getDate() . ".log";
@@ -26,7 +26,7 @@ class Logger
     if ($endpoint) {
       $endpoint_name = get_class($endpoint);
       $user = $endpoint->getUser();
-      if($user)
+      if ($user)
         $user_id = $user->get('id');
       else $user_id = 0;
     } else {
@@ -36,19 +36,20 @@ class Logger
 
     fwrite(
       $fhand,
-      $endpoint_name . " " . json_encode($_REQUEST) . " " . $response->getCode() . " " . $response_body . " " . $this->start_inst->toString() . " " . (new Ndate())->toString() . " " . $_SERVER['REMOTE_ADDR'] . " " . $user_id . "\n\n"
+      "$endpoint_name " . json_encode($_REQUEST) . " " . $response->getCode() . " $response_body " . $this->start_inst->toString() . " " . (new Ndate())->toString() . " " . $_SERVER['REMOTE_ADDR'] . " $user_id \n[[[[" . $response->hidden_buffer . "]]]]\n\n"
     );
 
     fclose($fhand);
   }
 
-  public function reportError($error){
+  public function reportError($error)
+  {
     if (!file_exists(self::$file))
       $fhand = fopen(self::$file, "w");
     else
       $fhand = fopen(self::$file, "a");
 
-    fwrite($fhand, $error."\n\n");
+    fwrite($fhand, $error . "\n\n");
     fclose($fhand);
   }
 }

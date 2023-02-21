@@ -95,7 +95,7 @@ class Ndate extends Date {
     return temp.toISOString().split('T')[0]
   }
 
-  interval(date) {
+  diff(date) {
     /**
      * @param date:Ndate
      */
@@ -120,6 +120,8 @@ class Ndate extends Date {
 
 class NdateInterval {
   constructor(milliseconds) {
+    this.total_millis = milliseconds;
+
     this.days = parseInt(milliseconds / 86400000);
     milliseconds -= this.days * 86400000;
 

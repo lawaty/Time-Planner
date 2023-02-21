@@ -1,33 +1,5 @@
 <?php
 
-function drop($table)
-{
-  return 'DROP TABLE IF EXISTS "' . $table . '"';
-}
-
-function recordExists($table, $params)
-{
-  $query = "select * from $table where ";
-  $keys = $params[0];
-  $values = $params[1];
-  foreach ($keys as $i => $key) {
-    if (strlen($values[$i]) == 0)
-      continue;
-
-    $query .= "$key = '" . $values[$i] . "'";
-    if ($i != count($values) - 1)
-      $query .= " and ";
-  }
-  $stmt = $GLOBALS['db']->prepare($query);
-  $stmt->execute();
-  return (bool) count($stmt->fetchAll(PDO::FETCH_ASSOC));
-}
-
-function insert($table, $insertion)
-{
-  return "INSERT INTO $table (\"" . implode('","', $insertion[0]) . "\") VALUES (\"" . implode('","', $insertion[1]) . "\")";
-}
-
 $creations = [
   'users' => 'CREATE TABLE IF NOT EXISTS users (
     id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
@@ -53,6 +25,13 @@ $creations = [
     time TEXT NOT NULL,
     project_id INTEGER NOT NULL,
     CONSTRAINT sessions_FK FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE CASCADE ON UPDATE CASCADE
+  )',
+  'goals' => 'CREATE TABLE goals (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    time INTEGER NOT NULL,
+    project_id INTEGER NOT NULL,
+    CONSTRAINT goals_UN UNIQUE (project_id),
+    CONSTRAINT goals_FK FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE CASCADE ON UPDATE CASCADE
   )'
 ];
 
@@ -159,3 +138,39 @@ if (!$failures)
   echo "<br>No Failures<br>";
 
 echo "$successes Successes<br>";
+
+
+
+
+
+
+
+
+
+function drop($table)
+{
+  return 'DROP TABLE IF EXISTS "' . $table . '"';
+}
+
+function recordExists($table, $params)
+{
+  $query = "select * from $table where ";
+  $keys = $params[0];
+  $values = $params[1];
+  foreach ($keys as $i => $key) {
+    if (strlen($values[$i]) == 0)
+      continue;
+
+    $query .= "$key = '" . $values[$i] . "'";
+    if ($i != count($values) - 1)
+      $query .= " and ";
+  }
+  $stmt = $GLOBALS['db']->prepare($query);
+  $stmt->execute();
+  return (bool) count($stmt->fetchAll(PDO::FETCH_ASSOC));
+}
+
+function insert($table, $insertion)
+{
+  return "INSERT INTO $table (\"" . implode('","', $insertion[0]) . "\") VALUES (\"" . implode('","', $insertion[1]) . "\")";
+}

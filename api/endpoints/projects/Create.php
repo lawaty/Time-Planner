@@ -12,8 +12,8 @@ class Create extends Authenticated
 
   public function handle(): Response
   {
-    try{
-      if($project = ProjectMapper::create([
+    try {
+      if ($project = ProjectMapper::create([
         'name' => $this->request['name'],
         'color' => $this->request['color'],
         'user_id' => $this->user->get('id')
@@ -23,8 +23,7 @@ class Create extends Authenticated
         ]);
 
       return new Response(FAIL);
-    }
-    catch(UniquenessViolated $e) {
+    } catch (UniquenessViolated $e) {
       throw new Conflict("Conflicting " . $e->getMessage());
     }
   }

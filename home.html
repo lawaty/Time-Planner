@@ -24,22 +24,19 @@
   </nav>
 
   <div class="d-flex w-100">
-    <div class="sidebar bg-light" )>
-      <ul class="list-unstyled">
-        <li>
-          <div class="d-flex justify-content-between">
-            <button class="btn bg-light btn-toggle" data-bs-toggle="collapse" data-bs-target="#projects-list"
-              aria-expanded="true">
-              <i class="bi bi-arrow-down-short mr-1 d-inline-block"></i>
-              Projects
-            </button>
-            <button class="btn bg-light" data-bs-toggle="modal" data-bs-target="#new-project-modal">
-              <i class="valign bi bi-plus-circle"></i>
-            </button>
-          </div>
-          <ul id="projects-list" class="rounded py-4 collapse ml-4 mt-1 list-unstyled show">
-          </ul>
-        </li>
+    <div class="leftbar bg-light">
+      <div class="d-flex justify-content-between">
+        <button class="btn bg-light btn-toggle" data-bs-toggle="collapse" data-bs-target="#projects-list"
+          aria-expanded="true">
+          <i class="bi bi-arrow-down-short mr-1 d-inline-block"></i>
+          Projects
+        </button>
+        <button class="btn bg-light" data-bs-toggle="modal" data-bs-target="#new-project-modal">
+          <i class="valign bi bi-plus-circle"></i>
+        </button>
+      </div>
+
+      <ul id="projects-list" class="rounded py-4 collapse ml-4 mt-1 list-unstyled show">
       </ul>
 
     </div>
@@ -58,11 +55,27 @@
         <button onclick="end()" class="btn btn-primary text-white mx-1" id="end-btn" disabled>End</button>
       </div>
 
-      <h3 class="text-secondary mb-4 ml-3">Sessions</h3>
-      <div class="container" id="sessions-list">
+      <div id="sessions-list">
 
       </div>
     </main>
+
+    <div class="rightbar bg-light">
+      <div class="d-flex justify-content-between">
+        <button class="btn bg-light btn-toggle" data-bs-toggle="collapse" data-bs-target="#goals-list"
+          aria-expanded="true">
+          <i class="bi bi-arrow-down-short mr-1 d-inline-block"></i>
+          Goals
+        </button>
+        <button class="btn bg-light" data-bs-toggle="modal" data-bs-target="#new-goal-modal">
+          <i class="valign bi bi-plus-circle"></i>
+        </button>
+      </div>
+
+      <ul id="goals-list" class="rounded py-4 collapse ml-4 mt-1 list-unstyled show">
+      </ul>
+
+    </div>
   </div>
 
   <div class="modal" id="new-project-modal">
@@ -81,14 +94,14 @@
             <input hidden name="token">
             <div class="form-group row">
               <label class="col-sm-2 col-form-label">Name</label>
-              <div class="col-sm-10">
+              <div class="col">
                 <input class="form-control" name="name" max="60" must regex="NAME">
               </div>
             </div>
 
             <div class="form-group row">
               <label class="col-sm-2 col-form-label">Color</label>
-              <div class="col-sm-2">
+              <div class="col">
                 <input type="color" oninput="$('#new_project_form [name=name]').css('color', $(this).val())"
                   class="form-control" must name="color">
               </div>
@@ -99,6 +112,50 @@
           </div>
           <div class="footer">
             <button type="button" submit="new_project_form" class="px-5 d-block mx-auto btn btn-primary">Create</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="new-goal-modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="modal-title">New Goal</div>
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        <form id="new_goal_form" request_type="POST" form_type="basic" api="api/goals/create"
+          callback="new_goal_callback">
+          <div class="modal-body">
+            <input hidden name="token">
+
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label">Project</label>
+              <div class="col">
+                <select class="form-control" id="select-project" oninput="$('#start-btn').removeAttr('disabled')" name="project_id">
+                  <option selected hidden>
+                    Select Project
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label">Goal Time</label>
+              <div class="col">
+                <input placeholder="time in minutes" regex="INT" class="form-control" must name="time">
+              </div>
+            </div>
+
+            <p class="text-danger m-3" alert="new_goal_form"></p>
+
+          </div>
+          <div class="footer">
+            <button type="button" submit="new_goal_form" class="px-5 d-block mx-auto btn btn-primary">Create</button>
           </div>
         </form>
       </div>

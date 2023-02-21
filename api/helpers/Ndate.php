@@ -4,6 +4,7 @@ class Ndate extends DateTime
 {
   const DATE_TIME = "Y-m-d H:i";
   const DATE = "Y-m-d";
+  const TIME = "H:i:s";
   
   private static ?Ndate $now = null;
 
@@ -35,6 +36,26 @@ class Ndate extends DateTime
     return $seconds;
   }
 
+  public function toMinutes(): int
+  {
+    return $this->getHours() * 60 + $this->getMinutes();
+  }
+
+  public function getHours(): string
+  {
+    return $this->format('H');
+  }
+
+  public function getMinutes(): string
+  {
+    return $this->format('i');
+  }
+
+  public function getSeconds(): string
+  {
+    return $this->format('s');
+  }
+
   public function getDay(): string
   {
     return $this->format('D');
@@ -52,6 +73,6 @@ class Ndate extends DateTime
 
   public function toString($format = self::DATE_TIME): string
   {
-    return $this->format(self::DATE_TIME);
+    return $this->format($format);
   }
 }

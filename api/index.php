@@ -15,6 +15,8 @@ require "proxy/Logger.php";
 require "proxy/Router.php";
 require "proxy/Response.php";
 
+ob_start();
+
 $logger = new Logger();
 
 if (!($endpoint = Router::route())) {

@@ -1,6 +1,6 @@
 <?php
 
-class GetProjects extends Authenticated
+class Get extends Authenticated
 {
   public function __construct()
   {
@@ -11,9 +11,4 @@ class GetProjects extends Authenticated
   {
     return new Response(SUCCESS, ProjectMapper::getAllByUser($this->user));
   }
-}
-
-function defaultEndpoint(): Endpoint
- {
-  return new GetProjects();
 }

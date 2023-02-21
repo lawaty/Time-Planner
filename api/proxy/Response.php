@@ -17,6 +17,7 @@ class Response
 {
   private int $code;
   private $body;
+  public string $hidden_buffer;
 
   public function __construct($code, $body = '')
   {
@@ -57,8 +58,8 @@ class Response
     header('Content-type: text/plain', true);
     header('Connection: close');
     ignore_user_abort(true);
-    ob_end_clean();
-    ob_start();
+    $this->hidden_buffer = ob_get_clean();
+    ob_clean();
 
     $body = '';
     if (is_iterable($this->body))

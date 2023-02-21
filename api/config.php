@@ -69,7 +69,10 @@ const DEPENDENCIES = [
   'Project' => 'entities',
   'ProjectMapper' => 'mappers',
   'Session' => 'entities',
-  'SessionMapper' => 'mappers',];
+  'SessionMapper' => 'mappers',
+  'Goal' => 'entities',
+  'GoalMapper' => 'mappers',
+];
 
 // JWT Secret
 const SECRET = 'lol';

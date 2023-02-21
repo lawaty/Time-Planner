@@ -1,0 +1,193 @@
+GetSessions {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-20 11:56 2023-02-20 11:56 ::1 1
+
+GetSessions {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc","start":"20"} 500 "SQLSTATE[HY000]: General error: 1 near \"sessions\": syntax error" 2023-02-20 11:56 2023-02-20 11:56 ::1 1
+
+GetSessions {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc","start":"20"} 500 "SQLSTATE[HY000]: General error: 1 near \"sessions\": syntax error" 2023-02-20 11:57 2023-02-20 11:57 ::1 1
+
+GetSessions {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc","start":"20"} 500 "SQLSTATE[HY000]: General error: 1 near \"sessions\": syntax error" 2023-02-20 11:57 2023-02-20 11:57 ::1 1
+
+GetSessions {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc","start":"20"} 500 "SQLSTATE[HY000]: General error: 1 near \"sessions\": syntax error" 2023-02-20 11:57 2023-02-20 11:57 ::1 1
+
+GetSessions {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc","start":"20"} 500 "SQLSTATE[HY000]: General error: 1 near \"sessions\": syntax error" 2023-02-20 11:58 2023-02-20 11:58 ::1 1
+
+GetSessions {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc","start":"20"} 500 "SQLSTATE[HY000]: General error: 1 near \"sessions\": syntax error" 2023-02-20 11:59 2023-02-20 11:59 ::1 1
+
+GetSessions {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc","start":"20"} 500 "SQLSTATE[HY000]: General error: 1 near \"sessions\": syntax error" 2023-02-20 11:59 2023-02-20 11:59 ::1 1
+
+GetSessions {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc","start":"20"} 500 "SQLSTATE[HY000]: General error: 1 near \"sessions\": syntax error" 2023-02-20 11:59 2023-02-20 11:59 ::1 1
+
+GetSessions {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc","start":"20"} 204 success 2023-02-20 12:02 2023-02-20 12:02 ::1 1
+
+GetSessions {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc","start":"11"} 204 success 2023-02-20 12:02 2023-02-20 12:02 ::1 1
+
+GetSessions {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc","start":"10"} 200 success 2023-02-20 12:02 2023-02-20 12:02 ::1 1
+
+GetSessions {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc","start":"10"} 200 success 2023-02-20 12:02 2023-02-20 12:02 ::1 1
+
+GetSessions {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc","start":"10"} 200 success 2023-02-20 12:02 2023-02-20 12:02 ::1 1
+
+GetSessions {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc","start":"10"} 200success select sessions.*, projects.name as project_name, projects.color as project_color from users join projects join sessions on users.id = projects.user_id and projects.id = sessions.project_id where users.id=? and sessions.id > 10  ORDER BY sessions.id desc <br>array(1) {
+  [0]=>
+  int(1)
+}
+<br> 2023-02-20 12:07 2023-02-20 12:07 ::1 1
+
+GetSessions {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc","start":"10"} 200 success 2023-02-20 12:09 2023-02-20 12:09 ::1 1 [[[[select sessions.*, projects.name as project_name, projects.color as project_color from users join projects join sessions on users.id = projects.user_id and projects.id = sessions.project_id where users.id=? and sessions.id > 10  ORDER BY sessions.id desc <br>array(1) {
+  [0]=>
+  int(1)
+}
+<br>]]]]
+
+GetSessions {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc","start":"10"} 200 success 2023-02-20 12:10 2023-02-20 12:10 ::1 1 
+[[[[select sessions.*, projects.name as project_name, projects.color as project_color from users join projects join sessions on users.id = projects.user_id and projects.id = sessions.project_id where users.id=? and sessions.id > 10  ORDER BY sessions.id desc <br>array(1) {
+  [0]=>
+  int(1)
+}
+<br>]]]]
+
+GetSessions {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc","start":"10"} 200 success 2023-02-20 12:18 2023-02-20 12:18 ::1 1 
+[[[[select sessions.*, projects.name as project_name, projects.color as project_color from users join projects join sessions on users.id = projects.user_id and projects.id = sessions.project_id where users.id=?  ORDER BY sessions.id desc limit 30 <br>array(1) {
+  [0]=>
+  int(1)
+}
+<br>]]]]
+
+GetSessions {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc","end":"11"} 200 success 2023-02-20 12:19 2023-02-20 12:19 ::1 1 
+[[[[select sessions.*, projects.name as project_name, projects.color as project_color from users join projects join sessions on users.id = projects.user_id and projects.id = sessions.project_id where users.id=?  ORDER BY sessions.id desc limit 30 <br>array(1) {
+  [0]=>
+  int(1)
+}
+<br>]]]]
+
+GetSessions {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc","end":"10"} 200 success 2023-02-20 12:19 2023-02-20 12:19 ::1 1 
+[[[[select sessions.*, projects.name as project_name, projects.color as project_color from users join projects join sessions on users.id = projects.user_id and projects.id = sessions.project_id where users.id=?  ORDER BY sessions.id desc limit 30 <br>array(1) {
+  [0]=>
+  int(1)
+}
+<br>]]]]
+
+GetSessions {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc","last":"10"} 204 success 2023-02-20 12:19 2023-02-20 12:19 ::1 1 
+[[[[select sessions.*, projects.name as project_name, projects.color as project_color from users join projects join sessions on users.id = projects.user_id and projects.id = sessions.project_id where users.id=? and sessions.id < 10 ORDER BY sessions.id desc limit 30 <br>array(1) {
+  [0]=>
+  int(1)
+}
+<br>]]]]
+
+GetSessions {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc","last":"11"} 200 success 2023-02-20 12:19 2023-02-20 12:19 ::1 1 
+[[[[select sessions.*, projects.name as project_name, projects.color as project_color from users join projects join sessions on users.id = projects.user_id and projects.id = sessions.project_id where users.id=? and sessions.id < 11 ORDER BY sessions.id desc limit 30 <br>array(1) {
+  [0]=>
+  int(1)
+}
+<br>]]]]
+
+GetSessions {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-20 13:05 2023-02-20 13:05 ::1 1 
+[[[[select sessions.*, projects.name as project_name, projects.color as project_color from users join projects join sessions on users.id = projects.user_id and projects.id = sessions.project_id where users.id=?  ORDER BY sessions.id desc limit 30 <br>array(1) {
+  [0]=>
+  int(1)
+}
+<br>]]]]
+
+GetProjects {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-20 13:05 2023-02-20 13:05 ::1 1 
+[[[[select * from projects where user_id=?<br>array(1) {
+  [0]=>
+  int(1)
+}
+<br>]]]]
+
+GetSessions {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-20 13:06 2023-02-20 13:06 ::1 1 
+[[[[select sessions.*, projects.name as project_name, projects.color as project_color from users join projects join sessions on users.id = projects.user_id and projects.id = sessions.project_id where users.id=?  ORDER BY sessions.id desc limit 30 <br>array(1) {
+  [0]=>
+  int(1)
+}
+<br>]]]]
+
+GetProjects {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-20 13:06 2023-02-20 13:06 ::1 1 
+[[[[select * from projects where user_id=?<br>array(1) {
+  [0]=>
+  int(1)
+}
+<br>]]]]
+
+GetProjects {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-20 13:06 2023-02-20 13:06 ::1 1 
+[[[[select * from projects where user_id=?<br>array(1) {
+  [0]=>
+  int(1)
+}
+<br>]]]]
+
+GetSessions {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-20 13:06 2023-02-20 13:06 ::1 1 
+[[[[select sessions.*, projects.name as project_name, projects.color as project_color from users join projects join sessions on users.id = projects.user_id and projects.id = sessions.project_id where users.id=?  ORDER BY sessions.id desc limit 30 <br>array(1) {
+  [0]=>
+  int(1)
+}
+<br>]]]]
+
+GetProjects {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-20 13:07 2023-02-20 13:07 ::1 1 
+[[[[select * from projects where user_id=?<br>array(1) {
+  [0]=>
+  int(1)
+}
+<br>]]]]
+
+GetSessions {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-20 13:07 2023-02-20 13:07 ::1 1 
+[[[[select sessions.*, projects.name as project_name, projects.color as project_color from users join projects join sessions on users.id = projects.user_id and projects.id = sessions.project_id where users.id=?  ORDER BY sessions.id desc limit 30 <br>array(1) {
+  [0]=>
+  int(1)
+}
+<br>]]]]
+
+GetProjects {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-20 13:16 2023-02-20 13:16 ::1 1 
+[[[[select * from projects where user_id=?<br>array(1) {
+  [0]=>
+  int(1)
+}
+<br>]]]]
+
+GetSessions {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-20 13:16 2023-02-20 13:16 ::1 1 
+[[[[select sessions.*, projects.name as project_name, projects.color as project_color from users join projects join sessions on users.id = projects.user_id and projects.id = sessions.project_id where users.id=?  ORDER BY sessions.id desc limit 30 <br>array(1) {
+  [0]=>
+  int(1)
+}
+<br>]]]]
+
+GetProjects {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-20 13:16 2023-02-20 13:16 ::1 1 
+[[[[select * from projects where user_id=?<br>array(1) {
+  [0]=>
+  int(1)
+}
+<br>]]]]
+
+GetSessions {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-20 13:16 2023-02-20 13:16 ::1 1 
+[[[[select sessions.*, projects.name as project_name, projects.color as project_color from users join projects join sessions on users.id = projects.user_id and projects.id = sessions.project_id where users.id=?  ORDER BY sessions.id desc limit 30 <br>array(1) {
+  [0]=>
+  int(1)
+}
+<br>]]]]
+
+Create {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc","time":"00:00:01","project_id":"6","description":"lolll"} 200 success 2023-02-20 13:17 2023-02-20 13:17 ::1 1 
+[[[[insert into sessions (description,date,time,project_id) values (?, ?, ?, ?)<br>array(4) {
+  [0]=>
+  string(5) "lolll"
+  [1]=>
+  string(16) "2023-02-20 13:17"
+  [2]=>
+  string(8) "00:00:01"
+  [3]=>
+  string(1) "6"
+}
+<br>]]]]
+
+GetProjects {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-20 13:17 2023-02-20 13:17 ::1 1 
+[[[[select * from projects where user_id=?<br>array(1) {
+  [0]=>
+  int(1)
+}
+<br>]]]]
+
+GetSessions {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-20 13:17 2023-02-20 13:17 ::1 1 
+[[[[select sessions.*, projects.name as project_name, projects.color as project_color from users join projects join sessions on users.id = projects.user_id and projects.id = sessions.project_id where users.id=?  ORDER BY sessions.id desc limit 30 <br>array(1) {
+  [0]=>
+  int(1)
+}
+<br>]]]]
+

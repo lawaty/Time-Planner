@@ -12,7 +12,7 @@ body {
   height: 10vh;
 }
 
-.sidebar {
+.leftbar {
   width: calc(30vw - 40px);
   max-width: 240px;
   position: sticky;
@@ -23,9 +23,20 @@ body {
   border-radius: 8px;
 }
 
+.rightbar {
+  width: calc(30vw - 40px);
+  max-width: 240px;
+  position: sticky;
+  height: 80vh;
+  margin: 20px;
+  padding: 30px 20px;
+  box-shadow: -8px -3px 8px 2px #dadada;
+  border-radius: 8px;
+}
+
 main {
   width: -webkit-fill-available;
-  height:80vh;
+  height: 80vh;
   margin: 20px;
   padding: 30px 20px;
   box-shadow: -8px -3px 8px 2px #dadada;
@@ -44,6 +55,10 @@ button[aria-expanded=true] i {
   display: flex;
   align-items: center;
   cursor: pointer;
+}
+
+.bi.bi-trash {
+  color: var(--red);
 }
 
 #projects-list li {

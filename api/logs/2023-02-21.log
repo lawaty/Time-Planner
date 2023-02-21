@@ -1,0 +1,836 @@
+Delete {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc","project_id":"8"} 404 "Project Not Found" 2023-02-21 17:36 2023-02-21 17:36 ::1 1 
+[[[[select * from projects where user_id=? and id=?<br>array(2) {
+  [0]=>
+  int(1)
+  [1]=>
+  string(1) "8"
+}
+<br>]]]]
+
+Get [] 400 "Invalid Parameter: parameter 'token' is not found" 2023-02-21 17:36 2023-02-21 17:36 ::1 0 
+[[[[]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 204 success 2023-02-21 17:38 2023-02-21 17:38 ::1 1 
+[[[[select goals.id as goal_id, goals.time as goal_time, projects.id as project_id, projects.name as project_name from goals join projects on goals.project_id = projects.id where projects.user_id=?<br>array(1) {
+  [0]=>
+  int(1)
+}
+<br>]]]]
+
+Create {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc","project_id":"2000","time":"20000"} 500 "SQLSTATE[HY000]: General error: 1 near \")\": syntax error" 2023-02-21 17:52 2023-02-21 17:52 ::1 1 
+[[[[insert into projects () values ()<br>array(0) {
+}
+<br>]]]]
+
+Create {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc","project_id":"2000","time":"20000"} 0 success 2023-02-21 17:52 2023-02-21 17:52 ::1 1 
+[[[[insert into goals (time,project_id) values (?, ?)<br>array(2) {
+  [0]=>
+  string(5) "20000"
+  [1]=>
+  string(4) "2000"
+}
+<br>]]]]
+
+Create {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc","project_id":"2000","time":"20000"} 404 "Project Not Found" 2023-02-21 17:53 2023-02-21 17:53 ::1 1 
+[[[[insert into goals (time,project_id) values (?, ?)<br>array(2) {
+  [0]=>
+  string(5) "20000"
+  [1]=>
+  string(4) "2000"
+}
+<br>]]]]
+
+Create {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc","project_id":"8","time":"20000"} 404 "Project Not Found" 2023-02-21 17:53 2023-02-21 17:53 ::1 1 
+[[[[insert into goals (time,project_id) values (?, ?)<br>array(2) {
+  [0]=>
+  string(5) "20000"
+  [1]=>
+  string(1) "8"
+}
+<br>]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 17:53 2023-02-21 17:53 ::1 1 
+[[[[select * from projects where user_id=?<br>array(1) {
+  [0]=>
+  int(1)
+}
+<br>]]]]
+
+Create {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc","project_id":"7","time":"150"} 200 success 2023-02-21 17:54 2023-02-21 17:54 ::1 1 
+[[[[insert into goals (time,project_id) values (?, ?)<br>array(2) {
+  [0]=>
+  string(3) "150"
+  [1]=>
+  string(1) "7"
+}
+<br>]]]]
+
+Create {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc","project_id":"7","time":"150"} 409 "Goal Already Exists for That Project" 2023-02-21 17:54 2023-02-21 17:54 ::1 1 
+[[[[insert into goals (time,project_id) values (?, ?)<br>array(2) {
+  [0]=>
+  string(3) "150"
+  [1]=>
+  string(1) "7"
+}
+<br>]]]]
+
+Create {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc","project_id":"7","time":"150"} 409 "A Goal Already Exists for That Project" 2023-02-21 17:54 2023-02-21 17:54 ::1 1 
+[[[[insert into goals (time,project_id) values (?, ?)<br>array(2) {
+  [0]=>
+  string(3) "150"
+  [1]=>
+  string(1) "7"
+}
+<br>]]]]
+
+Login {"username":"Lawaty","password":"lawaty10"} 401 "Wrong username or password" 2023-02-21 17:54 2023-02-21 17:54 ::1 0 
+[[[[select * from users where username=?<br>array(1) {
+  [0]=>
+  string(6) "Lawaty"
+}
+<br>]]]]
+
+Login {"username":"lawaty","password":"lawaty10"} 200 success 2023-02-21 17:54 2023-02-21 17:54 ::1 0 
+[[[[select * from users where username=?<br>array(1) {
+  [0]=>
+  string(6) "lawaty"
+}
+<br>]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 17:54 2023-02-21 17:54 ::1 1 
+[[[[select * from projects where user_id=?<br>array(1) {
+  [0]=>
+  int(1)
+}
+<br>]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 17:54 2023-02-21 17:54 ::1 1 
+[[[[select sessions.*, projects.name as project_name, projects.color as project_color from users join projects join sessions on users.id = projects.user_id and projects.id = sessions.project_id where users.id=?  ORDER BY sessions.id desc limit 30 <br>array(1) {
+  [0]=>
+  int(1)
+}
+<br>]]]]
+
+Delete {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc","goal_id":"2"} 204 success 2023-02-21 17:56 2023-02-21 17:56 ::1 1 
+[[[[select goals.id as id, goals.time as goal_time, projects.id as project_id, projects.name as project_name from goals join projects on goals.project_id = projects.id where projects.user_id=?<br>array(1) {
+  [0]=>
+  int(1)
+}
+<br>delete from goals where id=?<br>array(1) {
+  [0]=>
+  int(1)
+}
+<br>]]]]
+
+Delete {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc","goal_id":"2"} 404 "Goal Not Found" 2023-02-21 17:56 2023-02-21 17:56 ::1 1 
+[[[[select goals.id as id, goals.time as goal_time, projects.id as project_id, projects.name as project_name from goals join projects on goals.project_id = projects.id where projects.user_id=?<br>array(1) {
+  [0]=>
+  int(1)
+}
+<br>]]]]
+
+Delete {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc","goal_id":"3"} 404 "Goal Not Found" 2023-02-21 17:56 2023-02-21 17:56 ::1 1 
+[[[[select goals.id as id, goals.time as goal_time, projects.id as project_id, projects.name as project_name from goals join projects on goals.project_id = projects.id where projects.user_id=?<br>array(1) {
+  [0]=>
+  int(1)
+}
+<br>]]]]
+
+Delete {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc","goal_id":"3"} 404 "Goal Not Found" 2023-02-21 17:56 2023-02-21 17:56 ::1 1 
+[[[[select goals.id as id, goals.time as goal_time, projects.id as project_id, projects.name as project_name from goals join projects on goals.project_id = projects.id where projects.user_id=?<br>array(1) {
+  [0]=>
+  int(1)
+}
+<br>]]]]
+
+Delete {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc","goal_id":"1"} 404 "Goal Not Found" 2023-02-21 17:56 2023-02-21 17:56 ::1 1 
+[[[[select goals.id as id, goals.time as goal_time, projects.id as project_id, projects.name as project_name from goals join projects on goals.project_id = projects.id where projects.user_id=?<br>array(1) {
+  [0]=>
+  int(1)
+}
+<br>]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 204 success 2023-02-21 17:57 2023-02-21 17:57 ::1 1 
+[[[[select goals.id as id, goals.time as goal_time, projects.id as project_id, projects.name as project_name from goals join projects on goals.project_id = projects.id where projects.user_id=?<br>array(1) {
+  [0]=>
+  int(1)
+}
+<br>]]]]
+
+Create {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc","project_id":"7","time":"150"} 200 success 2023-02-21 17:57 2023-02-21 17:57 ::1 1 
+[[[[insert into goals (time,project_id) values (?, ?)<br>array(2) {
+  [0]=>
+  string(3) "150"
+  [1]=>
+  string(1) "7"
+}
+<br>]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 17:57 2023-02-21 17:57 ::1 1 
+[[[[select goals.id as id, goals.time as goal_time, projects.id as project_id, projects.name as project_name from goals join projects on goals.project_id = projects.id where projects.user_id=?<br>array(1) {
+  [0]=>
+  int(1)
+}
+<br>]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 18:01 2023-02-21 18:01 ::1 1 
+[[[[select * from projects where user_id=?<br>array(1) {
+  [0]=>
+  int(1)
+}
+<br>]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 18:01 2023-02-21 18:01 ::1 1 
+[[[[select sessions.*, projects.name as project_name, projects.color as project_color from users join projects join sessions on users.id = projects.user_id and projects.id = sessions.project_id where users.id=?  ORDER BY sessions.id desc limit 30 <br>array(1) {
+  [0]=>
+  int(1)
+}
+<br>]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 18:05 2023-02-21 18:05 ::1 1 
+[[[[select * from projects where user_id=?<br>array(1) {
+  [0]=>
+  int(1)
+}
+<br>]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 18:05 2023-02-21 18:05 ::1 1 
+[[[[select sessions.*, projects.name as project_name, projects.color as project_color from users join projects join sessions on users.id = projects.user_id and projects.id = sessions.project_id where users.id=?  ORDER BY sessions.id desc limit 30 <br>array(1) {
+  [0]=>
+  int(1)
+}
+<br>]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 18:09 2023-02-21 18:09 ::1 1 
+[[[[select * from projects where user_id=?<br>array(1) {
+  [0]=>
+  int(1)
+}
+<br>]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 18:09 2023-02-21 18:09 ::1 1 
+[[[[select sessions.*, projects.name as project_name, projects.color as project_color from users join projects join sessions on users.id = projects.user_id and projects.id = sessions.project_id where users.id=?  ORDER BY sessions.id desc limit 30 <br>array(1) {
+  [0]=>
+  int(1)
+}
+<br>]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 18:10 2023-02-21 18:10 ::1 1 
+[[[[select sessions.*, projects.name as project_name, projects.color as project_color from users join projects join sessions on users.id = projects.user_id and projects.id = sessions.project_id where users.id=?  ORDER BY sessions.id desc limit 30 <br>array(1) {
+  [0]=>
+  int(1)
+}
+<br>]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 18:10 2023-02-21 18:10 ::1 1 
+[[[[select * from projects where user_id=?<br>array(1) {
+  [0]=>
+  int(1)
+}
+<br>]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 18:11 2023-02-21 18:11 ::1 1 
+[[[[select * from projects where user_id=?<br>array(1) {
+  [0]=>
+  int(1)
+}
+<br>]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 18:11 2023-02-21 18:11 ::1 1 
+[[[[select sessions.*, projects.name as project_name, projects.color as project_color from users join projects join sessions on users.id = projects.user_id and projects.id = sessions.project_id where users.id=?  ORDER BY sessions.id desc limit 30 <br>array(1) {
+  [0]=>
+  int(1)
+}
+<br>]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 18:11 2023-02-21 18:11 ::1 1 
+[[[[select * from projects where user_id=?<br>array(1) {
+  [0]=>
+  int(1)
+}
+<br>]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 18:11 2023-02-21 18:11 ::1 1 
+[[[[select sessions.*, projects.name as project_name, projects.color as project_color from users join projects join sessions on users.id = projects.user_id and projects.id = sessions.project_id where users.id=?  ORDER BY sessions.id desc limit 30 <br>array(1) {
+  [0]=>
+  int(1)
+}
+<br>]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 18:12 2023-02-21 18:12 ::1 1 
+[[[[select * from projects where user_id=?<br>array(1) {
+  [0]=>
+  int(1)
+}
+<br>]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 18:12 2023-02-21 18:12 ::1 1 
+[[[[select sessions.*, projects.name as project_name, projects.color as project_color from users join projects join sessions on users.id = projects.user_id and projects.id = sessions.project_id where users.id=?  ORDER BY sessions.id desc limit 30 <br>array(1) {
+  [0]=>
+  int(1)
+}
+<br>]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 18:12 2023-02-21 18:12 ::1 1 
+[[[[select * from projects where user_id=?<br>array(1) {
+  [0]=>
+  int(1)
+}
+<br>]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 18:12 2023-02-21 18:12 ::1 1 
+[[[[select sessions.*, projects.name as project_name, projects.color as project_color from users join projects join sessions on users.id = projects.user_id and projects.id = sessions.project_id where users.id=?  ORDER BY sessions.id desc limit 30 <br>array(1) {
+  [0]=>
+  int(1)
+}
+<br>]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 18:14 2023-02-21 18:14 ::1 1 
+[[[[select * from projects where user_id=?<br>array(1) {
+  [0]=>
+  int(1)
+}
+<br>]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 18:14 2023-02-21 18:14 ::1 1 
+[[[[select sessions.*, projects.name as project_name, projects.color as project_color from users join projects join sessions on users.id = projects.user_id and projects.id = sessions.project_id where users.id=?  ORDER BY sessions.id desc limit 30 <br>array(1) {
+  [0]=>
+  int(1)
+}
+<br>]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 18:14 2023-02-21 18:14 ::1 1 
+[[[[select * from projects where user_id=?<br>array(1) {
+  [0]=>
+  int(1)
+}
+<br>]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 18:14 2023-02-21 18:14 ::1 1 
+[[[[select sessions.*, projects.name as project_name, projects.color as project_color from users join projects join sessions on users.id = projects.user_id and projects.id = sessions.project_id where users.id=?  ORDER BY sessions.id desc limit 30 <br>array(1) {
+  [0]=>
+  int(1)
+}
+<br>]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 18:14 2023-02-21 18:14 ::1 1 
+[[[[select * from projects where user_id=?<br>array(1) {
+  [0]=>
+  int(1)
+}
+<br>]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 18:14 2023-02-21 18:14 ::1 1 
+[[[[select sessions.*, projects.name as project_name, projects.color as project_color from users join projects join sessions on users.id = projects.user_id and projects.id = sessions.project_id where users.id=?  ORDER BY sessions.id desc limit 30 <br>array(1) {
+  [0]=>
+  int(1)
+}
+<br>]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 18:14 2023-02-21 18:14 ::1 1 
+[[[[select * from projects where user_id=?<br>array(1) {
+  [0]=>
+  int(1)
+}
+<br>]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 18:14 2023-02-21 18:14 ::1 1 
+[[[[select sessions.*, projects.name as project_name, projects.color as project_color from users join projects join sessions on users.id = projects.user_id and projects.id = sessions.project_id where users.id=?  ORDER BY sessions.id desc limit 30 <br>array(1) {
+  [0]=>
+  int(1)
+}
+<br>]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 18:15 2023-02-21 18:15 ::1 1 
+[[[[select * from projects where user_id=?<br>array(1) {
+  [0]=>
+  int(1)
+}
+<br>]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 18:15 2023-02-21 18:15 ::1 1 
+[[[[select sessions.*, projects.name as project_name, projects.color as project_color from users join projects join sessions on users.id = projects.user_id and projects.id = sessions.project_id where users.id=?  ORDER BY sessions.id desc limit 30 <br>array(1) {
+  [0]=>
+  int(1)
+}
+<br>]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 18:16 2023-02-21 18:16 ::1 1 
+[[[[select * from projects where user_id=?<br>array(1) {
+  [0]=>
+  int(1)
+}
+<br>]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 18:16 2023-02-21 18:16 ::1 1 
+[[[[select sessions.*, projects.name as project_name, projects.color as project_color from users join projects join sessions on users.id = projects.user_id and projects.id = sessions.project_id where users.id=?  ORDER BY sessions.id desc limit 30 <br>array(1) {
+  [0]=>
+  int(1)
+}
+<br>]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 18:30 2023-02-21 18:30 ::1 1 
+[[[[select sessions.*, projects.name as project_name, projects.color as project_color from users join projects join sessions on users.id = projects.user_id and projects.id = sessions.project_id where users.id=?  ORDER BY sessions.id desc limit 30 <br>array(1) {
+  [0]=>
+  int(1)
+}
+<br>]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 18:56 2023-02-21 18:56 ::1 1 
+[[[[select sessions.*, projects.name as project_name, projects.color as project_color from users join projects join sessions on users.id = projects.user_id and projects.id = sessions.project_id where users.id=?  ORDER BY sessions.id desc limit 30 <br>array(1) {
+  [0]=>
+  int(1)
+}
+<br>]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 500 "SQLSTATE[HY000]: General error: 1 near \"19\": syntax error" 2023-02-21 19:01 2023-02-21 19:01 ::1 1 
+[[[[select goals.id as id, goals.time as goal_time, projects.id as project_id, projects.name as project_name, projects.color as project_color from goals join projects on goals.project_id = projects.id where projects.user_id=?<br>array(1) {
+  [0]=>
+  int(1)
+}
+<br>select sessions.*, projects.name as project_name, projects.color as project_color from users join projects join sessions on users.id = projects.user_id and projects.id = sessions.project_id where users.id=? and sessions.date like 2023-02-21 19:01% <br>array(1) {
+  [0]=>
+  int(1)
+}
+<br>]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:02 2023-02-21 19:02 ::1 1 
+[[[[select goals.id as id, goals.time as goal_time, projects.id as project_id, projects.name as project_name, projects.color as project_color from goals join projects on goals.project_id = projects.id where projects.user_id=?<br>array(1) {
+  [0]=>
+  int(1)
+}
+<br>select sessions.*, projects.name as project_name, projects.color as project_color from users join projects join sessions on users.id = projects.user_id and projects.id = sessions.project_id where users.id=? and sessions.date like '2023-02-21 19:02%' <br>array(1) {
+  [0]=>
+  int(1)
+}
+<br>]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:03 2023-02-21 19:03 ::1 1 
+[[[[select goals.id as id, goals.time as goal_time, projects.id as project_id, projects.name as project_name, projects.color as project_color from goals join projects on goals.project_id = projects.id where projects.user_id=?<br>array(1) {
+  [0]=>
+  int(1)
+}
+<br>select sessions.*, projects.name as project_name, projects.color as project_color from users join projects join sessions on users.id = projects.user_id and projects.id = sessions.project_id where users.id=? and sessions.date like '2023-02-21 19:03%' <br>array(1) {
+  [0]=>
+  int(1)
+}
+<br>array(0) {
+}
+]]]]
+
+Create {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc","time":"00:00:02","project_id":"7","description":"session kda"} 200 success 2023-02-21 19:03 2023-02-21 19:03 ::1 1 
+[[[[insert into sessions (description,date,time,project_id) values (?, ?, ?, ?)<br>array(4) {
+  [0]=>
+  string(11) "session kda"
+  [1]=>
+  string(16) "2023-02-21 19:03"
+  [2]=>
+  string(8) "00:00:02"
+  [3]=>
+  string(1) "7"
+}
+<br>]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:03 2023-02-21 19:03 ::1 1 
+[[[[select * from projects where user_id=?<br>array(1) {
+  [0]=>
+  int(1)
+}
+<br>]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:03 2023-02-21 19:03 ::1 1 
+[[[[select sessions.*, projects.name as project_name, projects.color as project_color from users join projects join sessions on users.id = projects.user_id and projects.id = sessions.project_id where users.id=?  ORDER BY sessions.id desc limit 30 <br>array(1) {
+  [0]=>
+  int(1)
+}
+<br>]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:03 2023-02-21 19:03 ::1 1 
+[[[[select goals.id as id, goals.time as goal_time, projects.id as project_id, projects.name as project_name, projects.color as project_color from goals join projects on goals.project_id = projects.id where projects.user_id=?<br>array(1) {
+  [0]=>
+  int(1)
+}
+<br>select sessions.*, projects.name as project_name, projects.color as project_color from users join projects join sessions on users.id = projects.user_id and projects.id = sessions.project_id where users.id=? and sessions.date like '2023-02-21 19:03%' <br>array(1) {
+  [0]=>
+  int(1)
+}
+<br>array(1) {
+  [0]=>
+  array(7) {
+    ["id"]=>
+    int(13)
+    ["description"]=>
+    string(11) "session kda"
+    ["date"]=>
+    string(16) "2023-02-21 19:03"
+    ["time"]=>
+    string(8) "00:00:02"
+    ["project_id"]=>
+    int(7)
+    ["project_name"]=>
+    string(7) "Quantos"
+    ["project_color"]=>
+    string(7) "#379e00"
+  }
+}
+]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:03 2023-02-21 19:03 ::1 1 
+[[[[select goals.id as id, goals.time as goal_time, projects.id as project_id, projects.name as project_name, projects.color as project_color from goals join projects on goals.project_id = projects.id where projects.user_id=?<br>array(1) {
+  [0]=>
+  int(1)
+}
+<br>select sessions.*, projects.name as project_name, projects.color as project_color from users join projects join sessions on users.id = projects.user_id and projects.id = sessions.project_id where users.id=? and sessions.date like '2023-02-21 19:03%' <br>array(1) {
+  [0]=>
+  int(1)
+}
+<br>array(1) {
+  [0]=>
+  array(7) {
+    ["id"]=>
+    int(13)
+    ["description"]=>
+    string(11) "session kda"
+    ["date"]=>
+    string(16) "2023-02-21 19:03"
+    ["time"]=>
+    string(8) "00:00:02"
+    ["project_id"]=>
+    int(7)
+    ["project_name"]=>
+    string(7) "Quantos"
+    ["project_color"]=>
+    string(7) "#379e00"
+  }
+}
+]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:04 2023-02-21 19:04 ::1 1 
+[[[[select goals.id as id, goals.time as goal_time, projects.id as project_id, projects.name as project_name, projects.color as project_color from goals join projects on goals.project_id = projects.id where projects.user_id=?<br>array(1) {
+  [0]=>
+  int(1)
+}
+<br>select sessions.*, projects.name as project_name, projects.color as project_color from users join projects join sessions on users.id = projects.user_id and projects.id = sessions.project_id where users.id=? and sessions.date like '2023-02-21 19:04%' <br>array(1) {
+  [0]=>
+  int(1)
+}
+<br>array(1) {
+  [0]=>
+  array(5) {
+    ["id"]=>
+    int(2)
+    ["goal_time"]=>
+    int(150)
+    ["project_id"]=>
+    int(7)
+    ["project_name"]=>
+    string(7) "Quantos"
+    ["project_color"]=>
+    string(7) "#379e00"
+  }
+}
+]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:05 2023-02-21 19:05 ::1 1 
+[[[[select goals.id as id, goals.time as goal_time, projects.id as project_id, projects.name as project_name, projects.color as project_color from goals join projects on goals.project_id = projects.id where projects.user_id=?<br>array(1) {
+  [0]=>
+  int(1)
+}
+<br>select sessions.*, projects.name as project_name, projects.color as project_color from users join projects join sessions on users.id = projects.user_id and projects.id = sessions.project_id where users.id=? and sessions.date like '2023-02-21 19:05%' <br>array(1) {
+  [0]=>
+  int(1)
+}
+<br>]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:06 2023-02-21 19:06 ::1 1 
+[[[[select goals.id as id, goals.time as goal_time, projects.id as project_id, projects.name as project_name, projects.color as project_color from goals join projects on goals.project_id = projects.id where projects.user_id=?<br>array(1) {
+  [0]=>
+  int(1)
+}
+<br>select sessions.*, projects.name as project_name, projects.color as project_color from users join projects join sessions on users.id = projects.user_id and projects.id = sessions.project_id where users.id=? and sessions.date like '2023-02-21 19:06%' <br>array(1) {
+  [0]=>
+  int(1)
+}
+<br>]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:07 2023-02-21 19:07 ::1 1 
+[[[[]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:08 2023-02-21 19:08 ::1 1 
+[[[[01]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:11 2023-02-21 19:11 ::1 1 
+[[[[string(16) "2023-02-21 19:11"
+]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:12 2023-02-21 19:12 ::1 1 
+[[[[string(10) "2023-02-21"
+7 7]]]]
+
+Create {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc","project_id":"7","time":"01:01:01"} 200 success 2023-02-21 19:12 2023-02-21 19:12 ::1 1 
+[[[[]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:12 2023-02-21 19:12 ::1 1 
+[[[[string(10) "2023-02-21"
+7 77 7]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:15 2023-02-21 19:15 ::1 1 
+[[[[string(10) "2023-02-21"
+7 77 7]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:17 2023-02-21 19:17 ::1 1 
+[[[[string(10) "2023-02-21"
+7 77 7]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:17 2023-02-21 19:17 ::1 1 
+[[[[string(10) "2023-02-21"
+7 77 7]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:18 2023-02-21 19:18 ::1 1 
+[[[[string(10) "2023-02-21"
+7 77 7]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:18 2023-02-21 19:18 ::1 1 
+[[[[]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:18 2023-02-21 19:18 ::1 1 
+[[[[]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:18 2023-02-21 19:18 ::1 1 
+[[[[]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:18 2023-02-21 19:18 ::1 1 
+[[[[]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:18 2023-02-21 19:18 ::1 1 
+[[[[string(10) "2023-02-21"
+7 77 7]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:18 2023-02-21 19:18 ::1 1 
+[[[[]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:18 2023-02-21 19:18 ::1 1 
+[[[[string(10) "2023-02-21"
+7 77 7]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:18 2023-02-21 19:18 ::1 1 
+[[[[]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:18 2023-02-21 19:18 ::1 1 
+[[[[]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:18 2023-02-21 19:18 ::1 1 
+[[[[]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:18 2023-02-21 19:18 ::1 1 
+[[[[string(10) "2023-02-21"
+7 77 7]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:18 2023-02-21 19:18 ::1 1 
+[[[[]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:18 2023-02-21 19:18 ::1 1 
+[[[[]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:18 2023-02-21 19:18 ::1 1 
+[[[[string(10) "2023-02-21"
+7 77 7]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:18 2023-02-21 19:18 ::1 1 
+[[[[]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:18 2023-02-21 19:18 ::1 1 
+[[[[]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:18 2023-02-21 19:18 ::1 1 
+[[[[string(10) "2023-02-21"
+7 77 7]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:19 2023-02-21 19:19 ::1 1 
+[[[[]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:19 2023-02-21 19:19 ::1 1 
+[[[[]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:19 2023-02-21 19:19 ::1 1 
+[[[[string(10) "2023-02-21"
+7 77 7]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:19 2023-02-21 19:19 ::1 1 
+[[[[]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:19 2023-02-21 19:19 ::1 1 
+[[[[]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:19 2023-02-21 19:19 ::1 1 
+[[[[string(10) "2023-02-21"
+7 77 7]]]]
+
+Create {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc","time":"3"} 400 "Invalid Parameter: parameter 'project_id' is not found" 2023-02-21 19:20 2023-02-21 19:20 ::1 0 
+[[[[]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:20 2023-02-21 19:20 ::1 1 
+[[[[]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:20 2023-02-21 19:20 ::1 1 
+[[[[]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:20 2023-02-21 19:20 ::1 1 
+[[[[string(10) "2023-02-21"
+7 77 7]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:20 2023-02-21 19:20 ::1 1 
+[[[[]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:20 2023-02-21 19:20 ::1 1 
+[[[[]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:20 2023-02-21 19:20 ::1 1 
+[[[[string(10) "2023-02-21"
+7 77 7]]]]
+
+Create {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc","time":"3"} 400 "Invalid Parameter: parameter 'project_id' is not found" 2023-02-21 19:20 2023-02-21 19:20 ::1 0 
+[[[[]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:21 2023-02-21 19:21 ::1 1 
+[[[[]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:21 2023-02-21 19:21 ::1 1 
+[[[[]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:21 2023-02-21 19:21 ::1 1 
+[[[[string(10) "2023-02-21"
+7 77 7]]]]
+
+Create {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc","project_id":"6","time":"3"} 200 success 2023-02-21 19:21 2023-02-21 19:21 ::1 1 
+[[[[]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:21 2023-02-21 19:21 ::1 1 
+[[[[]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:21 2023-02-21 19:21 ::1 1 
+[[[[]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:21 2023-02-21 19:21 ::1 1 
+[[[[string(10) "2023-02-21"
+7 76 77 76 7<br />
+<b>Warning</b>:  Undefined array key "percent" in <b>/opt/lampp/htdocs/Time-Planner/api/endpoints/goals/index.php</b> on line <b>29</b><br />
+]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:21 2023-02-21 19:21 ::1 1 
+[[[[]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:21 2023-02-21 19:21 ::1 1 
+[[[[]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:21 2023-02-21 19:21 ::1 1 
+[[[[string(10) "2023-02-21"
+7 76 77 76 7<br />
+<b>Warning</b>:  Undefined array key "percent" in <b>/opt/lampp/htdocs/Time-Planner/api/endpoints/goals/index.php</b> on line <b>29</b><br />
+]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:22 2023-02-21 19:22 ::1 1 
+[[[[]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:22 2023-02-21 19:22 ::1 1 
+[[[[string(10) "2023-02-21"
+7 76 77 76 7<br />
+<b>Warning</b>:  Undefined array key "percent" in <b>/opt/lampp/htdocs/Time-Planner/api/endpoints/goals/index.php</b> on line <b>29</b><br />
+]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:22 2023-02-21 19:22 ::1 1 
+[[[[]]]]
+
+Create {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc","time":"00:01:00","project_id":"6","description":"lol"} 200 success 2023-02-21 19:23 2023-02-21 19:23 ::1 1 
+[[[[]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:23 2023-02-21 19:23 ::1 1 
+[[[[]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:23 2023-02-21 19:23 ::1 1 
+[[[[]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:23 2023-02-21 19:23 ::1 1 
+[[[[string(10) "2023-02-21"
+7 76 77 76 77 66 6]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:24 2023-02-21 19:24 ::1 1 
+[[[[]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:24 2023-02-21 19:24 ::1 1 
+[[[[]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:24 2023-02-21 19:24 ::1 1 
+[[[[string(10) "2023-02-21"
+7 76 77 76 77 66 6]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:25 2023-02-21 19:25 ::1 1 
+[[[[]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:25 2023-02-21 19:25 ::1 1 
+[[[[]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:25 2023-02-21 19:25 ::1 1 
+[[[[string(10) "2023-02-21"
+7 76 77 76 77 66 6]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:25 2023-02-21 19:25 ::1 1 
+[[[[]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:25 2023-02-21 19:25 ::1 1 
+[[[[string(10) "2023-02-21"
+7 76 77 76 77 66 6]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:25 2023-02-21 19:25 ::1 1 
+[[[[]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:25 2023-02-21 19:25 ::1 1 
+[[[[]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:25 2023-02-21 19:25 ::1 1 
+[[[[string(10) "2023-02-21"
+7 76 77 76 77 66 6]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:25 2023-02-21 19:25 ::1 1 
+[[[[]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:26 2023-02-21 19:26 ::1 1 
+[[[[]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:26 2023-02-21 19:26 ::1 1 
+[[[[]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:26 2023-02-21 19:26 ::1 1 
+[[[[string(10) "2023-02-21"
+7 76 77 76 77 66 6]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:26 2023-02-21 19:26 ::1 1 
+[[[[]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:26 2023-02-21 19:26 ::1 1 
+[[[[]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:26 2023-02-21 19:26 ::1 1 
+[[[[string(10) "2023-02-21"
+7 76 77 76 77 66 6]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:26 2023-02-21 19:26 ::1 1 
+[[[[]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:26 2023-02-21 19:26 ::1 1 
+[[[[string(10) "2023-02-21"
+7 76 77 76 77 66 6]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:26 2023-02-21 19:26 ::1 1 
+[[[[]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:26 2023-02-21 19:26 ::1 1 
+[[[[]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:26 2023-02-21 19:26 ::1 1 
+[[[[]]]]
+
+Get {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.4hZkYAXrV6LTpeAAYb1vNszEAEopbqThZcFNllKZJoc"} 200 success 2023-02-21 19:26 2023-02-21 19:26 ::1 1 
+[[[[string(10) "2023-02-21"
+7 76 77 76 77 66 6]]]]
+

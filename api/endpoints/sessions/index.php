@@ -1,19 +1,19 @@
 <?php
 
-class GetSessions extends Authenticated
+class Get extends Authenticated
 {
   public function __construct()
   {
-    $this->init([], $_GET);
+    $this->init([
+      'last' => [false, Regex::ID]
+    ], $_GET);
   }
 
   public function handle(): Response
   {
-    return new Response(SUCCESS, SessionMapper::getAllByUser($this->user));
+    if (isset($this->request['last']))
+      return new Response(SUCCESS, SessionMapper::getLatestByUser($this->user, $this->request['last']));
+    else
+      return new Response(SUCCESS, SessionMapper::getLatestByUser($this->user));
   }
-}
-
-function defaultEndpoint(): Endpoint
-{
-  return new GetSessions();
 }

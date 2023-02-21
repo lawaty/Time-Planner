@@ -32,6 +32,6 @@ class Router
     }
     
     require("endpoints/$controller/index.php");
-    return defaultEndpoint();
+    return new Get();
   }
 }
