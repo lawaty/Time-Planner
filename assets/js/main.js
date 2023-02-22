@@ -66,73 +66,103 @@ class Timer {
 let new_project_form, new_session_form, new_goal_form, session_timer
 (function () {
   new_project_form = Form.new($("#new_project_form"))
+  new_project_form.setCallback(function (xhr) {
+    switch (xhr.status) {
+      case 200:
+        $("#projects-list").append(`<li style="color:${$("#new_project_form [name=color]").val()};" id="project-${xhr.parsed.id}">${$("#new_project_form [name=name]").val()}<i class="bi bi-trash" onclick="deleteProject($(this).parent())"></i></li>`)
+
+        $("#select-project").append(`
+          <option style="color:${$("#new_project_form [name=color]").val()}" value="${xhr.responseText}">${project.name}</option>
+        `)
+
+        if (!$("#projects-list").hasClass('show'))
+          $("[data-bs-target='#projects-list']").click()
+
+        $("#new-project-modal").modal('hide')
+        break;
+
+      case 409:
+        if (xhr.responseText.includes("color"))
+          alert("project color already selected for another project")
+        else if (xhr.responseText.includes("name"))
+          alert("project name already exists for another project")
+        break;
+
+      default:
+        alert("Couldn't create project")
+    }
+  })
+
   new_session_form = Form.new($("#new_session_form"))
+  new_session_form.setCallback(function (xhr) {
+    switch (xhr.status) {
+      case 200:
+        $("#goals-list").append(`
+          <div class="card mb-4" id="session-${xhr.responseText}">
+            <div class="card-header d-flex justify-content-between" style="color:${rgb2hex($("#select-project").find(":selected").css('color'))}">
+              <span>${$("#select-project").find(":selected").text()}</span>
+              <i class="bi bi-trash" onclick="deleteSession($(this).closest('.card').attr('id').split('-')[1])"></i>
+            </div>
+  
+            <div class="card-body">
+              <h4 class="card-title text-center">
+                ${$("#new_session_form [name=time]").val()}
+              </h4>
+              <p class="card-text d-flex justify-content-between text-secondary"><span>${$("#new_session_form [name=description]").val()}</span><span>${(new Ndate()).toString()}</span></p>
+            </div>
+          </div>
+        `)
+
+        save()
+
+        $("#session-desc").modal('hide')
+        break;
+
+      default:
+        alert("Something went wrong, please refresh")
+    }
+  })
+
   new_goal_form = Form.new($("#new_goal_form"))
+  new_goal_form.setCallback(function (xhr) {
+    switch (xhr.status) {
+      case 409:
+        alert('Goal Already Exists For This Project')
+        break;
+
+      case 200:
+        $("#goals-list").append(`
+          <li class="mb-3 goal" id="goal-${xhr.responseText}">
+            <div class="d-flex justify-content-between">
+              <span style="color:${rgb2hex($("#new_goal_form select option:selected").css('color'))}">
+                ${$("#new_goal_form select option:selected").html()}
+              </span>
+              <i class="bi bi-trash" onclick="deleteGoal($(this).closest('.goal').attr('id').split('-')[1])"></i>
+            </div>
+
+            <div class="progress my-2" style="position:relative;height:30px;">
+              <div class="progress-bar" role="progressbar" style="width:0%;background-color:#03a9f4;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+              <p class="w-100 h-100 d-absolute d-flex justify-content-center align-items-center" style="position:absolute">${$("#new_goal_form input[name=time]").val()} minutes</p>
+            </div>
+          </li>
+        `)
+
+        $("#new-goal-modal").modal('hide')
+        break;
+
+      default:
+        alert("Something went wrong, please refresh")
+    }
+  })
 
   listProjects()
   listSessions()
-  listGoals() 
+  listGoals()
 
   $("[name=token]").val(local.get('token'))
 
   session_timer = new Timer($("#timer"))
 })()
-
-function new_project_callback(xhr) {
-  switch (xhr.status) {
-    case 200:
-      $("#projects-list").append(`<li style="color:${$("#new_project_form [name=color]").val()};" id="project-${xhr.parsed.id}">${$("#new_project_form [name=name]").val()}<i class="bi bi-trash" onclick="deleteProject($(this).parent())"></i></li>`)
-
-      $("#select-project").append(`
-        <option style="color:${$("#new_project_form [name=color]").val()}" value="${xhr.responseText}">${project.name}</option>
-      `)
-
-      if (!$("#projects-list").hasClass('show'))
-        $("[data-bs-target='#projects-list']").click()
-
-      $("#new-project-modal").modal('hide')
-      break;
-
-    case 409:
-      if (xhr.responseText.includes("color"))
-        alert("project color already selected for another project")
-      else if (xhr.responseText.includes("name"))
-        alert("project name already exists for another project")
-      break;
-
-    default:
-      alert("Couldn't create project")
-  }
-}
-
-function new_session_callback(xhr) {
-  switch (xhr.status) {
-    case 200:
-      $("#sessions-list").append(`
-        <div class="card mb-4" id="session-${xhr.responseText}">
-          <div class="card-header d-flex justify-content-between" style="color:${rgb2hex($("#select-project").find(":selected").css('color'))}">
-            <span>${$("#select-project").find(":selected").text()}</span>
-            <i class="bi bi-trash" onclick="deleteSession($(this).closest('.card').attr('id').split('-')[1])"></i>
-          </div>
-
-          <div class="card-body">
-            <h4 class="card-title text-center">
-              ${$("#new_session_form [name=time]").val()}
-            </h4>
-            <p class="card-text d-flex justify-content-between text-secondary"><span>${$("#new_session_form [name=description]").val()}</span><span>${(new Ndate()).toString()}</span></p>
-          </div>
-        </div>
-      `)
-
-      save()
-
-      $("#session-desc").modal('hide')
-      break;
-
-    default:
-      alert("Something went wrong, please refresh")
-  }
-}
 
 function start() {
   session_timer.start()
@@ -197,7 +227,7 @@ function listProjects() {
     }
   })
 }
-let session_date;
+
 function listSessions() {
   AJAX.ajax({
     url: "api/sessions",
@@ -245,6 +275,9 @@ function listSessions() {
           break;
 
         case 204:
+          $("#sessions-list").append(`
+            <h3 class="text-secondary mb-4 ml-3">Today</h3>
+          `)
           break;
 
         default:
@@ -265,21 +298,22 @@ function listGoals() {
       switch (xhr.status) {
         case 200:
           for (let goal of xhr.parsed) {
+            let remaining = goal.percent < 100 ? parseInt(((100 - goal.percent) / 100) * goal.goal_time) : 0;
             $("#goals-list").append(`
-              <div class="mb-3" id="goal-${goal.id}">
+              <li class="mb-3 goal" id="goal-${goal.id}">
                 <div class="d-flex justify-content-between">
                   <span style="color:${goal.project_color}">
                     ${goal.project_name}
                   </span>
-                  <i class="bi bi-trash" onclick="deleteSession($(this).closest('.card').attr('id').split('-')[1])"></i>
+                  <i class="bi bi-trash" onclick="deleteGoal($(this).closest('.goal').attr('id').split('-')[1])"></i>
                 </div>
 
-                <div class="progress">
-                  <div class="progress-bar" role="progressbar" style="width: ${goal.percent}%; background-color: ${goal.project_color}" aria-valuenow="${goal.percent}" aria-valuemin="0" aria-valuemax="100">${goal.percent}%</div>
-                  <p class="w-100 text-center">${parseInt(((100 - goal.percent) / 100) * goal.goal_time)} minutes</p>
+                <div class="progress my-2" style="position:relative;height:30px;">
+                  <div class="progress-bar" role="progressbar" style="width: ${goal.percent}%;background-color:#03a9f4;" aria-valuenow="${goal.percent}" aria-valuemin="0" aria-valuemax="100"></div>
+                  <p class="w-100 h-100 d-absolute d-flex justify-content-center align-items-center" style="position:absolute">${remaining} minutes</p>
                 </div>
 
-              </div>
+              </li>
             `)
           }
           break;
@@ -332,6 +366,30 @@ function deleteSession(session_id) {
           case 200:
           case 204:
             $(`#session-${session_id}`).remove()
+            break;
+
+          default:
+            alert("Something went wrong. Please, reload")
+        }
+      }
+    })
+  }
+}
+
+function deleteGoal(goal_id) {
+  if (confirm("Are you sure you want to delete this goal?")) {
+    AJAX.ajax({
+      url: "api/goals/delete",
+      type: "POST",
+      data: {
+        token: local.get('token'),
+        goal_id: goal_id
+      },
+      complete: function (xhr) {
+        switch (xhr.status) {
+          case 200:
+          case 204:
+            $(`#goal-${goal_id}`).remove()
             break;
 
           default:
