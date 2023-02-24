@@ -13,15 +13,18 @@
   <div class="rounded bg-white px-5 pt-5 w-50 conatiner mx-auto">
     <ul class="nav nav-tabs">
       <li class="nav-item">
-        <button id="sign-in-btn" type="button" class="nav-link active" data-bs-toggle="tab" data-bs-target="#sign-in">Sign In</button>
+        <button id="sign-in-btn" type="button" class="nav-link active" data-bs-toggle="tab"
+          data-bs-target="#sign-in">Sign In</button>
       </li>
       <li class="nav-item">
-        <button id="sign-up-btn" type="button" class="nav-link" data-bs-toggle="tab" data-bs-target="#sign-up">Sign Up</button>
+        <button id="sign-up-btn" type="button" class="nav-link" data-bs-toggle="tab" data-bs-target="#sign-up">Sign
+          Up</button>
       </li>
     </ul>
     <div class="container tab-content">
 
-      <form class="p-4 tab-pane fade active show" id="sign-in" form_type="basic" api="api/membership/login" request_type="POST" callback="login_callback">
+      <form class="p-4 tab-pane fade active show" id="sign-in" form_type="basic" api="api/membership/login"
+        request_type="POST">
 
         <div class="form-group row">
           <label class="col-form-label col-sm-4">Username</label>
@@ -42,7 +45,8 @@
         <p class="p-3 text-danger" alert="sign-in"></p>
       </form>
 
-      <form class="p-4 tab-pane fade" id="sign-up" form_type="basic" api="api/membership/register" request_type="POST" callback="register_callback">
+      <form class="p-4 tab-pane fade" id="sign-up" form_type="basic" api="api/membership/register" request_type="POST"
+        callback="register_callback">
 
         <div class="form-group">
           <div class="form-group row">
@@ -87,10 +91,7 @@
     let login_form, register_form
     (function () {
       login_form = Form.new($("#sign-in"))
-      register_form = Form.new($("#sign-up"))
-    })()
-
-    function login_callback (xhr) {
+      login_form.setCallback(function (xhr) {
         switch (xhr.status) {
           case 200:
             local.set('token', xhr.parsed.token)
@@ -105,28 +106,30 @@
           default:
             $("[alert=sign-in]").html("Something Went Wrong")
         }
-      }
+      })
 
-      function register_callback (xhr) {
+      register_form = Form.new($("#sign-up"))
+      register_form.setCallback(function (xhr) {
         switch (xhr.status) {
-          case 200:
-          case 204:
-            $("[alert=sign-up]").html('Registered Successfully').removeClass('text-danger').addClass('text-success')
-            setTimeout(function() {
-              $("#sign-in-btn").click()
-              $("[alert=sign-up]").addClass('text-danger'), removeClass('text-success')
+        case 200:
+        case 204:
+          $("[alert=sign-up]").html('Registered Successfully').removeClass('text-danger').addClass('text-success')
+          setTimeout(function () {
+            $("#sign-in-btn").click()
+            $("[alert=sign-up]").addClass('text-danger'), removeClass('text-success')
 
-            }, 1700)
-            break;
+          }, 1700)
+          break;
 
-          case 409:
-            $("[alert=sign-up]").html('Username or email already exists')
-            break;
+        case 409:
+          $("[alert=sign-up]").html('Username or email already exists')
+          break;
 
-          default:
-            $("[alert=sign-up]").html("Something Went Wrong")
-        }
+        default:
+          $("[alert=sign-up]").html("Something Went Wrong")
       }
+      })
+    })()
   </script>
 </body>
 

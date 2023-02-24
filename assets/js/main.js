@@ -72,7 +72,7 @@ let new_project_form, new_session_form, new_goal_form, session_timer
         $("#projects-list").append(`<li style="color:${$("#new_project_form [name=color]").val()};" id="project-${xhr.parsed.id}">${$("#new_project_form [name=name]").val()}<i class="bi bi-trash" onclick="deleteProject($(this).parent())"></i></li>`)
 
         $("#select-project").append(`
-          <option style="color:${$("#new_project_form [name=color]").val()}" value="${xhr.responseText}">${project.name}</option>
+          <option style="color:${$("#new_project_form [name=color]").val()}" value="${xhr.responseText}">${$("#new_project_form [name=name]")}</option>
         `)
 
         if (!$("#projects-list").hasClass('show'))
