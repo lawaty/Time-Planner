@@ -6,21 +6,21 @@ class Create extends Authenticated
   {
     $this->init([
       'project_id' => [true, Regex::ID],
-      'time' => [true, Regex::INT]
+      'amount' => [true, Regex::INT],
+      'date' => [true, Regex::DATE],
+      'repeat' => [true, Regex::ZERO_ONE]
     ], $_POST);
   }
 
   public function handle(): Response
   {
+    $this->request['date_day'] .= ' '. (new Ndate($this->request['date']))->getDay();
+
     try {
-      if ($goal = GoalMapper::create([
-        'project_id' => $this->request['project_id'],
-        'time' => $this->request['time']
-      ]))
+      if ($goal = GoalMapper::create($this->request))
         return new Response(SUCCESS, [
           'goal_id' => $goal->get('id')
         ]);
-
       return new Response(FAIL);
     } catch (UniquenessViolated $e) {
       throw new Conflict("A Goal Already Exists for That Project");

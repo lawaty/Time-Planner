@@ -74,3 +74,7 @@ div#sessions-list {
   height: calc(80vh - 100px - 3rem - 38px);
   overflow: auto;
 }
+
+.sessions-group {
+  box-shadow: inset 0px 0px 4px 0px var(--gray);
+}

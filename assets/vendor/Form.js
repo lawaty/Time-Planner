@@ -44,6 +44,14 @@ class BasicForm {
     this.initialize()
   }
 
+  get(name) {
+    return $(this.form).find(`[name=${name}]`).val()
+  }
+
+  set(name, value){
+    $(this.form).find(`[name=${name}]`).val(value)
+  }
+
   initialize() {
     if ($(this.form).attr('form_type') != 'list')
       this.validators = new Validators(this.form)

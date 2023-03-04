@@ -58,7 +58,7 @@ class Response
     header('Content-type: text/plain', true);
     header('Connection: close');
     ignore_user_abort(true);
-    $this->hidden_buffer = ob_get_clean();
+    $this->hidden_buffer = ob_get_contents();
     ob_clean();
 
     $body = '';

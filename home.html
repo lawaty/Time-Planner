@@ -36,26 +36,26 @@
         </button>
       </div>
 
-      <ul id="projects-list" class="rounded py-4 collapse ml-4 mt-1 list-unstyled show">
+      <ul id="projects-list" observe="projects" class="rounded py-4 collapse ml-4 mt-1 list-unstyled show">
       </ul>
 
     </div>
 
     <main class="bg-light">
       <div class="container d-flex justify-content-center w-100 mb-5" id="timer-container">
-        <select class="form-control col-sm-4" id="select-project" oninput="$('#start-btn').removeAttr('disabled')">
-          <option selected hidden>
+        <select class="form-control col-sm-4" observe="projects" id="session-project_id" oninput="$('#start-btn').removeAttr('disabled')">
+          <option selected hidden disabled>
             Select Project
           </option>
         </select>
         <div id="timer" class="mx-4 d-flex align-items-center">00:00:00</div>
-        <button onclick="start()" class="btn btn-success mx-1" id="start-btn" disabled>Start</button>
-        <button onclick="pause()" class="btn btn-warning text-white mx-1" id="pause-btn"
+        <button class="btn btn-success mx-1" id="start-btn" disabled>Start</button>
+        <button class="btn btn-warning text-white mx-1" id="pause-btn"
           style="display:none;">Pause</button>
-        <button onclick="end()" class="btn btn-primary text-white mx-1" id="end-btn" disabled>End</button>
+        <button class="btn btn-primary text-white mx-1" id="end-btn" disabled>End</button>
       </div>
 
-      <div id="sessions-list">
+      <div observe="sessions" id="sessions-list">
 
       </div>
     </main>
@@ -134,8 +134,9 @@
             <div class="form-group row">
               <label class="col-sm-3 col-form-label">Project</label>
               <div class="col">
-                <select class="form-control" id="select-project" oninput="$('#start-btn').removeAttr('disabled')" name="project_id">
-                  <option selected hidden>
+                <select class="form-control" id="select-project" must oninput="$('#start-btn').removeAttr('disabled')"
+                  name="project_id">
+                  <option selected hidden disabled>
                     Select Project
                   </option>
                 </select>
@@ -143,9 +144,27 @@
             </div>
 
             <div class="form-group row">
+              <label class="col-sm-3 col-form-label">Date</label>
+              <div class="col">
+                <input type="date" class="form-control" must name="date">
+              </div>
+            </div>
+
+            <div class="form-group row">
               <label class="col-sm-3 col-form-label">Goal Time</label>
               <div class="col">
-                <input placeholder="time in minutes" regex="INT" class="form-control" must name="time">
+                <input placeholder="time in minutes" regex="INT" class="form-control" must name="amount">
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="repeat" id="no-repeat" value="0" checked>
+                <label class="form-check-label" for="no-repeat">No Repeat</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="repeat" id="repeat" value="1">
+                <label class="form-check-label" for="repeat">Repeat</label>
               </div>
             </div>
 
@@ -195,7 +214,7 @@
   <script src="assets/vendor/Form.js"></script>
 
   <script src="assets/js/global.js"></script>
-  <script src="assets/js/main.js"></script>
+  <script type="module" src="assets/js/main/main.js"></script>
 </body>
 
 </html>

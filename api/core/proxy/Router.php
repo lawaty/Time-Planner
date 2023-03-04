@@ -5,7 +5,7 @@ class Router
   private static function endpointExists($controller, $endpoint): bool
   {
     // Searching for endpoint
-    return file_exists("endpoints/$controller/$endpoint.php") || (!$endpoint && file_exists("endpoints/$controller/index.php"));
+    return file_exists("app/endpoints/$controller/$endpoint.php") || (!$endpoint && file_exists("app/endpoints/$controller/index.php"));
   }
 
   public static function route(): ?Endpoint
@@ -24,14 +24,14 @@ class Router
     if (!self::endpointExists($controller, $endpoint))
       return null;
 
-    require("bases/Endpoint.php");
+    require("core/bases/Endpoint.php");
 
     if ($endpoint){
-      require("endpoints/$controller/$endpoint.php");
+      require("app/endpoints/$controller/$endpoint.php");
       return new $endpoint;
     }
     
-    require("endpoints/$controller/index.php");
+    require("app/endpoints/$controller/index.php");
     return new Get();
   }
 }

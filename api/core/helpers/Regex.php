@@ -12,6 +12,7 @@ class Regex
   const MONTH = '/^([1-9]|1[0-2])$/u';
   const DATE = '/^(\d{4})-(\d{2})-(\d{2})$/u';
   const TIME = '/^[0-9]{2}:[0-9]{2}$/u';
+  const DAY = '/^Sun|Mon|Tue|Wed|Thu|Fri|Sat$/u';
   const TIME_SEC = '/^[0-9]{2}:[0-9]{2}:[0-9]{2}$/u';
   const DATE_TIME = '/^(\d{4})-(\d{2})-(\d{2}) [0-9]{2}:[0-9]{2}$/u';
   const DATE_TIME_SEC = '/^(\d{4})-(\d{2})-(\d{2}) [0-9]{2}:[0-9]{2}:[0-9]{2}$/u';

@@ -9,7 +9,7 @@ class SessionMapper extends Mapper
   public static function getAllByUser(User $user, array $filters = []): array
   {
     return DB::getDB()->select(
-      'sessions.*, projects.name as project_name, projects.color as project_color',
+      'sessions.*, projects.name as project_name, projects.color as color',
       'users join projects join sessions on users.id = projects.user_id and projects.id = sessions.project_id',
       ['users.id' => $user->get('id'), ...$filters]
     );
@@ -30,12 +30,12 @@ class SessionMapper extends Mapper
     return null;
   }
 
-  public static function getLatestByUser($user, $last = null): array
+  public static function getLatestByUser($user, $last=null): array
   {
     $portion = $last ? "and sessions.id < $last" : "";
 
     return DB::getDB()->select(
-      'sessions.*, projects.name as project_name, projects.color as project_color',
+      'sessions.*, projects.name as project_name, projects.color as color',
       'users join projects join sessions on users.id = projects.user_id and projects.id = sessions.project_id',
       ['users.id' => $user->get('id'), "$portion ORDER BY sessions.id desc limit 30"]
     );

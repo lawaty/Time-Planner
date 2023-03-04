@@ -128,7 +128,7 @@ class Validators {
       if(validator){
         this.validators.push(validator)
         
-        $(input).on('input', function(){
+        $(input).on('input, select, textarea', function(){
           this.showMsg(validator, validator.run())
         }.bind(this, validator))
       }

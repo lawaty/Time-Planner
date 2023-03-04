@@ -12,20 +12,64 @@ let local = {
     localStorage.removeItem(key)
   }
 };
-(function () {
-  let page = window.location.pathname.split('/').pop()
-  // Need to sign in
-  if (page != 'membership' && page != 'membership.html' && (!local.get('token') || !local.get('id'))) {
-    local.remove('token')
-    local.remove('id')
-    window.location = "membership";
-  }
 
-  // Already signed in
-  if((page == 'membership' || page == 'membership.html') && local.get('token') && local.get('id')){
-    window.location = "home"
+class MissingInfo extends Error
+{
+  constructor(type, missing, object) {
+    super()
+    this.name = 'MissingInfo'
+    this.message = `'${missing}' is required for object of type '${type}'. Found in this object: ${JSON.stringify(object)}`
   }
-})()
+}
+
+let syncManager = {
+  types: {},
+
+  registerType: function(type, fields) {
+    /**
+     * @param string type
+     * @param array<string> fields
+     */
+    this.types[type] = fields
+    this[type] = {}
+  },
+
+  add: function(type, object, key=null) {
+    if(key === null)
+      key = object.id
+
+    let healthy_object = {}
+    for(let required of this.types[type]) {
+      if(object[required] === undefined){
+        try {
+          throw new MissingInfo(type, required, object)         
+        } catch (error) {
+          console.warn(error.stack)
+        }
+      }
+
+      healthy_object[required] = object[required]
+    }
+
+    let event = new Event(`${type}-added`)
+    event.added = healthy_object
+    document.dispatchEvent(event)
+
+    this[type][key] = healthy_object
+  },
+
+  remove: function(type, key) {
+    let event = new Event(`${type}-removed`)
+    event.deleted = this[type][key]
+    document.dispatchEvent(event)
+
+    delete this[type][key]
+  },
+
+  get: function(type, key) {
+    return this[type][key]
+  }
+}
 
 const Regex = {
   // Identifiers
@@ -51,6 +95,84 @@ const Regex = {
   // general
   GENERIC: /^[\p{Script=Arabic}\w_\-\)\(. +]+$/gu,
   ANY: /^.*$/,
+}
+
+let page = window.location.pathname.split('/').pop()
+// Need to sign in
+if (page != 'membership' && page != 'membership.html' && (!local.get('token') || !local.get('id'))) {
+  local.remove('token')
+  local.remove('id')
+  window.location = "membership";
+}
+
+// Already signed in
+if((page == 'membership' || page == 'membership.html') && local.get('token') && local.get('id')){
+  window.location = "home"
+}
+
+class Timer {
+  constructor(container = null) {
+    this.secs = 0
+    this.mins = 0
+    this.hrs = 0
+
+    this.container = container
+
+    this.started = false;
+  }
+
+  run() {
+    this.secs++
+
+    if (this.secs == 60) {
+      this.secs = 0
+      this.mins++
+
+      if (this.mins == 60) {
+        this.mins = 0
+        this.hrs++
+      }
+    }
+
+    if (this.container !== null)
+      this.display()
+  }
+
+  display() {
+    $(this.container).html(this.getTimer())
+  }
+
+  getTimer() {
+    let hours = this.hrs < 10 ? '0' + this.hrs : this.hrs
+    let minutes = this.mins < 10 ? '0' + this.mins : this.mins
+    let seconds = this.secs < 10 ? '0' + this.secs : this.secs
+
+    return `${hours}:${minutes}:${seconds}`
+  }
+
+  start() {
+    if (!this.started) {
+      this.interval = setInterval(function () { this.run() }.bind(this), 1000)
+      this.started = true;
+    }
+  }
+
+  pause() {
+    clearInterval(this.interval);
+    this.started = false;
+  }
+
+  reset() {
+    clearInterval(this.interval)
+    this.secs = 0
+    this.mins = 0
+    this.hrs = 0
+
+    if (this.container)
+      this.display()
+
+    this.started = false;
+  }
 }
 
 class Ndate extends Date {

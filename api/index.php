@@ -7,13 +7,13 @@ if (!function_exists('str_contains')) {
   }
 }
 
-require "config.php";
 require "autoload.php";
+require "config.php";
 require "functions.php";
 
-require "proxy/Logger.php";
-require "proxy/Router.php";
-require "proxy/Response.php";
+require "core/proxy/Logger.php";
+require "core/proxy/Router.php";
+require "core/proxy/Response.php";
 
 ob_start();
 

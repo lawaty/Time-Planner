@@ -1,18 +1,8 @@
 DirectoryIndex home.html
 
-# ------------- Headers
-# CORS
-Header add Access-Control-Allow-Origin "*"
-Header add Access-Control-Allow-Headers "origin, x-requested-with, content-type"
-Header add Access-Control-Allow-Methods "GET, POST"
-
 # ------------- Rewrite Rules
 RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
-
-# API Request Routing
-# example api/controller/endpoint?params
-RewriteRule api/(.*)$ api/index.php [NC,L]
 
 # Pretty HTML Paths
 RewriteRule ^([^\.]+)$ $1.html [NC,L]
