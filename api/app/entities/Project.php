@@ -6,4 +6,9 @@ class Project extends Entity {
   protected string $name;
   protected string $color;
   protected int $user_id;
+
+  public function getMapper(): ProjectMapper
+  {
+    return parent::getMapper();
+  }
 }

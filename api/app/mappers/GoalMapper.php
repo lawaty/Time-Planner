@@ -4,21 +4,37 @@ class GoalMapper extends Mapper
 {
   protected static string $entity_type = 'Goal';
   protected static string $table = 'goals';
-  protected static array $record_info = ['project_id', 'amount', 'date_day', 'repeat', 'progress'];
+  public static array $record_info = ['project_id', 'amount', 'date_day', 'repeat', 'progress'];
 
-  public static function create(array $data): Goal
+  public static function create(array $data, User $user = null): Goal
   {
-    $data['progress'] = 0;
+    if (!isset($data['project_id']))
+      throw new RequiredPropertyNotFound('project_id', 'Goal');
+
+    if (!isset($data['amount']))
+      throw new RequiredPropertyNotFound('amount', 'Goal');
+
+    if (!$user) {
+      $user = (new Project($data['project_id']))->getMapper()->getOwner();
+    }
+
+    $sessions = SessionMapper::getAllByUser($user);
+    $data['progress'] = 0; // in mins
+    foreach ($sessions as $session)
+      $data['progress'] += $session->get('time');
+
+    $data['progress'] = $data['progress'] / $data['amount'] * 100;
+
     return parent::create($data);
   }
 
-  public static function getAllByUser(User $user, ...$filters): array
+  public static function getAllByUser(User $user, ...$filters): Entities
   {
-    return DB::getDB()->select(
+    return new Entities(DB::getDB()->select(
       'goals.id as id, goals.amount as goal_amount, goals.date_day, goals.repeat, goals.progress, projects.id as project_id, projects.name as project_name, projects.color as color',
       'goals join projects on goals.project_id = projects.id',
       ['projects.user_id' => $user->get('id'), ...$filters]
-    );
+    ), 'Goal');
   }
 
   public static function getByUser(User $user, ...$filters): ?Goal

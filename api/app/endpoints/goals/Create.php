@@ -14,12 +14,14 @@ class Create extends Authenticated
 
   public function handle(): Response
   {
-    $this->request['date_day'] .= ' '. (new Ndate($this->request['date']))->getDay();
+    if($this->request['repeat'] == 1)
+      $this->request['day'] = (new Ndate($this->request['date']))->getDay(); 
 
     try {
       if ($goal = GoalMapper::create($this->request))
         return new Response(SUCCESS, [
-          'goal_id' => $goal->get('id')
+          'goal_id' => $goal->get('id'),
+          'progress' => $goal->get('progress')
         ]);
       return new Response(FAIL);
     } catch (UniquenessViolated $e) {

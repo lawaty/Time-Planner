@@ -1,6 +1,6 @@
 <?php
 
-class Entities implements Iterator, JsonSerializable, ArrayAccess
+class Entities implements Iterator, JsonSerializable, ArrayAccess, Countable
 {
   protected string $entity_name;
   protected array $array;
@@ -81,6 +81,12 @@ class Entities implements Iterator, JsonSerializable, ArrayAccess
   public function offsetUnset($offset): void
   {
     unset($this->array[$offset]);
+  }
+
+  // Countable Interface
+  public function count(): int
+  {
+    return count($this->array);
   }
 
   // More

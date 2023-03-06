@@ -22,7 +22,7 @@ abstract class Mapper implements IMapper
     $healthy = [];
     foreach(static::$record_info as $property){
       if(!isset($data[$property]))
-        continue;
+        throw new RequiredPropertyNotFound($property, static::$entity_type);
 
       if (is_array($data[$property]))
         $healthy[$property] = json_encode($data[$property]);

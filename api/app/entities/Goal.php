@@ -6,7 +6,8 @@ class Goal extends Entity
 
   protected int $project_id;
   protected int $amount;
-  protected string $date_day;
+  protected string $date;
+  protected string $day;
   protected string $repeat;
   protected int $progress;
 
