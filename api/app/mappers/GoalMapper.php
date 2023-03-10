@@ -4,7 +4,7 @@ class GoalMapper extends Mapper
 {
   protected static string $entity_type = 'Goal';
   protected static string $table = 'goals';
-  public static array $record_info = ['project_id', 'amount', 'date_day', 'repeat', 'progress'];
+  public static array $record_info = ['project_id', 'amount', 'date', 'day', 'repeat', 'progress'];
 
   public static function create(array $data, User $user = null): Goal
   {
@@ -16,6 +16,8 @@ class GoalMapper extends Mapper
 
     if (!$user) {
       $user = (new Project($data['project_id']))->getMapper()->getOwner();
+      if(!$user)
+        throw new NotFound('Project');
     }
 
     $sessions = SessionMapper::getAllByUser($user);
@@ -31,7 +33,7 @@ class GoalMapper extends Mapper
   public static function getAllByUser(User $user, ...$filters): Entities
   {
     return new Entities(DB::getDB()->select(
-      'goals.id as id, goals.amount as goal_amount, goals.date_day, goals.repeat, goals.progress, projects.id as project_id, projects.name as project_name, projects.color as color',
+      'goals.id as id, goals.amount, goals.date, goals.day, goals.repeat, goals.progress, projects.id as project_id, projects.name as project_name, projects.color as color',
       'goals join projects on goals.project_id = projects.id',
       ['projects.user_id' => $user->get('id'), ...$filters]
     ), 'Goal');

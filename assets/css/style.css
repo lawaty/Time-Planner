@@ -27,7 +27,7 @@ body {
 }
 
 .main {
-  padding: 30px 20px; 
+  padding: 30px 20px;
   box-shadow: -8px -3px 8px 2px #dadada;
   border-radius: 8px;
 }
@@ -66,4 +66,14 @@ div#sessions-list {
 
 .sessions-group {
   box-shadow: inset 0px 0px 4px 0px var(--gray);
+}
+
+.goals-container {
+  margin-bottom: 33px;
+}
+
+.bi-arrow-left-short,
+.bi-arrow-right-short {
+  color: var(--blue);
+  font-size: 30px;
 }

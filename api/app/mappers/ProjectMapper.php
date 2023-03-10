@@ -16,9 +16,13 @@ class ProjectMapper extends Mapper
     return static::getAll(['user_id' => $user->get('id'), ...$filters]);
   }
 
-  public function getOwner(): User
+  public function getOwner(): ?User
   {
-    $user_data = DB::getDB()->select(UserMapper::$record_info, 'users join projects on users.id = projects.user_id', ['projects.id' => $this->entity->get('id')])[0];
+    $user_data = DB::getDB()->select("users.*", 'users join projects on users.id = projects.user_id', ['projects.id' => $this->entity->get('id')]);
+    if(!count($user_data))
+      return null;
+
+    $user_data = $user_data[0];
     $user = new User($user_data['id']);
     $user->load($user_data);
     return $user;

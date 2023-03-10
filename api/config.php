@@ -5,7 +5,7 @@ ini_set("precision", 3);
 
 // Locations
 const LOCAL = ".";
-const LOG = LOCAL."/core/logs";
+const LOG = LOCAL."/app/logs";
 
 const DEBUG = false;
 

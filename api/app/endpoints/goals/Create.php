@@ -16,7 +16,8 @@ class Create extends Authenticated
   {
     if($this->request['repeat'] == 1)
       $this->request['day'] = (new Ndate($this->request['date']))->getDay(); 
-
+    else
+      $this->request['day'] = 'NIL';
     try {
       if ($goal = GoalMapper::create($this->request))
         return new Response(SUCCESS, [

@@ -9,13 +9,13 @@ const DEPENDENCIES = [
   'Firebase\JWT\Key' => "core/lib/php-jwt/src",
 
   // Helpers
-  'Validator' => 'core/helpers/validation',
-  'ValidationUnit' => 'core/helpers/validation',
-  'Curl' => 'core/helpers',
-  'Regex' => 'core/helpers',
-  'Ndate' => 'core/helpers',
-  'Entities' => 'core/helpers',
-  'AssocEntities' => 'core/helpers',
+  'Validator' => 'app/helpers/validation',
+  'ValidationUnit' => 'app/helpers/validation',
+  'Curl' => 'app/helpers',
+  'Regex' => 'app/helpers',
+  'Ndate' => 'app/helpers',
+  'Entities' => 'app/helpers',
+  'AssocEntities' => 'app/helpers',
 
   // Bases and Interfaces
   'Authenticated' => 'core/bases',

@@ -13,8 +13,7 @@ let local = {
   }
 };
 
-class MissingInfo extends Error
-{
+class MissingInfo extends Error {
   constructor(type, missing, object) {
     super()
     this.name = 'MissingInfo'
@@ -25,7 +24,7 @@ class MissingInfo extends Error
 let syncManager = {
   types: {},
 
-  registerType: function(type, fields) {
+  registerType: function (type, fields) {
     /**
      * @param string type
      * @param array<string> fields
@@ -34,15 +33,15 @@ let syncManager = {
     this[type] = {}
   },
 
-  add: function(type, object, key=null) {
-    if(key === null)
+  add: function (type, object, key = null) {
+    if (key === null)
       key = object.id
 
     let healthy_object = {}
-    for(let required of this.types[type]) {
-      if(object[required] === undefined){
+    for (let required of this.types[type]) {
+      if (object[required] === undefined) {
         try {
-          throw new MissingInfo(type, required, object)         
+          throw new MissingInfo(type, required, object)
         } catch (error) {
           console.warn(error.stack)
         }
@@ -58,16 +57,30 @@ let syncManager = {
     this[type][key] = healthy_object
   },
 
-  remove: function(type, key) {
+  remove: function (type, key) {
     let event = new Event(`${type}-removed`)
-    event.deleted = this[type][key]
+    event.removed = this[type][key]
     document.dispatchEvent(event)
-
     delete this[type][key]
+
+    if (this.isEmpty(type)) {
+      let event = new Event(`${type}-empty`)
+      document.dispatchEvent(event)
+    }
   },
 
-  get: function(type, key) {
+  get: function (type, key) {
     return this[type][key]
+  },
+
+  empty(type) {
+    let iterable = this[type]
+    for (let key in iterable)
+      syncManager.remove(type, key)
+  },
+
+  isEmpty(type) {
+    return Object.keys(this[type]).length == 0;
   }
 }
 
@@ -106,7 +119,7 @@ if (page != 'membership' && page != 'membership.html' && (!local.get('token') ||
 }
 
 // Already signed in
-if((page == 'membership' || page == 'membership.html') && local.get('token') && local.get('id')){
+if ((page == 'membership' || page == 'membership.html') && local.get('token') && local.get('id')) {
   window.location = "home"
 }
 

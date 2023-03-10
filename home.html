@@ -23,26 +23,25 @@
     </div>
   </nav>
 
+  <!-- Left Sidebar -->
   <div class="row m-4">
     <div class="col-md-2">
       <div class="leftbar bg-light">
         <div class="d-flex justify-content-between">
-          <button class="btn bg-light btn-toggle" data-bs-toggle="collapse" data-bs-target="#projects-list"
-            aria-expanded="true">
-            <i class="bi bi-arrow-down-short mr-1 d-inline-block"></i>
-            Projects
-          </button>
+          <h3>Projects</h3>
           <button class="btn bg-light" data-bs-toggle="modal" data-bs-target="#new-project-modal">
             <i class="valign bi bi-plus-circle"></i>
           </button>
         </div>
 
-        <ul id="projects-list" observe="projects" class="rounded py-4 collapse ml-4 mt-1 list-unstyled show">
+        <h4 id="no-projects">No Projects</h4>
+        <ul id="projects-list" observe="projects" class="rounded py-4 ml-4 mt-1 list-unstyled">
         </ul>
 
       </div>
     </div>
 
+    <!-- Main Section -->
     <div class="col-md-6">
       <div class="main bg-light">
         <div class="container row w-100 mb-5" id="timer-container">
@@ -59,27 +58,30 @@
         </div>
 
         <div observe="sessions" id="sessions-list">
-
+          <h4 id="no-sessions">No Sessions</h4>
         </div>
       </div>
     </div>
 
+    <!-- Right Sidebar-->
     <div class="col-md-4">
       <div class="rightbar bg-light">
         <div class="d-flex justify-content-between">
-          <button class="btn bg-light btn-toggle" data-bs-toggle="collapse" data-bs-target="#goals-list"
-            aria-expanded="true">
-            <i class="bi bi-arrow-down-short mr-1 d-inline-block"></i>
-            Goals
-          </button>
+          <h3>Goals</h3>
           <button class="btn bg-light" data-bs-toggle="modal" data-bs-target="#new-goal-modal">
             <i class="valign bi bi-plus-circle"></i>
           </button>
         </div>
 
-        <ul id="goals-list" class="rounded py-4 collapse ml-4 mt-1 list-unstyled show">
-
+        <h4 class="mt-5" id="no-goals">No Goals</h4>
+        <ul id="goals-list" class="rounded py-4 ml-4 mt-1 list-unstyled">          
         </ul>
+
+        <div class="d-flex justify-content-center">
+          <i class="bi bi-arrow-left-short" id="prev_day"></i>
+          <p class="m-1" id="date_display"></p>
+          <i class="bi bi-arrow-right-short" id="next_day"></i>
+        </div>
 
       </div>
     </div>

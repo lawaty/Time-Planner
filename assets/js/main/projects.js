@@ -3,6 +3,8 @@ syncManager.registerType('project', ['id', 'name', 'color'])
 document.addEventListener('project-added', function (e) {
   let project = e.added
 
+  $("#no-projects").hide()
+
   $("ul[observe=projects]").append(`
     <li style="color:${project.color}" id="project-${project.id}">${project.name}<i class="bi bi-trash" onclick="deleteProject($(this).parent().attr('id).split('-')[1])"></i></li>
   `)
@@ -18,6 +20,8 @@ document.addEventListener('project-removed', function (e) {
   $(`ul[observe=projects] li#project-${project.id}`).remove()
   $(`select[observe=projects] option#project-${project.id}`).remove()
 })
+
+document.addEventListener('project-empty', function() {$("#no-projects").show()})
 
 let new_project_form = Form.new($("#new_project_form"))
 new_project_form.setCallback(function (xhr) {
@@ -41,34 +45,11 @@ new_project_form.setCallback(function (xhr) {
       if (xhr.responseText.includes("color"))
         alert("project color already selected for another project")
       else if (xhr.responseText.includes("name"))
-        alert("project name already exists for another project")
+        alert("project name already e;xists for another project")
       break;
 
     default:
       alert("Couldn't create project")
-  }
-})
-
-AJAX.ajax({
-  url: "api/projects",
-  type: "GET",
-  data: {
-    token: local.get('token')
-  },
-  complete: function (xhr) {
-    switch (xhr.status) {
-      case 200:
-        for (let project of xhr.parsed)
-          syncManager.add('project', project)
-
-        break;
-
-      case 204:
-        break;
-
-      default:
-        alert('Cannot list projects. Please, reload')
-    }
   }
 })
 
@@ -95,3 +76,5 @@ function deleteProject(project_id) {
     })
   }
 }
+
+window.deleteProject = deleteProject;

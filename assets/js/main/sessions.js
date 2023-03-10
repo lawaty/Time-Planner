@@ -3,6 +3,8 @@ syncManager.registerType('session', ['id', 'date', 'time', 'description', 'color
 document.addEventListener('session-added', function (e) {
   let session = e.added
 
+  $("#no-sessions").hide();
+
   let session_date = new Ndate(session.date)
   let description = session.description != null ? session.description : 'no description';
 
@@ -42,8 +44,12 @@ document.addEventListener('session-added', function (e) {
 document.addEventListener('session-removed', function (e) {
   let session = e.removed
   $(`div[observe=sessions] div#session-${session.id}`).remove()
-  $(`div[observe=sessions] div#sessions-${session.date}`)
+
+  if(!$(`div#sessions-${session.date} div`).length)
+    $(`div#sessions-${session.date}`).remove()
 })
+
+document.addEventListener('session-empty', function() {$("#no-sessions").show()})
 
 let new_session_form = Form.new($("#new_session_form"))
 new_session_form.setCallback(function (xhr) {
@@ -104,31 +110,8 @@ $("#start-btn").click(start)
 $("#pause-btn").click(pause)
 $("#end-btn").click(end)
 
-AJAX.ajax({
-  url: "api/sessions",
-  type: "GET",
-  data: {
-    token: local.get('token')
-  },
-  complete: function (xhr) {
-    switch (xhr.status) {
-      case 200:
-        for (let session of xhr.parsed)
-          syncManager.add('session', session)
-
-        break;
-
-      case 204:
-        break;
-
-      default:
-        alert('Cannot list projects. Please, reload')
-    }
-  }
-})
-
 function deleteSession(session_id) {
-  if (confirm("Are you sure you want to delete this session?")) {
+  if (confirm("Are you sure you want to delete this session ?")) {
     AJAX.ajax({
       url: "api/sessions/delete",
       type: "POST",
@@ -150,3 +133,5 @@ function deleteSession(session_id) {
     })
   }
 }
+
+window.deleteSession = deleteSession;

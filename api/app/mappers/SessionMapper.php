@@ -21,11 +21,8 @@ class SessionMapper extends Mapper
      * Returns the first session found in database matching the specified filters
      */
     $user_sessions = static::getAllByUser($user, $filters);
-    if (count($user_sessions)) {
-      $session = new Session($user_sessions[0]['id']);
-      $session->load($user_sessions[0]);
-      return $session;
-    }
+    if (count($user_sessions))
+      return $user_sessions[0];
 
     return null;
   }
