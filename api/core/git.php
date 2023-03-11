@@ -22,7 +22,7 @@ logGit("Git pull successful:\n [" . implode("\n", $output) . "]");
 
 function logGit(string $msg): void
 {
-  $msg .= "\n".date('h:i:s');
+  $msg .= "[".date('h:i:s')."]";
   $filename = 'logs/' . date('Y-m-d') . '.log';
 
   if (!file_exists($filename))
