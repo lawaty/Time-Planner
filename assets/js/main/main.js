@@ -26,6 +26,13 @@ import "./goals.js"
     $("#date_display").html(date.toString());
     listGoals()
   })
+
+  $("#date-container").on('mouseover click', function () {
+    $("#day_display").html((new Ndate($("#date_display").html())).toLocaleDateString('en-US', { weekday: 'long' }))
+    $("#day_display").show();
+  }).on('mouseout', function () {
+    $("#day_display").hide()
+  })
 })()
 
 function logout() {
@@ -96,8 +103,6 @@ function listGoals() {
       switch (xhr.status) {
         case 200:
           for (let goal of xhr.parsed) {
-            let remaining = goal.percent < 100 ? parseInt(((100 - goal.percent) / 100) * goal.goal_time) : 0;
-
             goal.date = $("#date_display").html()
             syncManager.add('goal', goal)
           }
@@ -112,12 +117,3 @@ function listGoals() {
     }
   })
 }
-
-$("#date-container").on('mouseover click', function() {
-  $("#day_display").html((new Ndate($("#date_display").html())).toLocaleDateString('en-US', { weekday: 'long' }))
-  $("#day_display").show();
-})
-
-$("#date-container").on('mouseout', function() {
-  $("#day_display").hide()
-})

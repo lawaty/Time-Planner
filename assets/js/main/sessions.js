@@ -25,7 +25,7 @@ document.addEventListener('session-added', function (e) {
     `)
 
   $(`div[observe=sessions] div#sessions-${session_date.toString()}`).append(`
-    <div class="card mb-4" id="session-${session.id}">
+    <div class="card mb-4" data-id="${session.id}" id="session-${session.id}">
       <div class="card-header d-flex justify-content-between" style="color:${session.color}">
         <span>${session.project_name}</span>
         <i class="bi bi-trash" onclick="deleteSession($(this).closest('.card').attr('id').split('-')[1])"></i>
@@ -43,7 +43,7 @@ document.addEventListener('session-added', function (e) {
 
 document.addEventListener('session-removed', function (e) {
   let session = e.removed
-  $(`div[observe=sessions] div#session-${session.id}`).remove()
+  $(`[observe=sessions] [data-id=${session.id}]`).remove()
 
   if(!$(`div#sessions-${session.date} div`).length)
     $(`div#sessions-${session.date}`).remove()

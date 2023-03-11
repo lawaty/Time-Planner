@@ -21,7 +21,7 @@ class Create extends Authenticated
     try {
       if ($goal = GoalMapper::create($this->request))
         return new Response(SUCCESS, [
-          'goal_id' => $goal->get('id'),
+          'id' => $goal->get('id'),
           'progress' => $goal->get('progress')
         ]);
       return new Response(FAIL);

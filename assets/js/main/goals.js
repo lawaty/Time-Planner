@@ -1,20 +1,12 @@
 syncManager.registerType('goal', ['id', 'color', 'progress', 'amount', 'date', 'repeat', 'project_name', 'project_id'])
 
-document.addEventListener('project-added', function (e) {
-  let project = e.added
-
-  $("#new_goal_form #select-project").append(`
-  <option style="color:${project.color}" value="${project.id}">${project.name}</option>
-  `)
-})
-
 document.addEventListener('goal-added', function (e) {
   let goal = e.added
 
   $("#no-goals").hide();
 
-  $("#goals-list").append(`
-    <li class="mb-3 goal" id="goal-${goal.id}">
+  $("ul[observe=goals]").append(`
+    <li class="mb-3 goal" data-id="${goal.id}" id="goal-${goal.id}">
       <div class="d-flex justify-content-between">
         <span style="color:${goal.color}">
           ${goal.project_name}
@@ -33,7 +25,7 @@ document.addEventListener('goal-added', function (e) {
 document.addEventListener('goal-removed', function (e) {
   let goal = e.removed
 
-  $("#goal-"+goal.id).remove()
+  $(`[observe=goals] [data-id=${goal.id}]`).remove()
 })
 
 document.addEventListener('goal-empty', function() {$("#no-goals").show()})
@@ -46,13 +38,19 @@ new_goal_form.setCallback(function (xhr) {
       break;
 
     case 200:
+      if(new_goal_form.get('date') != $("#date_display").html())
+        break;
+      
+      let project = syncManager.get('project', new_goal_form.get('project_id'))
       let goal = {
         id: xhr.parsed.id,
         color: syncManager.get('project', new_goal_form.get('project_id')).color,
         progress: xhr.parsed.progress,
         amount: new_goal_form.get('amount'),
         date: new_goal_form.get('date'),
-        repeat: new_goal_form.get('repeat')
+        repeat: new_goal_form.get('repeat'),
+        project_id: project.id,
+        project_name: project.name
       }
       syncManager.add('goal', goal);
 
@@ -77,7 +75,7 @@ function deleteGoal(goal_id) {
         switch (xhr.status) {
           case 200:
           case 204:
-            $(`#goal-${goal_id}`).remove()
+            syncManager.remove('goal', goal_id)
             break;
 
           default:
