@@ -11,7 +11,7 @@ class Delete extends Authenticated
 
   public function handle(): Response
   {
-    if(!$goal = GoalMapper::getByUser($this->user, ['id' => $this->request['goal_id']]))
+    if(!$goal = GoalMapper::getByUser($this->user, ['goals.id' => $this->request['goal_id']]))
       throw new NotFound('Goal');
     
     if(!$goal->getMapper()->delete())

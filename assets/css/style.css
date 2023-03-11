@@ -77,3 +77,27 @@ div#sessions-list {
   color: var(--blue);
   font-size: 30px;
 }
+
+#date_display {
+  position: relative;
+}
+
+#day_display {
+  display: none;
+  position: absolute;
+  top: -123%;
+  left: -70%;
+  padding: 0.5rem;
+  border: 1px solid var(--blue);
+  border-radius: 0.25rem;
+  z-index: 1;
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: center;
+  box-shadow: 0px 0px 2px #888888;
+}
+
+
+#date-container:hover #day_display {
+  display: block;
+}

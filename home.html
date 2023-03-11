@@ -25,16 +25,16 @@
 
   <!-- Left Sidebar -->
   <div class="row m-4">
-    <div class="col-md-2">
+    <div class="col-md-2 col-sm-12">
       <div class="leftbar bg-light">
-        <div class="d-flex justify-content-between">
-          <h3>Projects</h3>
-          <button class="btn bg-light" data-bs-toggle="modal" data-bs-target="#new-project-modal">
+        <div class="d-flex justify-content-between mb-4">
+          <h5>Projects</h5>
+          <button class="btn bg-light p-0" data-bs-toggle="modal" data-bs-target="#new-project-modal">
             <i class="valign bi bi-plus-circle"></i>
           </button>
         </div>
 
-        <h4 id="no-projects">No Projects</h4>
+        <strong id="no-projects">No Projects</strong>
         <ul id="projects-list" observe="projects" class="rounded py-4 ml-4 mt-1 list-unstyled">
         </ul>
 
@@ -42,9 +42,9 @@
     </div>
 
     <!-- Main Section -->
-    <div class="col-md-6">
+    <div class="col-md-6 col-sm-12">
       <div class="main bg-light">
-        <div class="container row w-100 mb-5" id="timer-container">
+        <div class="container row w-100 mb-5 ml-0 mr-0 justify-content-center" id="timer-container">
           <select class="form-control col-sm-4" observe="projects" id="session-project_id"
             oninput="$('#start-btn').removeAttr('disabled')">
             <option selected hidden disabled>
@@ -58,28 +58,32 @@
         </div>
 
         <div observe="sessions" id="sessions-list">
-          <h4 id="no-sessions">No Sessions</h4>
+          <strong id="no-sessions">No Sessions</strong>
         </div>
       </div>
     </div>
 
     <!-- Right Sidebar-->
-    <div class="col-md-4">
+    <div class="col-md-4 col-sm-12">
       <div class="rightbar bg-light">
-        <div class="d-flex justify-content-between">
-          <h3>Goals</h3>
-          <button class="btn bg-light" data-bs-toggle="modal" data-bs-target="#new-goal-modal">
-            <i class="valign bi bi-plus-circle"></i>
+        <div class="d-flex justify-content-end mb-4">
+          <button class="btn btn-primary d-flex align-items-center" data-bs-toggle="modal"
+            data-bs-target="#new-goal-modal">
+            <i class="valign bi bi-plus-circle pr-2"></i>
+            Add Goal
           </button>
         </div>
 
-        <h4 class="mt-5" id="no-goals">No Goals</h4>
-        <ul id="goals-list" class="rounded py-4 ml-4 mt-1 list-unstyled">          
+        <strong class="mt-5" id="no-goals">No Goals</strong>
+        <ul id="goals-list" class="rounded py-4 ml-4 mt-1 list-unstyled">
         </ul>
 
-        <div class="d-flex justify-content-center">
+        <div class="d-flex justify-content-center" id="date-container">
           <i class="bi bi-arrow-left-short" id="prev_day"></i>
-          <p class="m-1" id="date_display"></p>
+          <div class="position-relative">
+            <p class="m-1" id="date_display"></p>
+            <div id="day_display"></div>
+          </div>
           <i class="bi bi-arrow-right-short" id="next_day"></i>
         </div>
 

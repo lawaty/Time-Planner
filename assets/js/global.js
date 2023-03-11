@@ -98,10 +98,11 @@ const Regex = {
   DATE_TIME_SEC: /^(\d{4})-(\d{2})-(\d{2}) [0-9]{2}:[0-9]{2}:[0-9]{2}$/,
   DAY_TIME: /^(Sun|Mon|Tue|Wed|Thu|Fri|Sat) [0-9]{2}:[0-9]{2}$/,
 
+  // Special
   JWT: /^[\w-]*\.[\w-]*\.[\w-]*$/,
   LOGIN: /^[\p{Script=Arabic}\w\-. ]+$/gu,
   EMAIL: /^[\w_\-.]+@[\w]+\.[\w]+$/,
-  NAME: /^[\p{Script=Arabic}a-zA-Z ]+$/gu,
+  NAME: /^[\p{Script=Arabic}\w ]+$/gu,
   PHONE: /^\+?[0-9]+$/,
   GRADE: /^([1-9]|1[0-2])$/,
 

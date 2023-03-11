@@ -18,9 +18,7 @@ class Create extends Authenticated
         'color' => $this->request['color'],
         'user_id' => $this->user->get('id')
       ]))
-        return new Response(SUCCESS, [
-          'project_id' => $project->get('id')
-        ]);
+        return new Response(SUCCESS, $project->get('id'));
 
       return new Response(FAIL);
     } catch (UniquenessViolated $e) {

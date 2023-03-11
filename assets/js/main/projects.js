@@ -2,11 +2,10 @@ syncManager.registerType('project', ['id', 'name', 'color'])
 
 document.addEventListener('project-added', function (e) {
   let project = e.added
-
   $("#no-projects").hide()
 
   $("ul[observe=projects]").append(`
-    <li style="color:${project.color}" id="project-${project.id}">${project.name}<i class="bi bi-trash" onclick="deleteProject($(this).parent().attr('id).split('-')[1])"></i></li>
+    <li style="color:${project.color}" id="project-${project.id}">${project.name}<i class="bi bi-trash" onclick="deleteProject($(this).parent().attr('id').split('-')[1])"></i></li>
   `)
 
   $("select[observe=projects]").append(`
@@ -16,7 +15,6 @@ document.addEventListener('project-added', function (e) {
 
 document.addEventListener('project-removed', function (e) {
   let project = e.removed
-
   $(`ul[observe=projects] li#project-${project.id}`).remove()
   $(`select[observe=projects] option#project-${project.id}`).remove()
 })
@@ -30,7 +28,7 @@ new_project_form.setCallback(function (xhr) {
       let project = {
         id: xhr.responseText,
         color: new_project_form.get('color'),
-        name: new_project_form.get('name'),
+        name: new_project_form.get('name')
       }
 
       syncManager.add('project', project)

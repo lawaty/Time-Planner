@@ -112,3 +112,12 @@ function listGoals() {
     }
   })
 }
+
+$("#date-container").on('mouseover click', function() {
+  $("#day_display").html((new Ndate($("#date_display").html())).toLocaleDateString('en-US', { weekday: 'long' }))
+  $("#day_display").show();
+})
+
+$("#date-container").on('mouseout', function() {
+  $("#day_display").hide()
+})

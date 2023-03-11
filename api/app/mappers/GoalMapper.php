@@ -32,6 +32,7 @@ class GoalMapper extends Mapper
 
   public static function getAllByUser(User $user, ...$filters): Entities
   {
+    var_dump($filters);
     return new Entities(DB::getDB()->select(
       'goals.id as id, goals.amount, goals.date, goals.day, goals.repeat, goals.progress, projects.id as project_id, projects.name as project_name, projects.color as color',
       'goals join projects on goals.project_id = projects.id',
@@ -39,14 +40,11 @@ class GoalMapper extends Mapper
     ), 'Goal');
   }
 
-  public static function getByUser(User $user, ...$filters): ?Goal
+  public static function getByUser(User $user, $filters): ?Goal
   {
-    $user_goals = static::getAllByUser($user, $filters);
-    if (count($user_goals)) {
-      $goal = new Goal($user_goals[0]['id']);
-      $goal->load($user_goals[0]);
-      return $goal;
-    }
+    $user_goals = static::getAllByUser($user, ...$filters);
+    if (count($user_goals))
+      return $user_goals[0];
 
     return null;
   }

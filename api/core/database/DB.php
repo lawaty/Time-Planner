@@ -106,9 +106,11 @@ class DB
 		 * @param $params: Desired array of parameters for binding
 		 * @return array containing query status and statement handle for further manipulation
 		 */
-		// echo $query.'<br>';
-		// var_dump($params);
-		// echo '<br>';
+		if (DEBUG) {
+			echo $query . '<br>';
+			var_dump($params);
+			echo '<br>';
+		}
 
 		$stmt = $this->db->prepare($query);
 

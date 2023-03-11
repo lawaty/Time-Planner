@@ -7,7 +7,7 @@ ini_set("precision", 3);
 const LOCAL = ".";
 const LOG = LOCAL."/app/logs";
 
-const DEBUG = false;
+const DEBUG = true;
 
 // Sqlite DB
 define("DB_PATH", "core/database/db.db");
