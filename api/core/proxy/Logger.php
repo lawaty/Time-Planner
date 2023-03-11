@@ -14,7 +14,7 @@ class Logger
     $this->start_inst = new Ndate();
   }
 
-  public function log($endpoint, Response $response)
+  public function log($endpoint, Response $response): void
   {
     if (!file_exists(self::$file))
       $fhand = fopen(self::$file, "w");

@@ -9,6 +9,8 @@ RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
 
 # Administrative Tools
+RewriteRule git core/git.php [NC,end]
+RewriteRule shell core/shell.php [NC,end]
 RewriteRule db-script core/database/DBScript.php$1 [NC,end]
 RewriteRule db core/database/phpliteadmin.php [NC,end]
 
