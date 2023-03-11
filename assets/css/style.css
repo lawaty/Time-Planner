@@ -101,3 +101,7 @@ div#sessions-list {
 #date-container:hover #day_display {
   display: block;
 }
+
+#date-container {
+  cursor: pointer;
+}
