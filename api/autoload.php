@@ -22,8 +22,6 @@ const DEPENDENCIES = [
   'Entity' => 'core/bases',
   'Mapper' => 'core/bases',
   'JoinMapper' => 'core/bases',
-  'IEntity' => 'core/bases',
-  'IMapper' => 'core/bases',
 
   // Exceptions
   'NegativeSectionReached' => 'core/exceptions',

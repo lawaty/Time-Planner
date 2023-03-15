@@ -5,7 +5,7 @@ document.addEventListener('goal-added', function (e) {
 
   $("#no-goals").hide();
 
-  $("ul[observe=goals]").append(`
+  $("ul[observe=goal]").append(`
     <li class="mb-3 goal" data-id="${goal.id}" id="goal-${goal.id}">
       <div class="d-flex justify-content-between">
         <span style="color:${goal.color}">
@@ -25,7 +25,7 @@ document.addEventListener('goal-added', function (e) {
 document.addEventListener('goal-removed', function (e) {
   let goal = e.removed
 
-  $(`[observe=goals] [data-id=${goal.id}]`).remove()
+  $(`[observe=goal] [data-id=${goal.id}]`).remove()
 })
 
 document.addEventListener('goal-empty', function() {$("#no-goals").show()})
@@ -38,6 +38,8 @@ new_goal_form.setCallback(function (xhr) {
       break;
 
     case 200:
+      $("#new-goal-modal").modal('hide')
+
       if(new_goal_form.get('date') != $("#date_display").html())
         break;
       
@@ -53,8 +55,6 @@ new_goal_form.setCallback(function (xhr) {
         project_name: project.name
       }
       syncManager.add('goal', goal);
-
-      $("#new-goal-modal").modal('hide')
       break;
 
     default:

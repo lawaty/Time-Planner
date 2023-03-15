@@ -6,11 +6,6 @@ class Validator
 	private array $filtered = [];
 	private bool $required = true;
 
-	private function isAssoc(array $array)
-	{
-		return array_keys($array) !== range(0, count($array) - 1);
-	}
-
 	public function __construct(array $expect, string $class = null)
 	{
 		if (isset($expect[0]) && isset($expect[1])) {
@@ -67,7 +62,7 @@ class Validator
 		 * Checks if input is a list of collections or just an associtative list
 		 */
 
-		if ($this->isAssoc($input)) {
+		if (isAssoc($input)) {
 			// associtative array validation
 			$result = $this->validateAssoc($input);
 			if (is_string($result))

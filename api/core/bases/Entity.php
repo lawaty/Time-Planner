@@ -3,27 +3,26 @@
 /**
  * @property string $mapper_type
  */
-abstract class Entity implements IEntity
+abstract class Entity
 {
-  protected ?IMapper $mapper = null; // mapper instance
+  protected ?Mapper $mapper = null; // mapper instance
   protected bool $synced = true; // db synchronization flag
 
   protected array $ids = [
     'id' => null
   ];
 
-  public function copy(IEntity $entity): void
+  /**
+   * copy properties from another entity
+   */
+  public function copy(Entity $entity): void
   {
-    /**
-     * copy properties from another entity
-     */
     if (get_class($entity) != static::class)
       throw new IncompatibleEntities(static::class, get_class($entity));
 
     $fields = get_object_vars($this);
-    foreach($fields as $field => $value)
-      $this->{$field} = $entity->get($field);
-    
+    foreach ($fields as $field => $value)
+      $this->{$field} = $entity->naiveGet($field);
   }
 
   public function __construct($id)
@@ -32,32 +31,30 @@ abstract class Entity implements IEntity
     $this->inSync();
   }
 
+  /**
+   * Method used to load ALL required user properties and optional if found
+   * @param array data to be loaded including required and optional info
+   */
   public function load(array $data): void
   {
-    /**
-     * Method used to load ALL required user properties and optional if found
-     * @param array data to be loaded including required and optional info
-     */
-
     foreach ($data as $property => $value)
       if (property_exists($this, $property))
         $this->set($property, $value);
   }
 
+  /**
+   * Function returns the entity id formatted in an associative array
+   */
   public function getID(): array
   {
-    /**
-     * Function returns the entity id
-     */
     return $this->ids;
   }
 
+  /**
+   * Method receives integer id or an associtative array of ids in case more than one id is required for this entity
+   */
   public function setID($id): void
   {
-    /**
-     * Method receives integer id or an associtative array of ids in case more than one id is required for this entity
-     */
-
     if (!is_array($id)) {
       $this->ids['id'] = $id;
       return;
@@ -74,7 +71,8 @@ abstract class Entity implements IEntity
     }
   }
 
-  public function get(string $property)
+  // Setters and Getters
+  public function naiveGet($property)
   {
     if (!property_exists($this, $property) && !isset($this->ids[$property]))
       throw new PropertyNotExisting($property, static::class);
@@ -83,9 +81,28 @@ abstract class Entity implements IEntity
       return $this->ids[$property];
 
     if (!isset($this->{$property}))
-      $this->copy($this->getMapper()->get($this->getID()));
+      return null;
 
     return $this->{$property};
+  }
+
+  public function get(...$properties)
+  {
+    $result = [];
+
+    foreach ($properties as $property) {
+      if ($value = $this->naiveGet($property))
+        $result[$property] = $value;
+      else {
+        $this->copy($this->getMapper()->get($this->getID()));
+        $result[$property] = $this->naiveGet($property);
+      }
+    }
+
+    if (count($result) == 1)
+      return array_values($result)[0];
+
+    return $result;
   }
 
   public function set(string $property, $value): void
@@ -111,7 +128,10 @@ abstract class Entity implements IEntity
     }
   }
 
-  public function getMapper(): IMapper
+  /**
+   * Method returns a mapper for that instance
+   */
+  public function getMapper(): Mapper
   {
     if (!$this->mapper)
       $this->mapper = new static::$mapper_type($this);
@@ -119,6 +139,7 @@ abstract class Entity implements IEntity
     return $this->mapper;
   }
 
+  //Sync with persistence layer functions
   public function inSync(): bool
   {
     /**

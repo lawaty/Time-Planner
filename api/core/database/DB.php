@@ -9,6 +9,13 @@ class DB
 	private static $instance;
 	protected $db;
 
+	private function validateConditions(array &$conditions) {
+		foreach($conditions as &$condition) {
+			while(is_array($condition))
+				$condition = $condition[array_keys($conditions)[0]];
+		}
+	}
+
 	public function __construct()
 	{
 		if (defined("DB_PATH")) {
@@ -35,9 +42,6 @@ class DB
 
 	private static function joinToString(array $array, string $conjunction, string $relation)
 	{
-
-		#TODO: Allow injecting string portions to the resulted query
-
 		/**
 		 * Converts a key-value array into string with specified conjunctions
 		 * You can use multiple conjunctions at different places if you put them inside the key-value array as 'conjunction'=>'anything'
@@ -146,15 +150,16 @@ class DB
 		 * @return array of all matched records
 		 */
 
+		$this->validateConditions($conditions);
+
 		if (is_array($fields))
 			$query = "select " . implode(',', $fields) . " from $table";
 		else
 			$query = "select $fields from $table";
 
-		$bind_params = null;
+		$bind_params = [];
 
 		if (is_array($conditions) && count($conditions)) { // 
-			#TODO: Validate key-value pair by checking that keys exist for all values from x0 to xn-1
 			$bind_params = DB::extractParams($conditions);
 			$query .= ' where ' . DB::joinToString($conditions, 'and', $comparison);
 		}
@@ -202,6 +207,9 @@ class DB
 		 * @return : false in case insert failed (uniqueness violated or not null condition violated etc...)
 		 */
 
+		$this->validateConditions($conditions);
+
+
 		$new_values_str = DB::joinToString($new_values, ', ', '=');
 		$conditions_str = ' where ' . DB::joinToString($conditions, 'and', '=');
 
@@ -223,6 +231,9 @@ class DB
 		 * @return : number of affected rows
 		 * @return : false in case delete failed
 		 */
+
+		$this->validateConditions($conditions);
+
 
 		$cond_str = ' where ' . DB::joinToString($conditions, 'and', '=');
 		$query = 'delete from ' . $table . $cond_str;

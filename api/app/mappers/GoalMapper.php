@@ -2,9 +2,15 @@
 
 class GoalMapper extends Mapper
 {
+  public static function formatCondition($date){
+    $day = (new Ndate($date))->getDay();
+    return "(goals.date LIKE '%$date%' OR goals.day LIKE '%$day%' AND goals.repeat = '1')";
+  }
+
   protected static string $entity_type = 'Goal';
   protected static string $table = 'goals';
-  public static array $record_info = ['project_id', 'amount', 'date', 'day', 'repeat', 'progress'];
+  protected static array $required = ['project_id', 'amount', 'date', 'day', 'repeat'];
+  protected static array $optional = ['progress'];
 
   public static function create(array $data, User $user = null): Goal
   {
@@ -32,9 +38,8 @@ class GoalMapper extends Mapper
 
   public static function getAllByUser(User $user, ...$filters): Entities
   {
-    var_dump($filters);
     return new Entities(DB::getDB()->select(
-      'goals.id as id, goals.amount, goals.date, goals.day, goals.repeat, goals.progress, projects.id as project_id, projects.name as project_name, projects.color as color',
+      'goals.id as id, goals.amount, goals.date, goals.day, goals.repeat, goals.progress, projects.id as project_id',
       'goals join projects on goals.project_id = projects.id',
       ['projects.user_id' => $user->get('id'), ...$filters]
     ), 'Goal');

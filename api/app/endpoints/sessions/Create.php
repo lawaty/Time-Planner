@@ -16,7 +16,7 @@ class Create extends Authenticated
     try {
       if ($session = SessionMapper::create([
         ...$this->request,
-        'date' => (new Ndate())->toString(Ndate::DATE)
+        'date' => Ndate::now()
       ]))
         return new Response(SUCCESS, $session->get('id'));
 

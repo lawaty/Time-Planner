@@ -4,12 +4,12 @@ class SessionMapper extends Mapper
 {
   protected static string $entity_type = "Session";
   protected static string $table = "sessions";
-  public static array $record_info = ['description', 'date', 'time', 'project_id'];
+  public static array $required = ['description', 'date', 'time', 'project_id'];
 
   public static function getAllByUser(User $user, array $filters = []): Entities
   {
     return new Entities(DB::getDB()->select(
-      'sessions.*, projects.name as project_name, projects.color as color',
+      'sessions.*, projects.id as project_id',
       'users join projects join sessions on users.id = projects.user_id and projects.id = sessions.project_id',
       ['users.id' => $user->get('id'), ...$filters]
     ), 'Session');
@@ -32,7 +32,7 @@ class SessionMapper extends Mapper
     $portion = $last ? "and sessions.id < $last" : "";
 
     return new Entities(DB::getDB()->select(
-      'sessions.*, projects.name as project_name, projects.color as color',
+      'sessions.*, projects.id as project_id',
       'users join projects join sessions on users.id = projects.user_id and projects.id = sessions.project_id',
       ['users.id' => $user->get('id'), "$portion ORDER BY sessions.id desc limit 30"]
     ), 'Session');

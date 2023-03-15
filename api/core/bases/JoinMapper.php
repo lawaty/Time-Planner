@@ -1,15 +1,15 @@
 <?php
 
-abstract class JoinMapper extends Mapper implements IMapper
+abstract class JoinMapper extends Mapper implements Mapper
 {
   protected static array $joined_mappers;
 
-  public static function get(array $filters = []): ?IEntity
+  public static function get(array $filters = []): ?Entity
   {
     /**
      * Method loads record info into a model instance
      * @param array $filters: db search filters
-     * @return ?IEntity: domain object instance if found
+     * @return ?Entity: domain object instance if found
      * @note: this method returns the first found object if many records matched
      */
     static::validateFilters($filters);

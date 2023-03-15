@@ -1,0 +1,16 @@
+[
+    {
+        "name": "Folder 1",
+        "children": [
+            {
+                "path": "membership.html",
+                "children": []
+            }
+        ]
+    },
+    {
+        "path": null,
+        "children": [],
+        "name": "api"
+    }
+]

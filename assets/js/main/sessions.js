@@ -5,6 +5,7 @@ document.addEventListener('session-added', function (e) {
 
   $("#no-sessions").hide();
 
+  // Specify group to add this session to it
   let session_date = new Ndate(session.date)
   let description = session.description != null ? session.description : 'no description';
 
@@ -17,17 +18,19 @@ document.addEventListener('session-added', function (e) {
   else
     title = `${diff.days} days ago`;
 
-  if (!$(`div[observe=sessions] div#sessions-${session_date.toString()}`).length)
-    $(`div[observe=sessions]`).append(`
+  // Create new group to add this session if not exists
+  if (!$(`div[observe=session] div#sessions-${session_date.toString()}`).length)
+    $(`div[observe=session]`).append(`
       <div class="p-4 mb-3 sessions-group" id="sessions-${session_date.toString()}">
         <h4>${title}</h4>
       </div>
     `)
 
-  $(`div[observe=sessions] div#sessions-${session_date.toString()}`).append(`
+  // Add session to the right group
+  $(`div[observe=session] div#sessions-${session_date.toString()}`).append(`
     <div class="card mb-4" data-id="${session.id}" id="session-${session.id}">
       <div class="card-header d-flex justify-content-between" style="color:${session.color}">
-        <span>${session.project_name}</span>
+        <span data-name="project_name">${session.project_name}</span>
         <i class="bi bi-trash" onclick="deleteSession($(this).closest('.card').attr('id').split('-')[1])"></i>
       </div>
 
@@ -43,14 +46,21 @@ document.addEventListener('session-added', function (e) {
 
 document.addEventListener('session-removed', function (e) {
   let session = e.removed
-  $(`[observe=sessions] [data-id=${session.id}]`).remove()
+  
+  // Remove session from all observers
+  $(`[observe=session] [data-id=${session.id}]`).remove()
 
+  // Remove group if this was the only session existing in it
   if(!$(`div#sessions-${session.date} div`).length)
     $(`div#sessions-${session.date}`).remove()
 })
 
 document.addEventListener('session-empty', function() {$("#no-sessions").show()})
 
+
+
+
+// new session ajax
 let new_session_form = Form.new($("#new_session_form"))
 new_session_form.setCallback(function (xhr) {
   switch (xhr.status) {
@@ -77,8 +87,9 @@ new_session_form.setCallback(function (xhr) {
   }
 })
 
-let session_timer = new Timer($("#timer"))
 
+// Timer Flow
+let session_timer = new Timer($("#timer"))
 function start() {
   session_timer.start()
   $("#start-btn").hide()
@@ -109,6 +120,8 @@ function save() {
 $("#start-btn").click(start)
 $("#pause-btn").click(pause)
 $("#end-btn").click(end)
+
+
 
 function deleteSession(session_id) {
   if (confirm("Are you sure you want to delete this session ?")) {

@@ -35,14 +35,14 @@ import "./goals.js"
   })
 })()
 
-function logout() {
+$("#logout").click(function () {
   local.remove("id")
   local.remove("token")
   window.location.href = "membership"
-}
+})
 
 function listProjects() {
-  AJAX.ajax({
+  AJAX.ajax ({
     url: "api/projects",
     type: "GET",
     data: {

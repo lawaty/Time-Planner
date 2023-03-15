@@ -6,19 +6,14 @@ class Ndate extends DateTime
   const DATE = "Y-m-d";
   const TIME = "H:i:s";
   
-  private static ?Ndate $now = null;
-
   public function __construct(string $date = 'now')
   {
     parent::__construct($date);
   }
 
-  public static function now(): Ndate
+  public static function now($format = self::DATE): string
   {
-    if (self::$now === null)
-      self::$now = new self();
-
-    return self::$now;
+    return (new Ndate())->toString($format);
   }
 
   public static function minutesUntil(Ndate $date): int
@@ -28,7 +23,7 @@ class Ndate extends DateTime
 
   public static function secondsUntil(Ndate $date): int
   {
-    $diff = self::now()->diff($date);
+    $diff = (new Ndate())->diff($date);
     $seconds = $diff->days * 24 * 3600 + $diff->h * 3600 + $diff->i * 60 + $diff->s;
     if(self::now() > $date)
       return $seconds * -1;

@@ -33,16 +33,7 @@ $creations = [
     date TEXT NOT NULL,
     day TEXT NOT NULL,
     repeat INTEGER NOT NULL,
-    progress INTEGER NOT NULL,
-    CONSTRAINT goals_UN UNIQUE (project_id),
-    CONSTRAINT goals_FK FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE CASCADE ON UPDATE CASCADE
-  )',
-  'weekly_goals' => 'CREATE TABLE IF NOT EXISTS weekly_goals (
-    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, 
-    project_id INTEGER NOT NULL,
-    amount INTEGER NOT NULL,
-    progress INTEGER NOT NULL,
-    CONSTRAINT goals_UN UNIQUE (project_id),
+    CONSTRAINT goals_UN UNIQUE (project_id, day, repeat),
     CONSTRAINT goals_FK FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE CASCADE ON UPDATE CASCADE
   )',
 ];

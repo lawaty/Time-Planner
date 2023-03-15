@@ -51,3 +51,8 @@ function trace(Exception $e, $seen = null)
 
   return $result;
 }
+
+function isAssoc(array $array)
+	{
+		return array_keys($array) !== range(0, count($array) - 1);
+	}

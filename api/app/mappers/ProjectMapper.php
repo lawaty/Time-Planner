@@ -4,7 +4,7 @@ class ProjectMapper extends Mapper
 {
   protected static string $entity_type = 'Project';
   protected static string $table = 'projects';
-  public static array $record_info = ['name', 'color', 'user_id'];
+  public static array $required = ['name', 'color', 'user_id'];
 
   public static function getByUser(User $user, array $filters = []): ?Project
   {
