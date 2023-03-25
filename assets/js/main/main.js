@@ -8,8 +8,6 @@ import "./goals.js"
   $("[name=token]").val(local.get('token'))
 
   $("#date_display").html((new Ndate()).toString())
-  listGoals()
-  listWeeklyGoals();
 
   $("#next_day").click(function () {
     let date = new Ndate($("#date_display").html());
@@ -57,8 +55,10 @@ function listProjects() {
         case 200:
           for (let project of xhr.parsed)
             syncManager.add('project', project)
-          listSessions()
 
+          listSessions()
+          listGoals()
+          listWeeklyGoals();
           break;
 
         case 204:
