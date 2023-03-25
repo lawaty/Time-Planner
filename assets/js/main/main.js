@@ -4,7 +4,6 @@ import "./goals.js"
 
 (function () {
   listProjects()
-  listSessions()
 
   $("[name=token]").val(local.get('token'))
 
@@ -47,7 +46,7 @@ $("#logout").click(function () {
 })
 
 function listProjects() {
-  AJAX.ajax ({
+  AJAX.ajax({
     url: "api/projects",
     type: "GET",
     data: {
@@ -58,6 +57,7 @@ function listProjects() {
         case 200:
           for (let project of xhr.parsed)
             syncManager.add('project', project)
+          listSessions()
 
           break;
 
