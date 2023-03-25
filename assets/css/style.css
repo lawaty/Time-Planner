@@ -24,6 +24,7 @@ body {
   padding: 30px 20px;
   box-shadow: -8px -3px 8px 2px #dadada;
   border-radius: 8px;
+  height: 40vh;
 }
 
 .main {
@@ -64,10 +65,6 @@ div#sessions-list {
   overflow: auto;
 }
 
-.sessions-group {
-  box-shadow: inset 0px 0px 4px 0px var(--gray);
-}
-
 .goals-container {
   margin-bottom: 33px;
 }
@@ -104,4 +101,33 @@ div#sessions-list {
 
 #date-container {
   cursor: pointer;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+*::-webkit-scrollbar {
+  width: 6px;
+}
+
+*::-webkit-scrollbar-track {
+  background-color: var(--light);
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--gray);
+  border-radius: 6px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: var(--dark);
+}
+
+[observe] {
+  overflow: auto;
+}
+
+.valign {
+  display: flex;
+  align-items: center;
 }

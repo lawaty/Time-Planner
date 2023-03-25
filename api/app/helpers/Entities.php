@@ -12,7 +12,8 @@ class Entities implements Iterator, JsonSerializable, ArrayAccess, Countable
     $this->entity_name = $entity_name;
   }
 
-  protected function createEntitiy(array $info) {
+  protected function createEntitiy(array $info)
+  {
     $entity = new $this->entity_name($info);
     $entity->load($info);
     $entity->setSync(true);
@@ -22,9 +23,9 @@ class Entities implements Iterator, JsonSerializable, ArrayAccess, Countable
   // Iterator
   public function current(): Object
   {
-    if(is_array($this->array[$this->key()]))
+    if (is_array($this->array[$this->key()]))
       $this->array[$this->key()] = $this->createEntitiy($this->array[$this->key()]);
-    
+
     return $this->array[$this->key()];
   }
 
@@ -70,7 +71,7 @@ class Entities implements Iterator, JsonSerializable, ArrayAccess, Countable
     if (is_array($this->array[$offset]))
       $this->array[$offset] = $this->createEntitiy($this->array[$offset]);
 
-    return $this->array[$offset];    
+    return $this->array[$offset];
   }
 
   public function offsetSet($offset, $value): void
@@ -98,5 +99,13 @@ class Entities implements Iterator, JsonSerializable, ArrayAccess, Countable
   public function toArray(): array
   {
     return $this->array;
+  }
+
+  public function push($to_be_pushed): void
+  {
+    if (is_array($to_be_pushed))
+      array_push($this->array, ...$to_be_pushed);
+    else
+      array_push($this->array, $to_be_pushed);
   }
 }

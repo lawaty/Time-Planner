@@ -31,10 +31,6 @@ class SessionMapper extends Mapper
   {
     $portion = $last ? "and sessions.id < $last" : "";
 
-    return new Entities(DB::getDB()->select(
-      'sessions.*, projects.id as project_id',
-      'users join projects join sessions on users.id = projects.user_id and projects.id = sessions.project_id',
-      ['users.id' => $user->get('id'), "$portion ORDER BY sessions.id desc limit 30"]
-    ), 'Session');
+    return self::getAllByUser($user, ["$portion ORDER BY sessions.id desc limit 30"]);
   }
 }

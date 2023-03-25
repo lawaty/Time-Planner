@@ -21,19 +21,72 @@ class MissingInfo extends Error {
   }
 }
 
+class TypeNotFound extends Error {
+  constructor(type) {
+    super()
+    this.name = 'TypeNotFound'
+    this.message = `'${type}' is not registered`
+  }
+}
+
+class PropertyDoesNotExist extends Error {
+  constructor(type, property) {
+    super()
+    this.name = 'PropertyDoesNotExist'
+    this.message = `'${property}' does not exist for resource of type ${type}`
+  }
+}
+
+class ResourceNotFound extends Error {
+  constructor(type, key) {
+    super()
+    this.name = 'ResourceNotFound'
+    this.message = `Key '${key}' is not attached to any resource of type ${type}`
+  }
+}
+
+
+/**
+ * A JavaScript object that manages the synchronization of objects.
+ * @type {syncManager}
+ */
 let syncManager = {
   types: {},
 
+  /**
+   * 
+   * @param {string} type 
+   * @param {Array<string>} fields 
+   */
   registerType: function (type, fields) {
-    /**
-     * @param string type
-     * @param array<string> fields
-     */
     this.types[type] = fields
     this[type] = {}
   },
 
+  /**
+   * returns an object with type and key
+   * @param {string} type 
+   * @param {string|int} key 
+   * @returns {any}
+   */
+  get: function (type, key) {
+    if (this.validateType(type))
+      return undefined
+
+    return this[type][key]
+  },
+
+  /**
+   * adds new resource with type and key
+   * @param {string} type 
+   * @param {object} object 
+   * @param {string|int} key 
+   * @returns {boolean}
+   */
   add: function (type, object, key = null) {
+    if (this.validateType(type))
+      return false
+
     if (key === null)
       key = object.id
 
@@ -55,9 +108,35 @@ let syncManager = {
     document.dispatchEvent(event)
 
     this[type][key] = healthy_object
+    return true;
   },
 
+  /**
+   * edits single parameter of a certain object with type, key, and propertyname
+   * @param {string} type 
+   * @param {string|int} key 
+   * @param {string|int} property 
+   * @param {any} value 
+   * @returns {boolean}
+   */
+  edit: function (type, key, property, value) {
+    if (this.validateType(type) || this.validateKey(type, key) || this.validateProperty(type, property))
+      return false;
+
+    this[type][key][property] = value;
+    return true;
+  },
+
+  /**
+   * removes an object with type and key
+   * @param {string} type 
+   * @param {string|int} key 
+   * @returns {boolean}
+   */
   remove: function (type, key) {
+    if (this.validateType(type) || this.validateKey(type, key))
+      return false;
+
     let event = new Event(`${type}-removed`)
     event.removed = this[type][key]
     document.dispatchEvent(event)
@@ -67,30 +146,93 @@ let syncManager = {
       let event = new Event(`${type}-empty`)
       document.dispatchEvent(event)
     }
+
+    return true;
   },
 
-  get: function (type, key) {
-    return this[type][key]
-  },
-
+  /**
+   * Deletes all resources of given type
+   * @param {string} type 
+   */
   empty(type) {
     let iterable = this[type]
     for (let key in iterable)
       syncManager.remove(type, key)
   },
 
+  /**
+   * @param {string} type 
+   * @returns {boolean}
+   */
   isEmpty(type) {
     return Object.keys(this[type]).length == 0;
+  },
+
+  // Validators
+  validateType(type) {
+    if (this[type] === undefined) {
+      try {
+        throw new TypeNotFound(type)
+      } catch (error) {
+        console.warn(error.stack)
+        return true;
+      }
+    }
+    return false;
+  },
+
+  validateProperty(type, property) {
+    if (!this[types][type].includes(property)) {
+      try {
+        throw new PropertyDoesNotExist(type, property)
+      } catch (error) {
+        console.warn(error.stack)
+        return true;
+      }
+    }
+    return false;
+  },
+
+  validateKey(type, key) {
+    if (this[type][key] === undefined) {
+      try {
+        throw new ResourceNotFound(type, key)
+      } catch (error) {
+        console.warn(error.stack)
+        return true;
+      }
+    }
+    return false;
   }
 }
 
+
+/**
+ * An object containing regular expressions for common validation purposes.
+ * @typedef {Object} Regex
+ * @property {RegExp} INT - Regular expression to validate an integer.
+ * @property {RegExp} SINT - Regular expression to validate a signed integer.
+ * @property {RegExp} ZERO_ONE - Regular expression to validate a zero or one value.
+ * @property {RegExp} MONTH - Regular expression to validate a month (1-12).
+ * @property {RegExp} DATE - Regular expression to validate a date in the format YYYY-MM-DD.
+ * @property {RegExp} TIME - Regular expression to validate a time in the format HH:MM.
+ * @property {RegExp} DATE_TIME - Regular expression to validate a date and time in the format YYYY-MM-DD HH:MM.
+ * @property {RegExp} DATE_TIME_SEC - Regular expression to validate a date and time with seconds in the format YYYY-MM-DD HH:MM:SS.
+ * @property {RegExp} DAY_TIME - Regular expression to validate a day and time in the format "Day HH:MM", where Day is one of Sun, Mon, Tue, Wed, Thu, Fri, Sat.
+ * @property {RegExp} JWT - Regular expression to validate a JWT token.
+ * @property {RegExp} LOGIN - Regular expression to validate a login string with Arabic script, letters, numbers, hyphens, and spaces.
+ * @property {RegExp} EMAIL - Regular expression to validate an email address.
+ * @property {RegExp} NAME - Regular expression to validate a name with Arabic script, letters, spaces.
+ * @property {RegExp} PHONE - Regular expression to validate a phone number.
+ * @property {RegExp} GRADE - Regular expression to validate a grade (1-12).
+ * @property {RegExp} GENERIC - Regular expression to validate any string with Arabic script, letters, numbers, hyphens, parentheses, spaces.
+ * @property {RegExp} ANY - Regular expression to validate any string.
+ */
 const Regex = {
-  // Identifiers
   INT: /^[0-9]+$/,
   SINT: /^-?[0-9]+$/,
   ZERO_ONE: /^[0-1]$/,
 
-  // Dates
   MONTH: /^([1-9]|1[0-2])$/,
   DATE: /^(\d{4})-(\d{2})-(\d{2})$/,
   TIME: /^[0-9]{2}:[0-9]{2}$/,
@@ -98,7 +240,6 @@ const Regex = {
   DATE_TIME_SEC: /^(\d{4})-(\d{2})-(\d{2}) [0-9]{2}:[0-9]{2}:[0-9]{2}$/,
   DAY_TIME: /^(Sun|Mon|Tue|Wed|Thu|Fri|Sat) [0-9]{2}:[0-9]{2}$/,
 
-  // Special
   JWT: /^[\w-]*\.[\w-]*\.[\w-]*$/,
   LOGIN: /^[\p{Script=Arabic}\w\-. ]+$/gu,
   EMAIL: /^[\w_\-.]+@[\w]+\.[\w]+$/,
@@ -106,7 +247,6 @@ const Regex = {
   PHONE: /^\+?[0-9]+$/,
   GRADE: /^([1-9]|1[0-2])$/,
 
-  // general
   GENERIC: /^[\p{Script=Arabic}\w_\-\)\(. +]+$/gu,
   ANY: /^.*$/,
 }

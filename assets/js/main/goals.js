@@ -1,4 +1,5 @@
-syncManager.registerType('goal', ['id', 'color', 'progress', 'amount', 'date', 'repeat', 'project_name', 'project_id'])
+syncManager.registerType('goal', ['id', 'amount', 'date', 'repeat', 'progress', 'project_id'])
+syncManager.registerType('weekly_goal', ['project_id', 'amount', 'progress'])
 
 document.addEventListener('goal-added', function (e) {
   let goal = e.added
@@ -8,8 +9,30 @@ document.addEventListener('goal-added', function (e) {
   $("ul[observe=goal]").append(`
     <li class="mb-3 goal" data-id="${goal.id}" id="goal-${goal.id}">
       <div class="d-flex justify-content-between">
-        <span style="color:${goal.color}">
-          ${goal.project_name}
+        <span style="color:${syncManager.get('project', goal.project_id).color}">
+          ${syncManager.get('project', goal.project_id).name}
+        </span>
+        <i class="bi bi-trash" onclick="deleteGoal($(this).closest('.goal').attr('id').split('-')[1])"></i>
+      </div>
+
+      <div class="progress my-2" style="position:relative;height:30px;">
+        <div class="progress-bar" role="progressbar" style="width:${goal.progress}%;background-color:#03a9f4;" aria-valuenow="${goal.progress}" aria-valuemin="0" aria-valuemax="100"></div>
+        <p class="w-100 h-100 d-absolute d-flex justify-content-center align-items-center" style="position:absolute">${goal.amount} minutes</p>
+      </div>
+    </li>
+  `)
+})
+
+document.addEventListener('weekly_goal-added', function (e) {
+  let goal = e.added
+
+  $("#no-weekly_goals").hide();
+
+  $("ul[observe=weekly_goal]").append(`
+    <li class="mb-3 goal" data-id="${goal.id}" id="goal-${goal.id}">
+      <div class="d-flex justify-content-between">
+        <span style="color:${syncManager.get('project', goal.project_id).color}">
+          ${syncManager.get('project', goal.project_id).name}
         </span>
         <i class="bi bi-trash" onclick="deleteGoal($(this).closest('.goal').attr('id').split('-')[1])"></i>
       </div>
@@ -28,7 +51,14 @@ document.addEventListener('goal-removed', function (e) {
   $(`[observe=goal] [data-id=${goal.id}]`).remove()
 })
 
-document.addEventListener('goal-empty', function() {$("#no-goals").show()})
+document.addEventListener('weekly_goal-removed', function (e) {
+  let goal = e.removed
+
+  $(`[observe=weekly_goal] [data-id=${goal.id}]`).remove()
+})
+
+document.addEventListener('goal-empty', function () { $("#no-goals").show() })
+document.addEventListener('weekly_goal-empty', function () { $("#no-weekly_goals").show() })
 
 let new_goal_form = Form.new($("#new_goal_form"))
 new_goal_form.setCallback(function (xhr) {
@@ -40,9 +70,9 @@ new_goal_form.setCallback(function (xhr) {
     case 200:
       $("#new-goal-modal").modal('hide')
 
-      if(new_goal_form.get('date') != $("#date_display").html())
+      if (new_goal_form.get('date') != $("#date_display").html())
         break;
-      
+
       let project = syncManager.get('project', new_goal_form.get('project_id'))
       let goal = {
         id: xhr.parsed.id,

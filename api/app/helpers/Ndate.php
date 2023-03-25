@@ -5,7 +5,7 @@ class Ndate extends DateTime
   const DATE_TIME = "Y-m-d H:i";
   const DATE = "Y-m-d";
   const TIME = "H:i:s";
-  
+
   public function __construct(string $date = 'now')
   {
     parent::__construct($date);
@@ -13,7 +13,7 @@ class Ndate extends DateTime
 
   public static function now($format = self::DATE): string
   {
-    return (new Ndate())->toString($format);
+    return (new Ndate())->format($format);
   }
 
   public static function minutesUntil(Ndate $date): int
@@ -25,7 +25,7 @@ class Ndate extends DateTime
   {
     $diff = (new Ndate())->diff($date);
     $seconds = $diff->days * 24 * 3600 + $diff->h * 3600 + $diff->i * 60 + $diff->s;
-    if(self::now() > $date)
+    if (self::now() > $date)
       return $seconds * -1;
 
     return $seconds;
@@ -33,41 +33,43 @@ class Ndate extends DateTime
 
   public function toMinutes(): int
   {
-    return $this->getHours() * 60 + $this->getMinutes();
+    return $this->format('H') * 60 + $this->format('i');
   }
 
-  public function getHours(): string
+  public function addDays(int $days): void
   {
-    return $this->format('H');
+    $interval = new DateInterval('P' . abs($days) . 'D');
+    if ($days >= 0)
+      $this->add($interval);
+    else
+      $this->sub($interval);
   }
 
-  public function getMinutes(): string
+  public function format($format = null): string
   {
-    return $this->format('i');
+    if (!$format)
+      $format = self::DATE;
+
+    return parent::format($format);
   }
 
-  public function getSeconds(): string
+  public function getWeekDates(): array
   {
-    return $this->format('s');
-  }
 
-  public function getDay(): string
-  {
-    return $this->format('D');
-  }
+    $dates = [];
+    $temp = new Ndate($this->format());
+    do {
+      array_push($dates, $temp->format());
+      $temp->addDays(-1);
+    } while ($temp->format('D') != 'Fri');
 
-  public function getMonth(): string
-  {
-    return $this->format('m');
-  }
+    $temp = new Ndate($this->format());
+    $temp->addDays(1);
+    while ($temp->format('D') != 'Sat') {
+      array_push($dates, $temp->format());
+      $temp->addDays(1);
+    }
 
-  public function getDate(): string
-  {
-    return $this->format(self::DATE);
-  }
-
-  public function toString($format = self::DATE_TIME): string
-  {
-    return $this->format($format);
+    return $dates;
   }
 }

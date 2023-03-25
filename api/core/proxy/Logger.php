@@ -10,7 +10,7 @@ class Logger
     if (!file_exists(LOG))
       mkdir(LOG);
 
-    self::$file = LOG . "/" . (new Ndate())->getDate() . ".log";
+    self::$file = LOG . "/" . (new Ndate())->format() . ".log";
     $this->start_inst = new Ndate();
   }
 
@@ -36,7 +36,7 @@ class Logger
 
     fwrite(
       $fhand,
-      "$endpoint_name " . json_encode($_REQUEST) . " " . $response->getCode() . " $response_body " . $this->start_inst->toString() . " " . (new Ndate())->toString() . " " . $_SERVER['REMOTE_ADDR'] . " $user_id \n[[[[" . $response->hidden_buffer . "]]]]\n\n"
+      "$endpoint_name " . json_encode($_REQUEST) . " " . $response->getCode() . " $response_body " . $this->start_inst->format(Ndate::DATE_TIME) . " " . (new Ndate())->format(Ndate::DATE_TIME) . " " . $_SERVER['REMOTE_ADDR'] . " $user_id \n[[[[" . $response->hidden_buffer . "]]]]\n\n"
     );
 
     fclose($fhand);

@@ -9,8 +9,8 @@
 abstract class Mapper
 {
   protected Entity $entity; // entity instance
-  protected static array $required = [];
-  protected static array $optional = [];
+  public static array $required = [];
+  public static array $optional = [];
 
   public static function getTableName(): string
   {
@@ -34,6 +34,9 @@ abstract class Mapper
     }
 
     foreach (static::$optional as $property) {
+      if (!isset($data[$property]) || $data[$property] == null)
+        continue;
+
       if (is_array($data[$property]))
         $healthy[$property] = json_encode($data[$property]);
       else
@@ -113,7 +116,7 @@ abstract class Mapper
   /**
    * Method loads records' info into entity instances
    * @param array $filters: db search filters
-   * @return array: matched records
+   * @return Entities: matched records
    */
   public static function getAll(array $filters = []): Entities
   {

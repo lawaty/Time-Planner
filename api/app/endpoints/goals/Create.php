@@ -14,19 +14,23 @@ class Create extends Authenticated
 
   public function handle(): Response
   {
-    if($this->request['repeat'] == 1)
-      $this->request['day'] = (new Ndate($this->request['date']))->getDay(); 
+    if ($this->request['repeat'] == 1)
+      $this->request['day'] = (new Ndate($this->request['date']))->format('D');
     else
       $this->request['day'] = 'NIL';
+
+    if (GoalMapper::get([
+      'date' => $this->request['date'],
+      'day' => $this->request['day']
+    ]))
+      throw new Conflict("Goal already exists");
+
     try {
-      if ($goal = GoalMapper::create($this->request))
-        return new Response(SUCCESS, [
-          'id' => $goal->get('id'),
-          'progress' => $goal->get('progress')
-        ]);
+      if ($goal = GoalMapper::create($this->request)) {
+        var_dump($goal->get('id'));
+        return new Response(SUCCESS, $goal->get('id'));
+      }
       return new Response(FAIL);
-    } catch (UniquenessViolated $e) {
-      throw new Conflict("A Goal Already Exists for That Project");
     } catch (ForeignKeyViolated $e) {
       throw new NotFound("Project");
     }

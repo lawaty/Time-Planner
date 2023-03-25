@@ -28,7 +28,6 @@ abstract class Entity
   public function __construct($id)
   {
     $this->setID($id);
-    $this->inSync();
   }
 
   /**
@@ -91,12 +90,10 @@ abstract class Entity
     $result = [];
 
     foreach ($properties as $property) {
-      if ($value = $this->naiveGet($property))
-        $result[$property] = $value;
-      else {
-        $this->copy($this->getMapper()->get($this->getID()));
-        $result[$property] = $this->naiveGet($property);
-      }
+      if (!$this->naiveGet($property) && !$this->inSync() && $this->get('id') > 0 && $entity = $this->getMapper()->get($this->getID()))
+        $this->copy($entity);
+
+      $result[$property] = $this->naiveGet($property);
     }
 
     if (count($result) == 1)
@@ -122,9 +119,13 @@ abstract class Entity
     else if (isJson($value))
       $value = json_decode($value, true);
 
+    // Value has changed
     if (!isset($this->{$property}) || $this->{$property} != $value) {
       $this->{$property} = $value;
-      $this->setSync(false);
+
+      // if persistence layer is concerned with the changed value
+      if (in_array($property, $this->getMapper()::$required) || in_array($property, $this->getMapper()::$optional))
+        $this->setSync(false);
     }
   }
 

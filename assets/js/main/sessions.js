@@ -1,4 +1,4 @@
-syncManager.registerType('session', ['id', 'date', 'time', 'description', 'color', 'project_name'])
+syncManager.registerType('session', ['id', 'date', 'time', 'description', 'project_id'])
 
 document.addEventListener('session-added', function (e) {
   let session = e.added
@@ -21,23 +21,23 @@ document.addEventListener('session-added', function (e) {
   // Create new group to add this session if not exists
   if (!$(`div[observe=session] div#sessions-${session_date.toString()}`).length)
     $(`div[observe=session]`).append(`
-      <div class="p-4 mb-3 sessions-group" id="sessions-${session_date.toString()}">
-        <h4>${title}</h4>
+      <div class="px-4 pt-4 mb-3 sessions-group" id="sessions-${session_date.toString()}">
+        <p>${title}</p>
       </div>
     `)
 
   // Add session to the right group
   $(`div[observe=session] div#sessions-${session_date.toString()}`).append(`
     <div class="card mb-4" data-id="${session.id}" id="session-${session.id}">
-      <div class="card-header d-flex justify-content-between" style="color:${session.color}">
-        <span data-name="project_name">${session.project_name}</span>
+      <div class="card-header d-flex justify-content-between" style="color:${syncManager.get('project', session.project_id).color}">
+        <span data-name="project_name">${syncManager.get('project', session.project_id).name}</span>
         <i class="bi bi-trash" onclick="deleteSession($(this).closest('.card').attr('id').split('-')[1])"></i>
       </div>
 
       <div class="card-body">
-        <h4 class="card-title text-center">
+        <p class="card-title text-center">
           ${session.time}
-        </h4>
+        </p>
         <p class="card-text d-flex justify-content-between text-secondary"><span>${description}</span><span>${session.date}</span></p>
       </div>
     </div>
@@ -120,8 +120,6 @@ function save() {
 $("#start-btn").click(start)
 $("#pause-btn").click(pause)
 $("#end-btn").click(end)
-
-
 
 function deleteSession(session_id) {
   if (confirm("Are you sure you want to delete this session ?")) {

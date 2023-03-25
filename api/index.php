@@ -27,8 +27,9 @@ if (!($endpoint = Router::route())) {
   } catch (Exception $e) {
     $code = is_integer($e->getCode()) ? $e->getCode() : FAIL;
     $response = new Response($code, $e->getMessage());
+
     if(DEBUG)
-      $response = new Response($code, trace($e));
+      echo "\n".trace($e)."\n";
   }
 }
 

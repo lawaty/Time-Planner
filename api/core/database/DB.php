@@ -9,13 +9,6 @@ class DB
 	private static $instance;
 	protected $db;
 
-	private function validateConditions(array &$conditions) {
-		foreach($conditions as &$condition) {
-			while(is_array($condition))
-				$condition = $condition[array_keys($conditions)[0]];
-		}
-	}
-
 	public function __construct()
 	{
 		if (defined("DB_PATH")) {
@@ -78,8 +71,8 @@ class DB
 				// in array
 				if (is_array($value) && count($value)) { // Special Case
 					$result .= $key . ' in (';
-					foreach ($value as $possibility) {
-						if ($possibility != end($value))
+					foreach ($value as $i => $possibility) {
+						if ($i != count($value) - 1)
 							$result .= '?, ';
 						else $result .= '?)';
 					}
@@ -111,9 +104,9 @@ class DB
 		 * @return array containing query status and statement handle for further manipulation
 		 */
 		if (DEBUG) {
-			echo $query . '<br>';
+			echo $query . "\n";
 			var_dump($params);
-			echo '<br>';
+			echo "\n";
 		}
 
 		$stmt = $this->db->prepare($query);
@@ -149,8 +142,6 @@ class DB
 		 * @param array $conditions: Matching conditions key-value pairs
 		 * @return array of all matched records
 		 */
-
-		$this->validateConditions($conditions);
 
 		if (is_array($fields))
 			$query = "select " . implode(',', $fields) . " from $table";
@@ -207,8 +198,6 @@ class DB
 		 * @return : false in case insert failed (uniqueness violated or not null condition violated etc...)
 		 */
 
-		$this->validateConditions($conditions);
-
 
 		$new_values_str = DB::joinToString($new_values, ', ', '=');
 		$conditions_str = ' where ' . DB::joinToString($conditions, 'and', '=');
@@ -231,8 +220,6 @@ class DB
 		 * @return : number of affected rows
 		 * @return : false in case delete failed
 		 */
-
-		$this->validateConditions($conditions);
 
 
 		$cond_str = ' where ' . DB::joinToString($conditions, 'and', '=');

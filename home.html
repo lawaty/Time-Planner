@@ -23,8 +23,8 @@
     </div>
   </nav>
 
-  <!-- Left Sidebar -->
   <div class="row m-4">
+    <!-- Left Sidebar -->
     <div class="col-md-2 col-sm-12">
       <div class="leftbar bg-light">
         <div class="d-flex justify-content-between mb-4">
@@ -34,8 +34,8 @@
           </button>
         </div>
 
-        <strong id="no-projects">No Projects</strong>
-        <ul id="projects-list" observe="project" class="rounded py-4 ml-4 mt-1 list-unstyled">
+        <strong id="no-projects">No projects</strong>
+        <ul id="projects-list" observe="project" class="rounded py-4 mt-1 list-unstyled">
         </ul>
 
       </div>
@@ -44,8 +44,8 @@
     <!-- Main Section -->
     <div class="col-md-6 col-sm-12">
       <div class="main bg-light">
-        <div class="container row w-100 mb-5 ml-0 mr-0 justify-content-center" id="timer-container">
-          <select class="form-control col-sm-4" observe="project" id="session-project_id"
+        <div class="container row w-100 mb-1 ml-0 mr-0 justify-content-center" id="timer-container">
+          <select class="form-control col-sm-4" must observe="project" id="session-project_id"
             oninput="$('#start-btn').removeAttr('disabled')">
             <option selected hidden disabled>
               Select Project
@@ -57,9 +57,18 @@
           <button class="btn btn-primary text-white mx-1" id="end-btn" disabled>End</button>
         </div>
 
-        <div observe="session" id="sessions-list">
-          <strong id="no-sessions">No Sessions</strong>
+        <div observe="session" id="sessions-list" class="mt-2">
+          <strong id="no-sessions">No sessions</strong>
         </div>
+      </div>
+
+      <div class="d-flex justify-content-center" id="date-container">
+        <i class="bi bi-arrow-left-short" id="prev_day"></i>
+        <div class="position-relative">
+          <strong class="m-1 valign" id="date_display"></strong>
+          <div id="day_display"></div>
+        </div>
+        <i class="bi bi-arrow-right-short" id="next_day"></i>
       </div>
     </div>
 
@@ -67,26 +76,24 @@
     <div class="col-md-4 col-sm-12">
       <div class="rightbar bg-light">
         <div class="d-flex justify-content-end mb-4">
-          <button class="btn btn-primary d-flex align-items-center" data-bs-toggle="modal"
-            data-bs-target="#new-goal-modal">
+          <button class="btn d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#new-goal-modal">
             <i class="valign bi bi-plus-circle pr-2"></i>
             Add Goal
           </button>
         </div>
 
-        <strong class="mt-5" id="no-goals">No Goals</strong>
-        <ul observe="goal" class="rounded py-4 ml-4 mt-1 list-unstyled">
+        <strong class="mt-5" id="no-goals">No goals</strong>
+        <ul observe="goal" class="rounded py-4 mt-1 list-unstyled">
         </ul>
 
-        <div class="d-flex justify-content-center" id="date-container">
-          <i class="bi bi-arrow-left-short" id="prev_day"></i>
-          <div class="position-relative">
-            <p class="m-1" id="date_display"></p>
-            <div id="day_display"></div>
-          </div>
-          <i class="bi bi-arrow-right-short" id="next_day"></i>
-        </div>
+      </div>
 
+      <div class="rightbar mt-3 bg-light">
+        <h5>Goals for this week</h5>
+
+        <strong class="mt-5" id="no-weekly_goals">No goals for this week</strong>
+        <ul observe="weekly_goal" class="rounded py-4 mt-1 list-unstyled">
+        </ul>
       </div>
     </div>
   </div>
@@ -147,8 +154,7 @@
             <div class="form-group row">
               <label class="col-sm-3 col-form-label">Project</label>
               <div class="col">
-                <select observe="project" class="form-control" id="select-project" must oninput="$('#start-btn').removeAttr('disabled')"
-                  name="project_id">
+                <select observe="project" class="form-control" id="select-project" must name="project_id">
                   <option selected hidden disabled>
                     Select Project
                   </option>

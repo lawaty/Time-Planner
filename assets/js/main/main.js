@@ -10,21 +10,26 @@ import "./goals.js"
 
   $("#date_display").html((new Ndate()).toString())
   listGoals()
+  listWeeklyGoals();
 
   $("#next_day").click(function () {
     let date = new Ndate($("#date_display").html());
     date.addDays(1);
     syncManager.empty('goal')
+    syncManager.empty('weekly_goal')
     $("#date_display").html(date.toString());
     listGoals()
+    listWeeklyGoals()
   })
 
   $("#prev_day").click(function () {
     let date = new Ndate($("#date_display").html());
     date.addDays(-1);
     syncManager.empty('goal')
+    syncManager.empty('weekly_goal')
     $("#date_display").html(date.toString());
     listGoals()
+    listWeeklyGoals()
   })
 
   $("#date-container").on('mouseover click', function () {
@@ -105,6 +110,33 @@ function listGoals() {
           for (let goal of xhr.parsed) {
             goal.date = $("#date_display").html()
             syncManager.add('goal', goal)
+          }
+          break;
+
+        case 204:
+          break;
+
+        default:
+          alert('Cannot list goals. Please, reload')
+      }
+    }
+  })
+}
+
+function listWeeklyGoals() {
+  AJAX.ajax({
+    url: "api/goals/getWeekly",
+    type: "GET",
+    data: {
+      token: local.get('token'),
+      date: $("#date_display").html()
+    },
+    complete: function (xhr) {
+      switch (xhr.status) {
+        case 200:
+          for (let project_id in xhr.parsed) {
+            xhr.parsed[project_id].project_id = project_id
+            syncManager.add('weekly_goal', xhr.parsed[project_id])
           }
           break;
 

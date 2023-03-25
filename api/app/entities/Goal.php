@@ -10,11 +10,10 @@ class Goal extends Entity
   protected string $day;
   protected string $repeat;
 
-  protected int $progress = 0;
+  protected float $progress = 0;
 
   public function calcSession(Session $session): void
   {
-    var_dump($session);
     $total_time = $this->get('amount') * $this->get('progress') / 100;
     $time_slices = explode(':', $session->get('time'));
     $time_in_mins = intval($time_slices[0]) * 60 + intval($time_slices[1]);

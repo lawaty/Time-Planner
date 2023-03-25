@@ -15,33 +15,37 @@ class Get extends Authenticated
       $date = Ndate::now();
     else $date = $this->request['date'];
 
+    // get all goals found for that date
     $user_goals = GoalMapper::getAllByUser(
       $this->user,
       [
-        ' AND ',
-        GoalMapper::formatCondition($date)
+        ' AND ' . GoalMapper::formatCondition($date)
       ]
     );
 
-    // Allow only one goal per day to exist (one-time goals have more priority than fixed goals)
     $formatted = [];
     foreach ($user_goals as $goal) {
-      if ($goal->get('day') == 'NIL' || !isset($formatted[$goal->get('date')]))
+      if (
+        !isset($formatted[$goal->get('project_id')]) ||
+        $goal->get('day') == 'NIL'
+      )
         $formatted[$goal->get('project_id')] = $goal;
-      // $formatted[$goal->get('project_id')] = $goal->get('id', 'amount', 'date', 'day', 'repeat');
     }
 
-    // Calculating progress for every goal
+
+    // Now we want to calculate the progress for all found goals
     $sessions = SessionMapper::getAllByUser($this->user, [
-      ' AND date = ' . Ndate::now()
+      'sessions.date' => $date
     ]);
 
     foreach ($sessions as $session)
       $formatted[$session->get('project_id')]->calcSession($session);
 
-    foreach($formatted as &$goal)
-      $goal = $goal->get('id', 'amount', 'date', 'day', 'repeat', 'progress');
+    foreach ($formatted as &$goal)
+      $goal = $goal->get('id', 'amount', 'date', 'day', 'repeat', 'progress', 'project_id');
 
-    return new Response(SUCCESS, $formatted);
+    var_dump($formatted);
+
+    return new Response(SUCCESS, array_values($formatted));
   }
 }

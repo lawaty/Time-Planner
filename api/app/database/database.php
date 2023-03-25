@@ -33,7 +33,6 @@ $creations = [
     date TEXT NOT NULL,
     day TEXT NOT NULL,
     repeat INTEGER NOT NULL,
-    CONSTRAINT goals_UN UNIQUE (project_id, day, repeat),
     CONSTRAINT goals_FK FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE CASCADE ON UPDATE CASCADE
   )',
 ];
