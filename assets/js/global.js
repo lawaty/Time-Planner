@@ -88,7 +88,15 @@ let syncManager = {
       return false
 
     if (key === null)
-      key = object.id
+      key = object[this.types[type][0]]
+
+    if (key === undefined) {
+      try {
+        throw new MissingInfo(type, this.types[type][0], object)
+      } catch (error) {
+        console.warn(error.stack)
+      }
+    }
 
     let healthy_object = {}
     for (let required of this.types[type]) {
@@ -103,9 +111,8 @@ let syncManager = {
       healthy_object[required] = object[required]
     }
 
-    let event = new Event(`${type}-added`)
-    event.added = healthy_object
-    document.dispatchEvent(event)
+    $(document).trigger(`${type}-changed`)
+    $(document).trigger(`${type}-added`, healthy_object)
 
     this[type][key] = healthy_object
     return true;
@@ -124,6 +131,10 @@ let syncManager = {
       return false;
 
     this[type][key][property] = value;
+
+    $(document).trigger(`${type}-changed`)
+    $(document).trigger(`${type}-edited`, [this[type][key], property])
+
     return true;
   },
 
@@ -137,15 +148,13 @@ let syncManager = {
     if (this.validateType(type) || this.validateKey(type, key))
       return false;
 
-    let event = new Event(`${type}-removed`)
-    event.removed = this[type][key]
-    document.dispatchEvent(event)
+    $(document).trigger(`${type}-changed`)
+    $(document).trigger(`${type}-removed`, this[type][key])
+
     delete this[type][key]
 
-    if (this.isEmpty(type)) {
-      let event = new Event(`${type}-empty`)
-      document.dispatchEvent(event)
-    }
+    if (this.isEmpty(type))
+      $(document).trigger(`${type}-empty`)
 
     return true;
   },
@@ -157,7 +166,7 @@ let syncManager = {
   empty(type) {
     let iterable = this[type]
     for (let key in iterable)
-      syncManager.remove(type, key)
+      this.remove(type, key)
   },
 
   /**
@@ -262,71 +271,6 @@ if (page != 'membership' && page != 'membership.html' && (!local.get('token') ||
 // Already signed in
 if ((page == 'membership' || page == 'membership.html') && local.get('token') && local.get('id')) {
   window.location = "home"
-}
-
-class Timer {
-  constructor(container = null) {
-    this.secs = 0
-    this.mins = 0
-    this.hrs = 0
-
-    this.container = container
-
-    this.started = false;
-  }
-
-  run() {
-    this.secs++
-
-    if (this.secs == 60) {
-      this.secs = 0
-      this.mins++
-
-      if (this.mins == 60) {
-        this.mins = 0
-        this.hrs++
-      }
-    }
-
-    if (this.container !== null)
-      this.display()
-  }
-
-  display() {
-    $(this.container).html(this.getTimer())
-  }
-
-  getTimer() {
-    let hours = this.hrs < 10 ? '0' + this.hrs : this.hrs
-    let minutes = this.mins < 10 ? '0' + this.mins : this.mins
-    let seconds = this.secs < 10 ? '0' + this.secs : this.secs
-
-    return `${hours}:${minutes}:${seconds}`
-  }
-
-  start() {
-    if (!this.started) {
-      this.interval = setInterval(function () { this.run() }.bind(this), 1000)
-      this.started = true;
-    }
-  }
-
-  pause() {
-    clearInterval(this.interval);
-    this.started = false;
-  }
-
-  reset() {
-    clearInterval(this.interval)
-    this.secs = 0
-    this.mins = 0
-    this.hrs = 0
-
-    if (this.container)
-      this.display()
-
-    this.started = false;
-  }
 }
 
 class Ndate extends Date {

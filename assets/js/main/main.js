@@ -1,8 +1,7 @@
-import "./projects.js"
-import "./sessions.js"
-import "./goals.js"
+import { listProjects } from "./projects.js"
+import { listGoals, listWeeklyGoals } from "./goals.js"
 
-(function () {
+$(document).ready(function () {
   listProjects()
 
   $("[name=token]").val(local.get('token'))
@@ -12,8 +11,6 @@ import "./goals.js"
   $("#next_day").click(function () {
     let date = new Ndate($("#date_display").html());
     date.addDays(1);
-    syncManager.empty('goal')
-    syncManager.empty('weekly_goal')
     $("#date_display").html(date.toString());
     listGoals()
     listWeeklyGoals()
@@ -22,8 +19,6 @@ import "./goals.js"
   $("#prev_day").click(function () {
     let date = new Ndate($("#date_display").html());
     date.addDays(-1);
-    syncManager.empty('goal')
-    syncManager.empty('weekly_goal')
     $("#date_display").html(date.toString());
     listGoals()
     listWeeklyGoals()
@@ -35,117 +30,10 @@ import "./goals.js"
   }).on('mouseout', function () {
     $("#day_display").hide()
   })
-})()
 
-$("#logout").click(function () {
-  local.remove("id")
-  local.remove("token")
-  window.location.href = "membership"
+  $("#logout").click(function () {
+    local.remove("id")
+    local.remove("token")
+    window.location.href = "membership"
+  })
 })
-
-function listProjects() {
-  AJAX.ajax({
-    url: "api/projects",
-    type: "GET",
-    data: {
-      token: local.get('token')
-    },
-    complete: function (xhr) {
-      switch (xhr.status) {
-        case 200:
-          for (let project of xhr.parsed)
-            syncManager.add('project', project)
-
-          listSessions()
-          listGoals()
-          listWeeklyGoals();
-          break;
-
-        case 204:
-          break;
-
-        default:
-          alert('Cannot list projects. Please, reload')
-      }
-    }
-  })
-}
-
-function listSessions() {
-  AJAX.ajax({
-    url: "api/sessions",
-    type: "GET",
-    data: {
-      token: local.get('token')
-    },
-    complete: function (xhr) {
-      switch (xhr.status) {
-        case 200:
-          for (let session of xhr.parsed)
-            syncManager.add('session', session)
-
-          break;
-
-        case 204:
-          break;
-
-        default:
-          alert('Cannot list projects. Please, reload')
-      }
-    }
-  })
-}
-
-function listGoals() {
-  AJAX.ajax({
-    url: "api/goals",
-    type: "GET",
-    data: {
-      token: local.get('token'),
-      date: $("#date_display").html()
-    },
-    complete: function (xhr) {
-      switch (xhr.status) {
-        case 200:
-          for (let goal of xhr.parsed) {
-            goal.date = $("#date_display").html()
-            syncManager.add('goal', goal)
-          }
-          break;
-
-        case 204:
-          break;
-
-        default:
-          alert('Cannot list goals. Please, reload')
-      }
-    }
-  })
-}
-
-function listWeeklyGoals() {
-  AJAX.ajax({
-    url: "api/goals/getWeekly",
-    type: "GET",
-    data: {
-      token: local.get('token'),
-      date: $("#date_display").html()
-    },
-    complete: function (xhr) {
-      switch (xhr.status) {
-        case 200:
-          for (let project_id in xhr.parsed) {
-            xhr.parsed[project_id].project_id = project_id
-            syncManager.add('weekly_goal', xhr.parsed[project_id])
-          }
-          break;
-
-        case 204:
-          break;
-
-        default:
-          alert('Cannot list goals. Please, reload')
-      }
-    }
-  })
-}

@@ -38,8 +38,11 @@ class Get extends Authenticated
       'sessions.date' => $date
     ]);
 
-    foreach ($sessions as $session)
+    foreach ($sessions as $session) {
+      if(!isset($formatted[$session->get('project_id')]))
+        continue;
       $formatted[$session->get('project_id')]->calcSession($session);
+    }
 
     foreach ($formatted as &$goal)
       $goal = $goal->get('id', 'amount', 'date', 'day', 'repeat', 'progress', 'project_id');

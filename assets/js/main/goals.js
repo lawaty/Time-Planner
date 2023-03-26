@@ -1,8 +1,9 @@
 syncManager.registerType('goal', ['id', 'amount', 'date', 'repeat', 'progress', 'project_id'])
 syncManager.registerType('weekly_goal', ['project_id', 'amount', 'progress'])
 
-document.addEventListener('goal-added', function (e) {
-  let goal = e.added
+$(document).on('goal-added', function (e, goal) {
+  if (goal.date != $("#date_display").html())
+    return;
 
   $("#no-goals").hide();
 
@@ -23,18 +24,15 @@ document.addEventListener('goal-added', function (e) {
   `)
 })
 
-document.addEventListener('weekly_goal-added', function (e) {
-  let goal = e.added
-
+$(document).on('weekly_goal-added', function (e, goal) {
   $("#no-weekly_goals").hide();
 
   $("ul[observe=weekly_goal]").append(`
-    <li class="mb-3 goal" data-id="${goal.id}" id="goal-${goal.id}">
+    <li class="mb-3 goal" data-id="${goal.project_id}" id="weekly_goal-${goal.project_id}">
       <div class="d-flex justify-content-between">
         <span style="color:${syncManager.get('project', goal.project_id).color}">
           ${syncManager.get('project', goal.project_id).name}
         </span>
-        <i class="bi bi-trash" onclick="deleteGoal($(this).closest('.goal').attr('id').split('-')[1])"></i>
       </div>
 
       <div class="progress my-2" style="position:relative;height:30px;">
@@ -45,20 +43,33 @@ document.addEventListener('weekly_goal-added', function (e) {
   `)
 })
 
-document.addEventListener('goal-removed', function (e) {
-  let goal = e.removed
-
+$(document).on('goal-removed', function (e, goal) {
   $(`[observe=goal] [data-id=${goal.id}]`).remove()
 })
 
-document.addEventListener('weekly_goal-removed', function (e) {
-  let goal = e.removed
-
-  $(`[observe=weekly_goal] [data-id=${goal.id}]`).remove()
+$(document).on('weekly_goal-removed', function (e, goal) {
+  $(`[observe=weekly_goal] [data-id=${goal.project_id}]`).remove()
 })
 
-document.addEventListener('goal-empty', function () { $("#no-goals").show() })
-document.addEventListener('weekly_goal-empty', function () { $("#no-weekly_goals").show() })
+$(document).on('goal-changed', function () {
+  listWeeklyGoals()
+})
+
+$(document).on('session-changed', function (e, session) {
+  listWeeklyGoals()
+  listGoals()
+})
+
+$(document).on('project-removed', function (e, project) {
+  let goals = syncManager.goal
+  for (let id in goals)
+    if (goals[id].project_id == project.id)
+      syncManager.remove('goal', id)
+})
+
+$(document).on('goal-empty', function () { $("#no-goals").show() })
+
+$(document).on('weekly_goal-empty', function () { $("#no-weekly_goals").show() })
 
 let new_goal_form = Form.new($("#new_goal_form"))
 new_goal_form.setCallback(function (xhr) {
@@ -116,4 +127,80 @@ function deleteGoal(goal_id) {
   }
 }
 
-window.deleteGoal = deleteGoal;
+window.deleteGoal = deleteGoal
+
+let listingGoals = false;
+function listGoals() {
+  if (listingGoals) {
+    $(document).off('goals-listed').one('goals-listed', listGoals)
+    return;
+  }
+  listingGoals = true;
+
+  syncManager.empty('goal')
+  AJAX.ajax({
+    url: "api/goals",
+    type: "GET",
+    data: {
+      token: local.get('token'),
+      date: $("#date_display").html()
+    },
+    complete: function (xhr) {
+      switch (xhr.status) {
+        case 200:
+          for (let goal of xhr.parsed) {
+            goal.date = $("#date_display").html()
+            syncManager.add('goal', goal)
+          }
+          break;
+
+        case 204:
+          break;
+
+        default:
+          alert('Cannot list goals. Please, reload')
+      }
+      $(document).trigger('goals-listed')
+      listingGoals = false;
+    }
+  })
+}
+
+let listingWeeklyGoals = false;
+function listWeeklyGoals() {
+  if (listingWeeklyGoals) {
+    $(document).off('weekly_goals-listed').one('weekly_goals-listed', listWeeklyGoals)
+    return;
+  }
+  listingWeeklyGoals = true;
+
+  syncManager.empty('weekly_goal')
+  AJAX.ajax({
+    url: "api/goals/getWeekly",
+    type: "GET",
+    data: {
+      token: local.get('token'),
+      date: $("#date_display").html()
+    },
+    complete: function (xhr) {
+      switch (xhr.status) {
+        case 200:
+          for (let project_id in xhr.parsed) {
+            xhr.parsed[project_id].project_id = project_id
+            syncManager.add('weekly_goal', xhr.parsed[project_id])
+          }
+          break;
+
+        case 204:
+          break;
+
+        default:
+          alert('Cannot list goals. Please, reload')
+      }
+      $(document).trigger('weekly_goals-listed')
+      listingWeeklyGoals = false;
+    }
+  })
+}
+
+export { listGoals, listWeeklyGoals }

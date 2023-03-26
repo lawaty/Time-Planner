@@ -8,7 +8,7 @@ class AJAX {
     /**
      * Function that is called before sending ajax requests by default
      */
-    console.log("Request is about to start")
+    // console.log("Request is about to start")
 	}
 
 	static complete(xhr, callback) {

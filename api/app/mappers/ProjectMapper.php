@@ -8,7 +8,7 @@ class ProjectMapper extends Mapper
 
   public static function getByUser(User $user, array $filters = []): ?Project
   {
-    return static::get(['user_id' => $user->get('id'), $filters]);
+    return static::get(['user_id' => $user->get('id'), ...$filters]);
   }
 
   public static function getAllByUser(User $user, array $filters = []): Entities

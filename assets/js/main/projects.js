@@ -1,7 +1,9 @@
+import { listSessions } from "./sessions.js";
+import { listGoals, listWeeklyGoals } from "./goals.js";
+
 syncManager.registerType('project', ['id', 'name', 'color'])
 
-document.addEventListener('project-added', function (e) {
-  let project = e.added
+$(document).on('project-added', function (e, project) {
   $("#no-projects").hide()
 
   // Add to sidebar list
@@ -15,23 +17,20 @@ document.addEventListener('project-added', function (e) {
   `)
 })
 
-document.addEventListener('project-removed', function (e) {
-  let project = e.removed
+$(document).on('project-removed', function (e, removed) {
   // Remove from all observers
-  $(`[observe=project] [data-id=${project.id}]`).remove()
+  $(`[observe=project] [data-id=${removed.id}]`).remove()
 
   // Remove all associated resources
   $("[data-name=project_name]").each(function (i, container) {
-    if ($(container).html() == project.name) {
+    if ($(container).html() == removed.name) {
       let resource = $(container).closest("[data-id]")
       syncManager.remove(`${$(resource).attr('observe')}`)
     }
   })
 })
 
-document.addEventListener('project-empty', function () { $("#no-projects").show() })
-
-
+$(document).on('project-empty', function () { $("#no-projects").show() })
 
 // AJAX for creating new project
 let new_project_form = Form.new($("#new_project_form"))
@@ -85,4 +84,34 @@ function deleteProject(project_id) {
   }
 }
 
-window.deleteProject = deleteProject;
+window.deleteProject = deleteProject
+
+function listProjects() {
+  AJAX.ajax({
+    url: "api/projects",
+    type: "GET",
+    data: {
+      token: local.get('token')
+    },
+    complete: function (xhr) {
+      switch (xhr.status) {
+        case 200:
+          for (let project of xhr.parsed)
+            syncManager.add('project', project)
+
+          listSessions()
+          listGoals()
+          listWeeklyGoals();
+          break;
+
+        case 204:
+          break;
+
+        default:
+          alert('Cannot list projects. Please, reload')
+      }
+    }
+  })
+}
+
+export { deleteProject, listProjects }

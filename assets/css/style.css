@@ -125,6 +125,7 @@ div#sessions-list {
 
 [observe] {
   overflow: auto;
+  max-height: 100%;
 }
 
 .valign {

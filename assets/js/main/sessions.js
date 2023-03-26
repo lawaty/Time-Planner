@@ -1,8 +1,6 @@
 syncManager.registerType('session', ['id', 'date', 'time', 'description', 'project_id'])
 
-document.addEventListener('session-added', function (e) {
-  let session = e.added
-
+$(document).on('session-added', function (e, session) {
   $("#no-sessions").hide();
 
   // Specify group to add this session to it
@@ -44,20 +42,23 @@ document.addEventListener('session-added', function (e) {
   `)
 })
 
-document.addEventListener('session-removed', function (e) {
-  let session = e.removed
-  
+$(document).on('session-removed', function (e, session) {
   // Remove session from all observers
   $(`[observe=session] [data-id=${session.id}]`).remove()
 
   // Remove group if this was the only session existing in it
-  if(!$(`div#sessions-${session.date} div`).length)
+  if (!$(`div#sessions-${session.date} div`).length)
     $(`div#sessions-${session.date}`).remove()
 })
 
-document.addEventListener('session-empty', function() {$("#no-sessions").show()})
+$(document).on('session-empty', function () { $("#no-sessions").show() })
 
-
+$(document).on('project-removed', function (e, project) {
+  let sessions = syncManager.session
+  for (let id in sessions)
+    if (sessions[id].project_id == project.id)
+      syncManager.remove('session', id)
+})
 
 
 // new session ajax
@@ -89,6 +90,71 @@ new_session_form.setCallback(function (xhr) {
 
 
 // Timer Flow
+class Timer {
+  constructor(container = null) {
+    this.secs = 0
+    this.mins = 0
+    this.hrs = 0
+
+    this.container = container
+
+    this.started = false;
+  }
+
+  run() {
+    this.secs++
+
+    if (this.secs == 60) {
+      this.secs = 0
+      this.mins++
+
+      if (this.mins == 60) {
+        this.mins = 0
+        this.hrs++
+      }
+    }
+
+    if (this.container !== null)
+      this.display()
+  }
+
+  display() {
+    $(this.container).html(this.getTimer())
+  }
+
+  getTimer() {
+    let hours = this.hrs < 10 ? '0' + this.hrs : this.hrs
+    let minutes = this.mins < 10 ? '0' + this.mins : this.mins
+    let seconds = this.secs < 10 ? '0' + this.secs : this.secs
+
+    return `${hours}:${minutes}:${seconds}`
+  }
+
+  start() {
+    if (!this.started) {
+      this.interval = setInterval(function () { this.run() }.bind(this), 1000)
+      this.started = true;
+    }
+  }
+
+  pause() {
+    clearInterval(this.interval);
+    this.started = false;
+  }
+
+  reset() {
+    clearInterval(this.interval)
+    this.secs = 0
+    this.mins = 0
+    this.hrs = 0
+
+    if (this.container)
+      this.display()
+
+    this.started = false;
+  }
+}
+
 let session_timer = new Timer($("#timer"))
 function start() {
   session_timer.start()
@@ -145,4 +211,32 @@ function deleteSession(session_id) {
   }
 }
 
-window.deleteSession = deleteSession;
+window.deleteSession = deleteSession
+
+
+function listSessions() {
+  AJAX.ajax({
+    url: "api/sessions",
+    type: "GET",
+    data: {
+      token: local.get('token')
+    },
+    complete: function (xhr) {
+      switch (xhr.status) {
+        case 200:
+          for (let session of xhr.parsed)
+            syncManager.add('session', session)
+
+          break;
+
+        case 204:
+          break;
+
+        default:
+          alert('Cannot list projects. Please, reload')
+      }
+    }
+  })
+}
+
+export { listSessions }
