@@ -133,7 +133,7 @@ let syncManager = {
     this[type][key][property] = value;
 
     $(document).trigger(`${type}-changed`)
-    $(document).trigger(`${type}-edited`, [this[type][key], property])
+    $(document).trigger(`${type}-edited`, this[type][key])
 
     return true;
   },
@@ -191,7 +191,7 @@ let syncManager = {
   },
 
   validateProperty(type, property) {
-    if (!this[types][type].includes(property)) {
+    if (!this['types'][type].includes(property)) {
       try {
         throw new PropertyDoesNotExist(type, property)
       } catch (error) {
@@ -320,7 +320,7 @@ class Ndate extends Date {
      * @param date:Ndate
      */
 
-    return new NdateInterval(Math.abs(date - this))
+    return new NdateInterval({ millis: Math.abs(date - this) })
   }
 
   firstDayOfMonth() {
@@ -339,22 +339,45 @@ class Ndate extends Date {
 }
 
 class NdateInterval {
-  constructor(milliseconds) {
-    this.total_millis = milliseconds;
+  constructor(object) {
+    if (object.hasOwnProperty('millis'))
+      this.millis = object.millis;
+    else if (object.hasOwnProperty('secs'))
+      this.millis = object.secs * 1000
+    else if (object.hasOwnProperty('mins'))
+      this.millis = object.mins * 60000
+    else
+      throw new Error("Weird Input to NdateInterval: found" + object)
 
-    this.days = parseInt(milliseconds / 86400000);
-    milliseconds -= this.days * 86400000;
+    this.total_millis = this.millis;
 
-    this.hours = parseInt(milliseconds / 3600000);
-    milliseconds -= this.hours * 3600000;
+    this.days = parseInt(this.millis / 86400000);
+    this.millis -= this.days * 86400000;
 
-    this.minutes = parseInt(milliseconds / 60000);
-    milliseconds -= this.minutes * 60000;
+    this.hrs = parseInt(this.millis / 3600000);
+    this.millis -= this.hrs * 3600000;
 
-    this.seconds = parseInt(milliseconds / 1000);
+    this.mins = parseInt(this.millis / 60000);
+    this.millis -= this.mins * 60000;
 
-    this.milliseconds -= this.seconds * 1000;
+    this.secs = parseInt(this.millis / 1000);
+
+    this.millis -= this.secs * 1000;
 
     Object.preventExtensions()
   }
+
+  formatClock() {
+    let hours = this.hrs < 10 ? '0' + this.hrs : this.hrs
+    let minutes = this.mins < 10 ? '0' + this.mins : this.mins
+    let seconds = this.secs < 10 ? '0' + this.secs : this.secs
+
+    return `${hours}:${minutes}:${seconds}`
+  }
+}
+
+function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 }

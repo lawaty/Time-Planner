@@ -20,8 +20,8 @@ class Create extends Authenticated
       $this->request['day'] = 'NIL';
 
     if (GoalMapper::get([
-      'date' => $this->request['date'],
-      'day' => $this->request['day']
+      'project_id' => $this->request['project_id'],
+      ' AND ( date = '.$this->request['date'].' and day = "NIL" OR day = "'.$this->request['day'].'" )'
     ]))
       throw new Conflict("Goal already exists");
 

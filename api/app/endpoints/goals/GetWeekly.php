@@ -28,13 +28,16 @@ class GetWeekly extends Authenticated
     $week_goals = [];
     foreach($temp as $goal) {
       if (
-        !isset($week_goals[$goal->get('date')]) ||
+        !isset($week_goals[$goal->get('project_id')][$goal->get('date')]) ||
         $goal->get('day') == 'NIL'
       )
-      $week_goals[$goal->get('date')] = $goal;
+      $week_goals[$goal->get('project_id')][$goal->get('date')] = $goal;
     }
-    $week_goals = array_values($week_goals);
-
+    $temp = $week_goals;
+    $week_goals = [];
+    foreach($temp as $i => $goals)
+      array_push($week_goals, ...array_values($goals));
+    
     foreach ($week_goals as $goal) {
       if (
         !isset($formatted[$goal->get('project_id')]) ||

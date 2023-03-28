@@ -51,28 +51,28 @@ $(document).on('weekly_goal-removed', function (e, goal) {
   $(`[observe=weekly_goal] [data-id=${goal.project_id}]`).remove()
 })
 
+$(document).on('goal-edited', function (e, goal) {
+  $(`ul[observe=goal] [data-id=${goal.id}]`).html(`
+    <div class="d-flex justify-content-between">
+      <span style="color:${syncManager.get('project', goal.project_id).color}">
+        ${syncManager.get('project', goal.project_id).name}
+      </span>
+      <i class="bi bi-trash" onclick="deleteGoal($(this).closest('.goal').attr('id').split('-')[1])"></i>
+    </div>
+
+    <div class="progress my-2" style="position:relative;height:30px;">
+      <div class="progress-bar" role="progressbar" style="width:${goal.progress}%;background-color:#03a9f4;" aria-valuenow="${goal.progress}" aria-valuemin="0" aria-valuemax="100"></div>
+      <p class="w-100 h-100 d-absolute d-flex justify-content-center align-items-center" style="position:absolute">${goal.amount} minutes</p>
+    </div>
+  `)
+})
+
 $(document).on('goal-changed session-changed', function () {
   listWeeklyGoals()
 })
 
-$(document).on('session-added', function (e, session) {
-  for (let goal of syncManager.goal) {
-    if (session.project_id == goal.project_id) {
-      let progress = (goal.progress / 100 * goal.amount + session.time) * 100
-      syncManager.edit('goal', goal.id, 'progress', progress)
-      break;
-    }
-  }
-})
-
-$(document).on('session-removed', function (e, session) {
-  for (let goal of syncManager.goal) {
-    if (session.project_id == goal.project_id) {
-      let progress = (goal.progress / 100 * goal.amount - session.time) * 100
-      syncManager.edit('goal', goal.id, 'progress', progress)
-      break;
-    }
-  }
+$(document).on('session-changed', function() {
+  listGoals()
 })
 
 $(document).on('project-removed', function (e, project) {
@@ -99,7 +99,6 @@ new_goal_form.setCallback(function (xhr) {
       listWeeklyGoals()
       if (new_goal_form.get('date') == $("#date_display").html())
         listGoals()
-
 
       break;
 

@@ -88,17 +88,23 @@ new_session_form.setCallback(function (xhr) {
   }
 })
 
-
 // Timer Flow
-class Timer {
+class Timer extends NdateInterval {
   constructor(container = null) {
-    this.secs = 0
-    this.mins = 0
-    this.hrs = 0
+    super({ secs: 0 })
 
     this.container = container
 
     this.started = false;
+
+    this.tic = new Audio('assets/sound/tic-tac.mp3')
+    this.tic.volume = 0.3
+    this.tic.loop = true
+
+    this.motives = [
+      new Audio('assets/sound/motivation1.mp3'),
+      new Audio('assets/sound/motivation2.mp3')
+    ]
   }
 
   run() {
@@ -119,15 +125,13 @@ class Timer {
   }
 
   display() {
-    $(this.container).html(this.getTimer())
+    $(this.container).html(this.formatClock())
   }
 
-  getTimer() {
-    let hours = this.hrs < 10 ? '0' + this.hrs : this.hrs
-    let minutes = this.mins < 10 ? '0' + this.mins : this.mins
-    let seconds = this.secs < 10 ? '0' + this.secs : this.secs
-
-    return `${hours}:${minutes}:${seconds}`
+  setTimer(interval) {
+    this.hrs = interval.hrs
+    this.mins = interval.mins
+    this.secs = interval.secs
   }
 
   start() {
@@ -135,15 +139,24 @@ class Timer {
       this.interval = setInterval(function () { this.run() }.bind(this), 1000)
       this.started = true;
     }
+
+    this.tic.play()
+
+    this.motivation = setInterval(function () {
+      this.motives[getRandomInt(0, 1)].play()
+    }, 900000)
   }
 
   pause() {
     clearInterval(this.interval);
+    clearInterval(this.motivation)
     this.started = false;
+    this.tic.pause()
   }
 
   reset() {
     clearInterval(this.interval)
+    clearInterval(this.motivation)
     this.secs = 0
     this.mins = 0
     this.hrs = 0
@@ -152,6 +165,7 @@ class Timer {
       this.display()
 
     this.started = false;
+    this.tic.pause()
   }
 }
 
@@ -172,7 +186,7 @@ function pause() {
 function end() {
   pause()
   $("#session-desc").modal('show')
-  new_session_form.set('time', session_timer.getTimer())
+  new_session_form.set('time', session_timer.formatClock())
   new_session_form.set('project_id', $("#session-project_id").val())
 }
 
