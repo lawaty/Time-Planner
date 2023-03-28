@@ -92,20 +92,26 @@ new_session_form.setCallback(function (xhr) {
 class Timer extends NdateInterval {
   constructor(container = null) {
     super({ secs: 0 })
-
     this.container = container
-
     this.started = false;
 
     this.tic = new Audio('assets/sound/tic-tac.mp3')
-    this.tic.volume = 0.3
-    this.tic.loop = true
 
     this.motives = [
       new Audio('assets/sound/motivation1.mp3'),
       new Audio('assets/sound/motivation2.mp3'),
       new Audio('assets/sound/motivation3.mp3'),
     ]
+
+    this.setupSound()
+  }
+
+  setupSound() {
+    this.tic.loop = true
+    this.volume = 0.3
+    this.muted = false
+
+    this.setVolume(this.volume)
   }
 
   run() {
@@ -168,9 +174,22 @@ class Timer extends NdateInterval {
     this.started = false;
     this.tic.pause()
   }
+
+  setVolume(volume) {
+    this.tic.volume = volume
+    for(let motive of this.motives)
+      motive.volume = volume
+  }
+
+  toggleMute() {
+    this.muted = !this.muted
+    this.tic.muted = this.muted
+    for(let motive of this.motives)
+      motive.muted = this.muted
+  }
 }
 
-let session_timer = new Timer($("#timer"))
+window.session_timer = new Timer($("#timer"))
 function start() {
   session_timer.start()
   $("#start-btn").hide()

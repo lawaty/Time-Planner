@@ -36,4 +36,31 @@ $(document).ready(function () {
     local.remove("token")
     window.location.href = "membership"
   })
+
+  $("#volumeSlider").val(session_timer.volume)
+  if (session_timer.muted) {
+    $("#muted").show()
+    $("#unmuted").hide()
+  }
+  else {
+    $("#muted").hide()
+    $("#unmuted").show()
+  }
+  $(window).on('beforeunload', function(event) {
+    if (session_timer.formatClock() != '00:00:00')
+      return '';
+  });
 })
+
+window.mute = function mute() {
+  session_timer.toggleMute();
+
+  if (session_timer.muted) {
+    $("#muted").show()
+    $("#unmuted").hide()
+  }
+  else {
+    $("#muted").hide()
+    $("#unmuted").show()
+  }
+}

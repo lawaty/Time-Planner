@@ -132,3 +132,15 @@ div#sessions-list {
   display: flex;
   align-items: center;
 }
+
+.progress {
+  background-color: var(--);
+}
+
+label {
+  margin-bottom: 0;
+}
+
+.form-check-label .bi {
+  font-size: 20px;
+}
