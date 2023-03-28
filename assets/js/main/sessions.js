@@ -107,7 +107,6 @@ class Timer extends NdateInterval {
   }
 
   setupSound() {
-    this.tic.loop = true
     this.volume = 0.3
     this.muted = false
 
@@ -116,6 +115,7 @@ class Timer extends NdateInterval {
 
   run() {
     this.secs++
+    this.tic.play()
 
     if (this.secs == 60) {
       this.secs = 0
@@ -147,8 +147,6 @@ class Timer extends NdateInterval {
       this.started = true;
     }
 
-    this.tic.play()
-
     this.motivation = setInterval(function () {
       this.motives[getRandomInt(0, 2)].play()
     }.bind(this), 900000)
@@ -158,7 +156,6 @@ class Timer extends NdateInterval {
     clearInterval(this.interval);
     clearInterval(this.motivation)
     this.started = false;
-    this.tic.pause()
   }
 
   reset() {
@@ -172,7 +169,6 @@ class Timer extends NdateInterval {
       this.display()
 
     this.started = false;
-    this.tic.pause()
   }
 
   setVolume(volume) {
