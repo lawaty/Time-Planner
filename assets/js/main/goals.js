@@ -51,13 +51,28 @@ $(document).on('weekly_goal-removed', function (e, goal) {
   $(`[observe=weekly_goal] [data-id=${goal.project_id}]`).remove()
 })
 
-$(document).on('goal-changed', function () {
+$(document).on('goal-changed session-changed', function () {
   listWeeklyGoals()
 })
 
-$(document).on('session-changed', function (e, session) {
-  listWeeklyGoals()
-  listGoals()
+$(document).on('session-added', function(e, session) {
+  for(let goal of syncManager.goal){
+    if(session.project_id == goal.project_id){
+      let progress = (goal.progress / 100 * goal.amount + session.time) * 100
+      syncManager.edit('goal', goal.id, 'progress', progress)
+      break;
+    }
+  }
+})
+
+$(document).on('session-removed', function(e, session) {
+  for(let goal of syncManager.goal){
+    if(session.project_id == goal.project_id){
+      let progress = (goal.progress / 100 * goal.amount - session.time) * 100
+      syncManager.edit('goal', goal.id, 'progress', progress)
+      break;
+    }
+  }
 })
 
 $(document).on('project-removed', function (e, project) {
@@ -84,18 +99,7 @@ new_goal_form.setCallback(function (xhr) {
       if (new_goal_form.get('date') != $("#date_display").html())
         break;
 
-      let project = syncManager.get('project', new_goal_form.get('project_id'))
-      let goal = {
-        id: xhr.parsed.id,
-        color: syncManager.get('project', new_goal_form.get('project_id')).color,
-        progress: xhr.parsed.progress,
-        amount: new_goal_form.get('amount'),
-        date: new_goal_form.get('date'),
-        repeat: new_goal_form.get('repeat'),
-        project_id: project.id,
-        project_name: project.name
-      }
-      syncManager.add('goal', goal);
+      listGoals()
       break;
 
     default:
