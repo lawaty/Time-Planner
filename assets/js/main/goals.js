@@ -55,9 +55,9 @@ $(document).on('goal-changed session-changed', function () {
   listWeeklyGoals()
 })
 
-$(document).on('session-added', function(e, session) {
-  for(let goal of syncManager.goal){
-    if(session.project_id == goal.project_id){
+$(document).on('session-added', function (e, session) {
+  for (let goal of syncManager.goal) {
+    if (session.project_id == goal.project_id) {
       let progress = (goal.progress / 100 * goal.amount + session.time) * 100
       syncManager.edit('goal', goal.id, 'progress', progress)
       break;
@@ -65,9 +65,9 @@ $(document).on('session-added', function(e, session) {
   }
 })
 
-$(document).on('session-removed', function(e, session) {
-  for(let goal of syncManager.goal){
-    if(session.project_id == goal.project_id){
+$(document).on('session-removed', function (e, session) {
+  for (let goal of syncManager.goal) {
+    if (session.project_id == goal.project_id) {
       let progress = (goal.progress / 100 * goal.amount - session.time) * 100
       syncManager.edit('goal', goal.id, 'progress', progress)
       break;
@@ -96,10 +96,11 @@ new_goal_form.setCallback(function (xhr) {
     case 200:
       $("#new-goal-modal").modal('hide')
 
-      if (new_goal_form.get('date') != $("#date_display").html())
-        break;
+      listWeeklyGoals()
+      if (new_goal_form.get('date') == $("#date_display").html())
+        listGoals()
 
-      listGoals()
+
       break;
 
     default:
