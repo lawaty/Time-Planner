@@ -103,7 +103,8 @@ class Timer extends NdateInterval {
 
     this.motives = [
       new Audio('assets/sound/motivation1.mp3'),
-      new Audio('assets/sound/motivation2.mp3')
+      new Audio('assets/sound/motivation2.mp3'),
+      new Audio('assets/sound/motivation3.mp3'),
     ]
   }
 
@@ -143,8 +144,8 @@ class Timer extends NdateInterval {
     this.tic.play()
 
     this.motivation = setInterval(function () {
-      this.motives[getRandomInt(0, 1)].play()
-    }, 900000)
+      this.motives[getRandomInt(0, 2)].play()
+    }.bind(this), 900000)
   }
 
   pause() {
