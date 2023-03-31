@@ -20,7 +20,7 @@ $(document).on('session-added', function (e, session) {
   if (!$(`div[observe=session] div#sessions-${session_date.toString()}`).length)
     $(`div[observe=session]`).append(`
       <div class="px-4 pt-4 mb-3 sessions-group" id="sessions-${session_date.toString()}">
-        <p>${title}</p>
+        <p class="d-flex justify-content-between">${title}<span data="total">00:00:00</span></p>
       </div>
     `)
 
@@ -40,6 +40,13 @@ $(document).on('session-added', function (e, session) {
       </div>
     </div>
   `)
+
+  let total_displayed = NInterval.fromClock($(`div[observe=session] div#sessions-${session_date.toString()} [data=total]`).html())
+  
+  let new_total_in_secs = total_displayed.total('secs') + NInterval.fromClock(session.time).total('secs')
+
+  let new_total = new NInterval({secs: new_total_in_secs})
+  $(`div[observe=session] div#sessions-${session_date.toString()} [data=total]`).html(new_total.formatClock())
 })
 
 $(document).on('session-removed', function (e, session) {
@@ -80,7 +87,7 @@ new_session_form.setCallback(function (xhr) {
       syncManager.add('session', session)
 
       save()
-      $("#session-desc").modal('hide')
+      $("#new-session-modal").modal('hide')
       break;
 
     default:
@@ -89,7 +96,7 @@ new_session_form.setCallback(function (xhr) {
 })
 
 // Timer Flow
-class Timer extends NdateInterval {
+class Timer extends NInterval {
   constructor(container = null) {
     super({ secs: 0 })
     this.container = container
@@ -201,7 +208,7 @@ function pause() {
 
 function end() {
   pause()
-  $("#session-desc").modal('show')
+  $("#new-session-modal").modal('show')
   new_session_form.set('time', session_timer.formatClock())
   new_session_form.set('project_id', $("#session-project_id").val())
 }

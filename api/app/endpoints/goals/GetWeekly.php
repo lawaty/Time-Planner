@@ -65,7 +65,8 @@ class GetWeekly extends Authenticated
     );
 
     foreach ($week_sessions as $session)
-      $formatted[$session->get('project_id')]->calcSession($session);
+      if(isset($formatted[$session->get('project_id')]))
+        $formatted[$session->get('project_id')]->calcSession($session);
 
     foreach ($formatted as &$goal)
       $goal = $goal->get('amount', 'progress');

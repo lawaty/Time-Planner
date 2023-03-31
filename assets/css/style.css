@@ -1,3 +1,18 @@
+:root {
+  --secondary: #e5e5e5;
+}
+
+.btn-secondary {
+  background: buttonface;
+  color: buttontext;
+  border: none;
+}
+
+.btn-secondary:hover {
+  background-color: var(--secondary);
+  color: buttontext;
+}
+
 * {
   transition: 0.3s;
   box-sizing: border-box;
@@ -17,7 +32,7 @@ body {
   padding: 20px;
   box-shadow: inset -3px -3px 3px 1px #dadada;
   border-radius: 8px;
-  height:100%;
+  height: 100%;
 }
 
 .rightbar {
@@ -32,6 +47,7 @@ body {
   padding: 20px;
   box-shadow: 0px -3px 8px 2px #dadada;
   border-radius: 8px;
+  position: relative;
 }
 
 button[aria-expanded=true] i {
@@ -52,6 +68,14 @@ button[aria-expanded=true] i {
   color: var(--red);
 }
 
+button.btn.new-session-btn {
+  position: sticky;
+  bottom: 0;
+  width: 100%;
+  left: 0;
+  margin-top: 15px;
+}
+
 #projects-list li {
   display: flex;
   justify-content: space-between;
@@ -62,7 +86,7 @@ button[aria-expanded=true] i {
 }
 
 div#sessions-list {
-  height: calc(88vh - 100px - 3rem - 38px);
+  height: calc(80vh - 100px - 3rem - 38px);
   overflow: auto;
 }
 
@@ -144,4 +168,10 @@ label {
 
 .form-check-label .bi {
   font-size: 20px;
+}
+
+.col-form-label {
+  align-items: center;
+  font-size: 15px;
+  display: flex;
 }

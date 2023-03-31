@@ -65,6 +65,11 @@
         <div observe="session" id="sessions-list" class="mt-2">
           <strong id="no-sessions">No sessions</strong>
         </div>
+
+        <button class="btn btn-secondary new-session-btn d-flex justify-content-center align-items-center" data-bs-toggle="modal" data-bs-target="#new-session-modal">
+          <i class="valign bi bi-plus-circle pr-2"></i>
+          Add Session
+        </button>
       </div>
 
       <div class="d-flex justify-content-center" id="date-container">
@@ -81,7 +86,7 @@
     <div class="col-md-4 col-sm-12 p-1">
       <div class="rightbar bg-light">
         <div class="d-flex justify-content-end mb-4">
-          <button class="btn d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#new-goal-modal">
+          <button class="btn btn-secondary d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#new-goal-modal">
             <i class="valign bi bi-plus-circle pr-2"></i>
             Add Goal
           </button>
@@ -103,7 +108,7 @@
     </div>
   </div>
 
-  <div class="modal" id="new-project-modal">
+  <div class="modal fade" id="new-project-modal">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -142,7 +147,7 @@
     </div>
   </div>
 
-  <div class="modal" id="new-goal-modal">
+  <div class="modal fade" id="new-goal-modal">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -203,7 +208,7 @@
     </div>
   </div>
 
-  <div class="modal" id="session-desc">
+  <div class="modal fade" id="new-session-modal">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -216,9 +221,23 @@
         <form id="new_session_form" request_type="POST" form_type="basic" api="api/sessions/create">
           <div class="modal-body">
             <input hidden name="token">
-            <input hidden name="time">
-            <input hidden name="project_id">
-            <textarea class="form-control" name="description" max="255" regex="GENERIC"></textarea>
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label">Session Time</label>
+              <div class="col">
+                <input placeholder="ex: 01:20:00" regex="TIME" class="form-control" must name="time">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label">Project</label>
+              <div class="col">
+                <select observe="project" class="form-control" id="select-project" must name="project_id">
+                  <option selected hidden disabled>
+                    Select Project
+                  </option>
+                </select>
+              </div>
+            </div>
+            <textarea class="form-control mt-2" name="description" max="255" regex="GENERIC" placeholder="Any Notes ?"></textarea>
             <p class="text-danger m-3" alert="new_session_form"></p>
           </div>
 
@@ -266,6 +285,7 @@
   <script src="assets/vendor/Validator.js"></script>
   <script src="assets/vendor/Form.js"></script>
 
+  <script src="assets/js/helpers.js"></script>
   <script src="assets/js/global.js"></script>
   <script type="module" src="assets/js/main/main.js"></script>
 </body>
