@@ -177,9 +177,19 @@ class NInterval {
    * @static
    * @method fromClock
    * @param {string} clock - A clock string with the format "HH:MM:SS"
-   * @returns {NInterval} A new `NInterval` instance representing the duration of the clock string
+   * @returns {NInterval | null} A new `NInterval` instance representing the duration of the clock string
    */
   static fromClock(clock) {
+    let regex = Regex.TIME
+    if (!regex.test(clock)) {
+      try {
+        throw new Error("Invalid Clock Format")
+      } catch (error) {
+        console.warn(error.stack)
+        return null;
+      }
+    }
+
     let seconds = parseInt(clock.split(':')[0]) * SEC_PER_HOUR + parseInt(clock.split(':')[1]) * SEC_PER_MIN + parseInt(clock.split(':')[2])
     return new NInterval({ secs: seconds })
   }

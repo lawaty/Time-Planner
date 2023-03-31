@@ -108,4 +108,9 @@ class Entities implements Iterator, JsonSerializable, ArrayAccess, Countable
     else
       array_push($this->array, $to_be_pushed);
   }
+
+  public function reverse(): void
+  {
+    $this->array = array_reverse($this->array);
+  }
 }

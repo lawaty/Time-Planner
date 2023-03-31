@@ -18,14 +18,15 @@ $(document).on('session-added', function (e, session) {
 
   // Create new group to add this session if not exists
   if (!$(`div[observe=session] div#sessions-${session_date.toString()}`).length)
-    $(`div[observe=session]`).append(`
+    $(`div[observe=session]`).prepend(`
       <div class="px-4 pt-4 mb-3 sessions-group" id="sessions-${session_date.toString()}">
         <p class="d-flex justify-content-between">${title}<span data="total">00:00:00</span></p>
+        <div data="list"></div>
       </div>
     `)
 
   // Add session to the right group
-  $(`div[observe=session] div#sessions-${session_date.toString()}`).append(`
+  $(`div[observe=session] div#sessions-${session_date.toString()} [data=list]`).prepend(`
     <div class="card mb-4" data-id="${session.id}" id="session-${session.id}">
       <div class="card-header d-flex justify-content-between" style="color:${syncManager.get('project', session.project_id).color}">
         <span data-name="project_name">${syncManager.get('project', session.project_id).name}</span>

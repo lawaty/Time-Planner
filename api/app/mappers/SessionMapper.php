@@ -31,6 +31,8 @@ class SessionMapper extends Mapper
   {
     $portion = $last ? "and sessions.id < $last" : "";
 
-    return self::getAllByUser($user, ["$portion ORDER BY sessions.id desc limit 30"]);
+    $entities = self::getAllByUser($user, ["$portion ORDER BY sessions.id desc limit 30"]);
+    $entities->reverse();
+    return $entities;
   }
 }
