@@ -50,6 +50,8 @@ $(document).ready(function () {
     if (session_timer.formatClock() != '00:00:00')
       return '';
   });
+
+  $("[name=date]").val((new Ndate).toString())
 })
 
 window.mute = function mute() {

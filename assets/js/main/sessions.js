@@ -82,7 +82,7 @@ new_session_form.setCallback(function (xhr) {
         color: project.color,
         time: new_session_form.get('time'),
         description: new_session_form.get('description'),
-        date: (new Ndate()).toString()
+        date: new_session_form.get('date')
       }
 
       syncManager.add('session', session)
