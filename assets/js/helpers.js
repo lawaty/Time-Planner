@@ -159,10 +159,9 @@ class NInterval {
    * and "SS" is the number of seconds.
    *
    * @method formatClock
-   * @param {Object} [object=null] - An optional object used to customize the output.
    * @returns {string} A formatted clock string representing the duration of this `NInterval` instance
    */
-  formatClock(object = null) {
+  formatClock() {
     let hours = this.hrs < 10 ? '0' + this.hrs : this.hrs
     let minutes = this.mins < 10 ? '0' + this.mins : this.mins
     let seconds = this.secs < 10 ? '0' + this.secs : this.secs

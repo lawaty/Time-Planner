@@ -6,6 +6,7 @@ $(document).on('goal-added', function (e, goal) {
     return;
 
   $("#no-goals").hide();
+  let amount = (new NInterval({mins: goal.amount})).formatClock()
 
   $("ul[observe=goal]").append(`
     <li class="mb-3 goal" data-id="${goal.id}" id="goal-${goal.id}">
@@ -18,7 +19,7 @@ $(document).on('goal-added', function (e, goal) {
 
       <div class="progress my-2" style="position:relative;height:30px;">
         <div class="progress-bar" role="progressbar" style="width:${goal.progress}%;background-color:#03a9f4;" aria-valuenow="${goal.progress}" aria-valuemin="0" aria-valuemax="100"></div>
-        <p class="w-100 h-100 d-absolute d-flex justify-content-center align-items-center" style="position:absolute">${goal.amount} minutes</p>
+        <p class="w-100 h-100 d-absolute d-flex justify-content-center align-items-center" style="position:absolute">${amount}</p>
       </div>
     </li>
   `)
@@ -26,6 +27,8 @@ $(document).on('goal-added', function (e, goal) {
 
 $(document).on('weekly_goal-added', function (e, goal) {
   $("#no-weekly_goals").hide();
+
+  let amount = (new NInterval({mins: goal.amount})).formatClock()
 
   $("ul[observe=weekly_goal]").append(`
     <li class="mb-3 goal" data-id="${goal.project_id}" id="weekly_goal-${goal.project_id}">
@@ -37,7 +40,7 @@ $(document).on('weekly_goal-added', function (e, goal) {
 
       <div class="progress my-2" style="position:relative;height:30px;">
         <div class="progress-bar" role="progressbar" style="width:${goal.progress}%;background-color:#03a9f4;" aria-valuenow="${goal.progress}" aria-valuemin="0" aria-valuemax="100"></div>
-        <p class="w-100 h-100 d-absolute d-flex justify-content-center align-items-center" style="position:absolute">${goal.amount} minutes</p>
+        <p class="w-100 h-100 d-absolute d-flex justify-content-center align-items-center" style="position:absolute">${amount}</p>
       </div>
     </li>
   `)

@@ -37,16 +37,16 @@ $(document).on('session-added', function (e, session) {
         <p class="card-title text-center">
           ${session.time}
         </p>
-        <p class="card-text d-flex justify-content-between text-secondary"><span>${description}</span><span>${session.date}</span></p>
+        <p class="card-text d-flex justify-content-between text-secondary"><span>${description}</span><span class="date">${session.date}</span></p>
       </div>
     </div>
   `)
 
   let total_displayed = NInterval.fromClock($(`div[observe=session] div#sessions-${session_date.toString()} [data=total]`).html())
-  
+
   let new_total_in_secs = total_displayed.total('secs') + NInterval.fromClock(session.time).total('secs')
 
-  let new_total = new NInterval({secs: new_total_in_secs})
+  let new_total = new NInterval({ secs: new_total_in_secs })
   $(`div[observe=session] div#sessions-${session_date.toString()} [data=total]`).html(new_total.formatClock())
 })
 
@@ -57,6 +57,13 @@ $(document).on('session-removed', function (e, session) {
   // Remove group if this was the only session existing in it
   if (!$(`div#sessions-${session.date} div`).length)
     $(`div#sessions-${session.date}`).remove()
+
+  let total_displayed = NInterval.fromClock($(`div[observe=session] div#sessions-${session_date.toString()} [data=total]`).html())
+
+  let new_total_in_secs = total_displayed.total('secs') - NInterval.fromClock(session.time).total('secs')
+
+  let new_total = new NInterval({ secs: new_total_in_secs })
+  $(`div[observe=session] div#sessions-${session_date.toString()} [data=total]`).html(new_total.formatClock())
 })
 
 $(document).on('session-empty', function () { $("#no-sessions").show() })
@@ -181,14 +188,14 @@ class Timer extends NInterval {
 
   setVolume(volume) {
     this.tic.volume = volume
-    for(let motive of this.motives)
+    for (let motive of this.motives)
       motive.volume = volume
   }
 
   toggleMute() {
     this.muted = !this.muted
     this.tic.muted = this.muted
-    for(let motive of this.motives)
+    for (let motive of this.motives)
       motive.muted = this.muted
   }
 }
