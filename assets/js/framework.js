@@ -1,3 +1,5 @@
+const APP = 'Time Planner';
+
 // Date and Time
 // =============
 
@@ -275,6 +277,7 @@ let local = {
    * @returns {string|false} - The value associated with the key, or false if the key doesn't exist.
    */
   get: function (key) {
+    key = `${APP}-${key}`
     let result = localStorage.getItem(key)
     if (result !== null)
       return result
@@ -290,6 +293,7 @@ let local = {
    * @param {string} value - The value to store.
    */
   set: function (key, value) {
+    key = `${APP}-${key}`
     localStorage.setItem(key, value)
   },
 
@@ -301,6 +305,7 @@ let local = {
    * @param {string} key - The key of the value to remove.
    */
   remove: function (key) {
+    key = `${APP}-${key}`
     localStorage.removeItem(key)
   }
 };
