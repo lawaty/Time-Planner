@@ -10,20 +10,16 @@ class Validator {
    *  5: Not Matching (For Confirmational)
    */
 
-  static new(input) {
+  constructor(input) {
+    /**
+     * Validator Initialization
+     */
     /**
      * Validator Factory
      */
     if (!$(input)[0].hasAttribute('name'))
       throw "Validator Failed: Input has no name attribute"
 
-    return new Validator(input)
-  }
-
-  constructor(input) {
-    /**
-     * Validator Initialization
-     */
     this.input = input
     this.fieldName = $(this.input).attr("name")
 
@@ -81,8 +77,9 @@ class Validator {
     if ($(this.input)[0].hasAttribute("regex")) {
       let regex_string = $(this.input).attr("regex")
       let regex = Regex[regex_string]
+      // regex.lastIndex = 0;
+      // console.log(regex, input, regex.test(input))
       regex.lastIndex = 0;
-      console.log(regex, input)
       if (!regex.test(input))
         return 4 // Regex Criteria Violated
     }
@@ -108,16 +105,9 @@ class Validators {
     * Initialization
     */
     this.initializeValidators(container)
-    if ($(container)[0].hasAttribute('new')) {
-      this.msgContainer = $("[alert=" + $(container).attr('new') + "]")
-      if (!this.msgContainer.length)
-        console.log($(container).attr('new') + " alert container not found")
-    }
-    else {
-      this.msgContainer = $("[alert=" + $(container).attr('id') + "]")
-      if (!this.msgContainer.length)
-        console.log($(container).attr('id') + " alert container not found")
-    }
+    this.msgContainer = $("[alert=" + $(container).attr('id') + "]")
+    if (!this.msgContainer.length)
+      console.log($(container).attr('id') + " alert container not found")
   }
 
   initializeValidators(container) {
@@ -126,11 +116,11 @@ class Validators {
     */
     this.validators = []
     function newValidator(i, input) {
-      let validator = Validator.new(input)
+      let validator = new Validator(input)
       if (validator) {
         this.validators.push(validator)
 
-        $(input).on('input, select, textarea', function () {
+        $(input).on('input', function () {
           this.showMsg(validator, validator.run())
         }.bind(this, validator))
       }

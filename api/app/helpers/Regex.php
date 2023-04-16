@@ -37,6 +37,6 @@ class Regex
   const HEX = '/^#([a-f0-9]{3}){1,2}\b$/i';
 
   // general
-  const GENERIC = '[\p{Arabic}\w\-\)\(.,\s+]';
+  const GENERIC = '[\p{Arabic}\x{0020}-\x{002F}\x{005C}\x{005F}\w_\-\)\(.+\s]';
   const ANY = '/^(.|\s)+$/u';
 }

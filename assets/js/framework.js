@@ -253,12 +253,12 @@ const Regex = {
   DAY_TIME: /^(Sun|Mon|Tue|Wed|Thu|Fri|Sat) [0-9]{2}:[0-9]{2}$/,
 
   JWT: /^[\w-]*\.[\w-]*\.[\w-]*$/,
-  LOGIN: /^[\p{Script=Arabic}\u0020-\u007E\w\-. ]*$/gu,
+  LOGIN: /^[\p{Script=Arabic}\w\-. ]*$/gu,
   EMAIL: /^[\w_\-.]+@[\w]+\.[\w]*$/,
-  NAME: /^[\p{Script=Arabic}\u0020-\u007E\w ]*$/gu,
+  NAME: /^[\p{Script=Arabic}\w ]*$/gu,
   PHONE: /^\+?[0-9]+$/,
   GRADE: /^([1-9]|1[0-2])$/,
-  GENERIC: /^[\p{Script=Arabic}\u0020-\u007E\w_\-\)\(.+\s]*$/gu,
+  GENERIC: /^[\p{Script=Arabic}\u0020-\u002F\u005C\u005F\w_\-\)\(.+\s]*$/gu,
   ANY: /^.*$/,
 }
 
