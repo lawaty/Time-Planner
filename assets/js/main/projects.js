@@ -33,7 +33,7 @@ $(document).on('project-removed', function (e, removed) {
 $(document).on('project-empty', function () { $("#no-projects").show() })
 
 // AJAX for creating new project
-let new_project_form = Form.new($("#new_project_form"))
+let new_project_form = new BasicForm($("#new_project_form"))
 new_project_form.setCallback(function (xhr) {
   switch (xhr.status) {
     case 200:

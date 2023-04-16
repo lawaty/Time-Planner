@@ -91,7 +91,7 @@
   <script>
     let login_form, register_form
     (function () {
-      login_form = Form.new($("#sign-in"))
+      login_form = new BasicForm($("#sign-in"))
       login_form.setCallback(function (xhr) {
         switch (xhr.status) {
           case 200:
@@ -109,7 +109,7 @@
         }
       })
 
-      register_form = Form.new($("#sign-up"))
+      register_form = new BasicForm($("#sign-up"))
       register_form.setCallback(function (xhr) {
         switch (xhr.status) {
         case 200:

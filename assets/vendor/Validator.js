@@ -82,6 +82,7 @@ class Validator {
       let regex_string = $(this.input).attr("regex")
       let regex = Regex[regex_string]
       regex.lastIndex = 0;
+      console.log(regex, input)
       if (!regex.test(input))
         return 4 // Regex Criteria Violated
     }

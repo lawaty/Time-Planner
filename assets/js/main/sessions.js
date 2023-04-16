@@ -77,7 +77,7 @@ $(document).on('project-removed', function (e, project) {
 
 
 // new session ajax
-let new_session_form = Form.new($("#new_session_form"))
+let new_session_form = new BasicForm($("#new_session_form"))
 new_session_form.setCallback(function (xhr) {
   switch (xhr.status) {
     case 200:

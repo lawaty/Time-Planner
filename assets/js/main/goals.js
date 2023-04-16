@@ -89,7 +89,7 @@ $(document).on('goal-empty', function () { $("#no-goals").show() })
 
 $(document).on('weekly_goal-empty', function () { $("#no-weekly_goals").show() })
 
-let new_goal_form = Form.new($("#new_goal_form"))
+let new_goal_form = new BasicForm($("#new_goal_form"))
 new_goal_form.setCallback(function (xhr) {
   switch (xhr.status) {
     case 409:
