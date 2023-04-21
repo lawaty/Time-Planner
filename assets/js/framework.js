@@ -515,3 +515,335 @@ let syncManager = {
     return false;
   }
 }
+
+class Validator {
+  /**
+   * Single input validator
+   * Error Codes:
+   *  0: Healthy
+   *  1: Missing Required Field
+   *  2: Min Limit Violated
+   *  3: Max Limit Violated
+   *  4: Regex Pattern Not Matching
+   *  5: Not Matching (For Confirmational)
+   */
+
+  constructor(input) {
+    /**
+     * Validator Initialization
+     */
+    /**
+     * Validator Factory
+     */
+    if (!$(input)[0].hasAttribute('name'))
+      throw "Validator Failed: Input has no name attribute"
+
+    this.input = input
+    this.fieldName = $(this.input).attr("name")
+
+    this.min = $(this.input).attr('min')
+    this.max = $(this.input).attr('max')
+
+    if ($(this.input)[0].hasAttribute('confirm')) {
+      this.original = $(this.input).parents('form').find("input[name=" + $(this.input).attr("confirm") + "]")
+      if (!this.original.length)
+        throw "Confirmational Validation Failed: Original Input Not Found For Input " + $(this.input).attr('confirm')
+      this.fieldName = $(this.input).attr('confirm') + " confirmation"
+    }
+    else {
+      if (!$(this.input)[0].hasAttribute('name'))
+        throw "Validation Creation Error: input has no attribute name inside form " + $(this.input).parents('form').attr('id')
+
+    }
+  }
+
+  getVal() {
+    switch ($(this.input).prop("tagName")) {
+      case 'TEXTAREA':
+      case 'INPUT':
+        return $(this.input).val().trim()
+      default:
+        return $(this.input).val()
+    }
+  }
+
+  run() {
+    /**
+     * Validation
+     * Error Codes:
+     *  0: Healthy
+     *  1: Missing Required Field
+     *  2: Min Limit Violated
+     *  3: Max Limit Violated
+     *  4: Regex Pattern Not Matching
+     *  5: Not Matching (For Confirmational)
+     */
+
+    let input = this.getVal()
+
+    if ($(this.input)[0].hasAttribute("must") && !input)
+      return 1 // Required field not filled
+
+    if (this.min && input.length < this.min)
+      return 2; // Min Limit Code
+
+    if (this.max && input.length > this.max) {
+      $(this.input).val(input.substr(0, this.max))
+      return 3; // Max limit Code
+    }
+
+    if ($(this.input)[0].hasAttribute("regex")) {
+      let regex_string = $(this.input).attr("regex")
+      let regex = Regex[regex_string]
+      // regex.lastIndex = 0;
+      // console.log(regex, input, regex.test(input))
+      regex.lastIndex = 0;
+      if (!regex.test(input))
+        return 4 // Regex Criteria Violated
+    }
+
+    if ($(this.input)[0].hasAttribute("confirm")) {
+      // Confirmational Validator
+      if (input != $(this.original).val()) {
+        return 5 // Not Matching Code
+      }
+    }
+
+    return 0 // Fine Error Code
+  }
+}
+
+class Validators {
+  /**
+  * Validators Pool
+  * Used for multi-field containers validation
+  */
+  constructor(container) {
+    /**
+    * Initialization
+    */
+    this.initializeValidators(container)
+    this.msgContainer = $("[alert=" + $(container).attr('id') + "]")
+    if (!this.msgContainer.length)
+      console.log($(container).attr('id') + " alert container not found")
+  }
+
+  initializeValidators(container) {
+    /**
+    * Constructing validators
+    */
+    this.validators = []
+    function newValidator(i, input) {
+      let validator = new Validator(input)
+      if (validator) {
+        this.validators.push(validator)
+
+        $(input).on('input', function () {
+          this.showMsg(validator, validator.run())
+        }.bind(this, validator))
+      }
+    }
+    $(container).find('[name]').each(newValidator.bind(this))
+  }
+
+  validateAll() {
+    /**
+    * All Fields Must Be Healthy
+    */
+    for (let validator of this.validators) {
+      let err = validator.run()
+      this.showMsg(validator, err)
+      if (err)
+        return false
+    }
+    return true
+  }
+
+  showMsg(validator, err) {
+    /**
+    * Display Error
+    */
+    let text = validator.fieldName + " Error: "
+    switch (err) {
+      case 1:
+        text += "Required Field"
+        break;
+      case 2:
+        text += "Min Limit is " + validator.min
+        break;
+      case 3:
+        text += "Max Limit is " + validator.max
+        break;
+      case 4:
+        text += "Wrong Pattern!<br>Hover Over the field to view the allowed characters"
+        break;
+      case 5:
+        text += "Not Matching"
+        break;
+      default:
+        text = ""
+    }
+    $(this.msgContainer).html(text)
+  }
+}
+
+// Form Types
+class BasicForm {
+  /**
+   * class for basic form flow (validation, data extraction, and ajax requesting)
+   */
+  constructor(form) {
+    /**
+     * Form Initialization.
+    */
+    this.form = form
+    this.form_title = $(form).attr('id')
+    if (this.form_title === undefined)
+      console.log("id not found for " + this.form_title + " form")
+
+    this.initialize()
+  }
+
+  get(name) {
+    return $(this.form).find(`[name=${name}]`).val()
+  }
+
+  set(name, value){
+    $(this.form).find(`[name=${name}]`).val(value)
+  }
+
+  initialize() {
+    if ($(this.form).attr('form_type') != 'list')
+      this.validators = new Validators(this.form)
+    this.sender = new Sender(this.form)
+
+    this.submitBtn = $("[submit=" + $(this.form).attr('id') + "]")
+    if (!this.submitBtn.length)
+      console.log("submit btn not found for " + this.title + " form")
+    $(this.submitBtn).attr('type', 'button')
+    $(this.submitBtn).click(this.run.bind(this))
+  }
+
+  setCallback(callback) {
+    this.sender.callback = callback;
+  }
+
+  payload() {
+    return new FormData(this.form[0])
+  }
+
+  run() {
+    /**
+     * run the form
+     */
+    if (this.validators.validateAll()) {
+      let form_data = this.payload()
+      this.sender.send(form_data)
+    }
+  }
+}
+
+// Utilities
+class Sender {
+  /**
+   * Class for form-api communication
+   */
+  constructor(form) {
+    this.form = form
+    this.form_title = $(form).attr('id')
+    this.api = $(form).attr('api')
+    if (this.api === undefined)
+      console.log("api destination not found for " + this.form_title + " form")
+    this.type = $(form).attr('request_type') !== undefined ? $(form).attr('request_type') : 'GET'
+  }
+
+  send(data) {
+    AJAX.ajax({
+      url: this.api,
+      type: this.type,
+      data: data,
+      complete: function (xhr) {
+        if (typeof (this.callback) == "function")
+          this.callback(xhr)
+      }.bind(this)
+    })
+  }
+}
+
+class AJAX {
+	/**
+	 * Class for customizing AJAX communications by setting default callback functions for ajax requests for improving consistency, centralization, and simplicity.
+   * All default callbacks can be simply overriden by specifying new ones on calling AJAX.ajax({...}) just as $.ajax({...})
+	 */
+
+	static beforeSend(){
+    /**
+     * Function that is called before sending ajax requests by default
+     */
+    // console.log("Request is about to start")
+	}
+
+	static complete(xhr, callback) {
+		/**
+		 * Function that is called after ajax requests are completed by default (called for both success and error status)
+		 */
+
+		try {
+			xhr.parsed = JSON.parse(xhr.responseText)
+		} catch (error) {
+			xhr.parsed = {}
+		}
+
+		if(typeof(callback) == "function")
+			callback(xhr)
+	}
+
+	static error(e, options){
+    /**
+     * Function catches the request failure
+     */
+    console.log("Fail:", options.data, e.status, e.responseText)
+	}
+
+	static success(xhr, callback) {
+		/**
+		 * Function that handles the success status
+		 */
+
+		try {
+			xhr.parsed = JSON.parse(xhr.responseText)
+		} catch (error) {
+			xhr.parsed = {}
+		}
+
+		if(callback)
+			callback(xhr)
+		
+	}
+
+	static ajax(options) {
+		/**
+		 * options must contain url, type, data functions
+		 */
+
+		if (options.data instanceof FormData) {
+			options.contentType = false;
+			options.processData = false;
+		}
+		
+		if (options.beforeSend === undefined)
+			options.beforeSend = AJAX.beforeSend()
+
+		let callback = options.complete
+		options.complete = function (xhr, status) {
+			AJAX.complete(xhr, callback)
+		}
+			
+		let success_callback = options.success
+		options.success = function (blah1, blah2, xhr) {
+			AJAX.success(xhr, success_callback)
+		}
+
+		return $.ajax(options)
+	}
+}
