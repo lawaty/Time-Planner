@@ -18,7 +18,11 @@ abstract class Mapper
   }
 
   /**
-   * Function makes the data ready for insertion
+   * Function sanitizes data by doing the following:
+   * 1. only required and optional data are considered and the rest are kicked out
+   * 2. resulted data are primitive types (no arrays) 
+   * @param array $data to be sanitized
+   * @return array healthy result
    */
   public static function sanitize(array $data): array
   {
@@ -60,6 +64,7 @@ abstract class Mapper
   {
     $record = static::sanitize($entity_data);
 
+    $record['insertion_date'] = (new Ndate)->format(Ndate::DATE_TIME);
     $id = DB::getDB()->insert(static::$table, $record);
     if ($id) {
       $entity = new static::$entity_type($id);

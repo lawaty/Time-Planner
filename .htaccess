@@ -1,5 +1,3 @@
-DirectoryIndex home.html
-
 # ------------- Rewrite Rules
 RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f

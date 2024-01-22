@@ -66,3 +66,19 @@ window.mute = function mute() {
     $("#unmuted").show()
   }
 }
+
+while(local.get('draft')) {
+  if(confirm("You haven't saved the last session. Start where you lift over ?"))
+  {
+    let draft = JSON.parse(local.get('draft'))
+    $("#session-project_id").val(draft.project_id)
+    $("#start-btn").removeAttr('disabled')
+    session_timer.hrs = parseInt(draft.time.split(":")[0])
+    session_timer.mins = parseInt(draft.time.split(":")[1])
+    session_timer.secs = parseInt(draft.time.split(":")[2])
+    session_timer.display()
+    local.remove('draft')
+  }
+  else if(confirm("You won't be able to restore the unsaved session again"))
+    local.remove('draft')
+}

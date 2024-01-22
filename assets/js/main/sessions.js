@@ -109,6 +109,7 @@ class Timer extends NInterval {
     super({ secs: 0 })
     this.container = container
     this.started = false;
+    this.localSaver = null;
 
     this.tic = new Audio('assets/sound/tic-tac.mp3')
 
@@ -150,15 +151,16 @@ class Timer extends NInterval {
     $(this.container).html(this.formatClock())
   }
 
-  setTimer(interval) {
-    this.hrs = interval.hrs
-    this.mins = interval.mins
-    this.secs = interval.secs
-  }
-
   start() {
     if (!this.started) {
       this.interval = setInterval(function () { this.run() }.bind(this), 1000)
+      this.localSaver = setInterval(function() {
+        local.set('draft', JSON.stringify({
+          'project': $("#session-project_id option:selected").html(),
+          'project_id': $("#session-project_id").val(),
+          'time': this.formatClock()
+        }))
+      }.bind(this), 10 * 1000)
       this.started = true;
     }
 
@@ -184,6 +186,9 @@ class Timer extends NInterval {
       this.display()
 
     this.started = false;
+
+    clearInterval(this.localSaver)
+    local.remove('draft')
   }
 
   setVolume(volume) {
@@ -205,6 +210,7 @@ function start() {
   session_timer.start()
   $("#start-btn").hide()
   $("#pause-btn").show()
+  $("#reset-btn").removeAttr('disabled')
   $("#end-btn").removeAttr('disabled')
 }
 
@@ -225,12 +231,24 @@ function save() {
   session_timer.reset()
   $("#start-btn").html('Start').show()
   $("#pause-btn").hide()
+  $("#reset-btn").attr('disabled', 'disabled')
   $("#end-btn").attr('disabled', 'disabled')
+}
+
+function reset() {
+  if(confirm("You won't be able to restore the unsaved session")){
+    session_timer.reset()
+    $("#start-btn").html('Start').show()
+    $("#pause-btn").hide()
+    $("#reset-btn").attr('disabled', 'disabled')
+    $("#end-btn").attr('disabled', 'disabled')
+  }
 }
 
 $("#start-btn").click(start)
 $("#pause-btn").click(pause)
 $("#end-btn").click(end)
+$("#reset-btn").click(reset)
 
 function deleteSession(session_id) {
   if (confirm("Are you sure you want to delete this session ?")) {

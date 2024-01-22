@@ -47,9 +47,9 @@
     </div>
 
     <!-- Main Section -->
-    <div class="col-md-6 col-sm-12 p-1">
+    <div class="col-md-7 col-sm-12 p-1">
       <div class="main bg-light">
-        <div class="container row w-100 mb-1 ml-0 mr-0 justify-content-center" id="timer-container">
+        <div class="row w-100 mb-1 ml-0 mr-0 justify-content-center" id="timer-container">
           <select class="form-control col-sm-4" must observe="project" id="session-project_id"
             oninput="$('#start-btn').removeAttr('disabled')">
             <option selected hidden disabled>
@@ -59,7 +59,8 @@
           <div id="timer" class="mx-4 d-flex align-items-center">00:00:00</div>
           <button class="btn btn-success mx-1" id="start-btn" disabled>Start</button>
           <button class="btn btn-warning text-white mx-1" id="pause-btn" style="display:none;">Pause</button>
-          <button class="btn btn-primary text-white mx-1" id="end-btn" disabled>End</button>
+          <button class="btn btn-danger text-white mx-1" id="end-btn" disabled>End</button>
+          <button class="btn btn-primary btn text-white mx-1" id="reset-btn" disabled>Reset</button>
         </div>
 
         <div observe="session" id="sessions-list" class="mt-2">
@@ -84,7 +85,7 @@
     </div>
 
     <!-- Right Sidebar-->
-    <div class="col-md-4 col-sm-12 p-1">
+    <div class="col-md-3 col-sm-12 p-1">
       <div class="rightbar bg-light">
         <div class="d-flex justify-content-end mb-4">
           <button class="btn btn-secondary d-flex align-items-center" data-bs-toggle="modal"
